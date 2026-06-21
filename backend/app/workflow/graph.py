@@ -88,7 +88,13 @@ class ScriptEvaluationWorkflow:
 
         # 3. 统计并导出可观测性指标，存入 state.trace
         exported_events = recorder.export_trace()
-        metrics = calculate_metrics(exported_events, workflow_success=workflow_success)
+        metrics = calculate_metrics(
+            exported_events, 
+            workflow_success=workflow_success,
+            cache_hit_count=recorder.cache_hit_count,
+            cache_miss_count=recorder.cache_miss_count,
+            parser_cache_hit_count=recorder.parser_cache_hit_count
+        )
         state.trace = {
             "events": [event.model_dump() for event in exported_events],
             "metrics": metrics.model_dump()

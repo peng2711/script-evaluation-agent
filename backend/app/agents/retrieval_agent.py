@@ -14,6 +14,21 @@ class RetrievalAgent:
         query_parts = [state.script.raw_text, genre, state.script.target_audience or ""]
         query_string = " ".join(query_parts)
         
+        import hashlib
+        from ..cache.simple_cache import global_cache
+        
+        cache_key = f"retrieval:{hashlib.md5(query_string.encode('utf-8')).hexdigest()}"
+        cached_evidences = global_cache.get(cache_key)
+        if cached_evidences is not None:
+            state.evidences = cached_evidences
+            titles = [ev.source_title for ev in state.evidences]
+            state.history_logs.append(
+                f"[{datetime.datetime.now().isoformat()}] RetrievalAgent 缓存命中，直接恢复检索到的对标证据: {', '.join(titles) if titles else '无'}"
+            )
+            return state
+
+        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] RetrievalAgent 缓存未命中，执行两阶段检索。")
+
         # 1. 第一阶段：粗召回 20 条候选对标作品
         state.history_logs.append(
             f"[{datetime.datetime.now().isoformat()}] [召回阶段] 获取候选对比数据。"
@@ -44,9 +59,11 @@ class RetrievalAgent:
             from ..rag.reranker import mock_reranker
             reranked_evidences = mock_reranker.rerank(recalled_evidences, query_string, top_k=5)
 
-        
         # 3. 筛选最终最精准的 Top 2 对标证据，注入状态机上下文
         state.evidences = reranked_evidences[:2]
+        
+        # 存入缓存
+        global_cache.set(cache_key, state.evidences)
         
         titles = [ev.source_title for ev in state.evidences]
         state.history_logs.append(

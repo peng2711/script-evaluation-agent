@@ -35,6 +35,18 @@ class TraceRecorder:
         self.trace_id = trace_id or f"tr-{uuid.uuid4().hex[:8]}"
         self.events: List[TraceEvent] = []
         self._node_start_times: Dict[str, float] = {}
+        self.cache_hit_count = 0
+        self.cache_miss_count = 0
+        self.parser_cache_hit_count = 0
+
+    def record_cache_hit(self) -> None:
+        self.cache_hit_count += 1
+
+    def record_cache_miss(self) -> None:
+        self.cache_miss_count += 1
+
+    def record_parser_cache_hit(self) -> None:
+        self.parser_cache_hit_count += 1
 
     def start_trace(self, trace_id: str) -> None:
         self.trace_id = trace_id

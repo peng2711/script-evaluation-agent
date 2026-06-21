@@ -156,5 +156,13 @@
     "user_preferences": [
       "偏好生活化细节"
     ]
+  },
+  "test-workflow-cache": {
+    "project_id": "test-workflow-cache",
+    "title": "双重对决",
+    "raw_text": "陈默与苏瑶在百年茶馆遭遇李建国强拆抗争资本。",
+    "genre": "商战",
+    "target_audience": "大众",
+    "user_preferences": []
   }
 }

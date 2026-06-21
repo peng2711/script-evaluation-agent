@@ -302,3 +302,26 @@ graph LR
 1. **真实 API 接入**：在系统定义的节点接口下，无缝接入大语言模型（如 Google Gemini / OpenAI）以处理真实的复杂剧本文本。
 2. **向量化 RAG 升级**：将本地的静态 TF-IDF 检索升级为外部向量数据库（如 Chroma / Qdrant）配合文本 Embedding 向量化的真正语义检索。
 3. **企业级持久化**：将本地 JSON 文件存储迁移至关系型数据库（如 PostgreSQL / SQLite）并加入读写文件锁与用户权限隔离，以支持企业级多并发使用场景。
+
+---
+
+## 11. 轻量级内存缓存与成本/时延可观测性设计 (Lightweight Cache & Cost/Latency Observability)
+
+为了减少重复分析、重复检索和重排的系统延迟，并为 B 端客户提供精确的服务开销预估，系统引入了轻量级本地内存缓存机制，并在 Trace Telemetry 中实现了精细化的成本统计。
+
+### 1. 轻量级本地内存缓存 (SimpleCache)
+* **实现方案**：系统在 `backend/app/cache/simple_cache.py` 中实现了一个纯内存的带 TTL (Time To Live) 生存时间检查的缓存模块。该模块不依赖于 Redis 或任何第三方数据库服务，做到了零依赖、开箱即用。
+* **接入与缓存键 (Cache Key) 策略**：
+  1. **ParserAgent**：对剧本原文的 `raw_text` 计算 MD5 哈希作为键。若剧本未发生更改，二次评估时将直接命中缓存并提取已抽取的角色事实与事件要素，**从而免除大模型 API 推理开销**。
+  2. **RetrievalAgent**：将检索 query 字符串（包含正文、题材、受众等）拼接并生成 MD5 哈希作为键。若搜索条件不变，二次检索时将直接恢复最终对标结果，**跳过第一阶段召回与第二阶段精排的所有工具调用**。
+  3. **Reranker**：将 query 和召回作品列表的所有标题排序后组合，计算 MD5 哈希作为键。保证在相同输入下的相似作品二次重排直接秒出，**降低时延**。
+
+### 2. 成本与时延可观测性统计 (Trace Metrics)
+通过在 `TraceRecorder` 与 `calculate_metrics` 中接入缓存命中统计，我们在 `final_report.trace.metrics` 中新增了以下五个关键观测指标：
+* `cache_hit_count` (缓存命中次数)：当前评估工作流中从缓存中成功读取的次数。
+* `cache_miss_count` (缓存未命中次数)：当前评估工作流中触发实际计算与调用的次数。
+* `cache_hit_rate` (缓存命中率)：命中次数除以总缓存请求次数的比率。
+* `estimated_llm_calls` (大模型估算调用次数)：系统假设 `ParserNode`、`AnalysisNode` 和 `ReviewNode` 在无缓存时均会向大语言模型发起 API 请求。在发生 Parser 缓存命中时，我们会扣除对应的次数。
+* `estimated_tool_cost` (估算服务总成本)：基于以下精细计费模型在运行时动态累加（单位为美元）：
+  $$\text{estimated\_tool\_cost} = \text{estimated\_llm\_calls} \times 0.01 + \text{total\_tool\_calls} \times 0.001$$
+  当缓存命中增多时，`estimated_llm_calls` 和 `total_tool_calls` 会同步减少，从而直观展现系统的降本增效成果。

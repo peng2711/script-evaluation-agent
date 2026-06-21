@@ -14,6 +14,24 @@ class Reranker:
     负责对召回的相似作品候选进行二次多维度加权精细重排（Rerank）。
     """
     def rerank(self, evidences: List[RetrievalEvidence], query: str, top_k: int = 5) -> List[RetrievalEvidence]:
+        # Collect and sort candidate titles to make cache key unique of candidates list
+        candidate_titles = []
+        for ev in evidences:
+            title = ev.source_title if hasattr(ev, "source_title") else ev.get("source_title")
+            candidate_titles.append(title)
+        candidate_titles.sort()
+        
+        import hashlib
+        from ..cache.simple_cache import global_cache
+        
+        candidates_str = ",".join(candidate_titles)
+        raw_key = f"rerank:{query}:{candidates_str}"
+        cache_key = f"reranker:{hashlib.md5(raw_key.encode('utf-8')).hexdigest()}"
+        
+        cached_result = global_cache.get(cache_key)
+        if cached_result is not None:
+            return cached_result
+
         from .retriever import mock_retriever
         # 建立标题到详情的数据库映射
         works_db = {w["title"]: w for w in mock_retriever._data}
@@ -62,7 +80,11 @@ class Reranker:
             
         # 按照精排总分降序排序
         reranked_evidences.sort(key=lambda x: x.score, reverse=True)
-        return reranked_evidences[:top_k]
+        final_result = reranked_evidences[:top_k]
+        
+        # 存入缓存
+        global_cache.set(cache_key, final_result)
+        return final_result
 
 # 全局单例重排器
 mock_reranker = Reranker()

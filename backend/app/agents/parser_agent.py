@@ -215,8 +215,24 @@ class ParserAgent:
         title = state.script.title
         content = state.script.raw_text
         
-        # 执行客观抽取
-        analysis = self.extract(content)
+        import hashlib
+        from ..cache.simple_cache import global_cache
+        
+        # 计算内容 MD5 作为缓存键
+        cache_key = f"parser:{hashlib.md5(content.encode('utf-8')).hexdigest()}"
+        cached_analysis = global_cache.get(cache_key)
+        
+        if cached_analysis is not None:
+            analysis = cached_analysis
+            state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent 缓存命中，直接恢复解析结果。")
+            from ..observability.trace import active_trace_recorder
+            recorder = active_trace_recorder.get()
+            if recorder and hasattr(recorder, "record_parser_cache_hit"):
+                recorder.record_parser_cache_hit()
+        else:
+            state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent 缓存未命中，执行客观抽取。")
+            analysis = self.extract(content)
+            global_cache.set(cache_key, analysis)
         
         # 将角色特征注册进入全局人设记忆（Character Memory）进行本地持久化写入
         if state.use_tools_via_router:
