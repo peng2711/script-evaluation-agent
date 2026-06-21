@@ -20,7 +20,16 @@ class ScriptEvaluationWorkflow:
         self.max_iterations = max_iterations
 
     def run(self, script: ScriptInput) -> FinalReport:
-        report, _ = self.run_with_state(script)
+        report, state = self.run_with_state(script)
+        if report:
+            report.node_traces = state.node_traces
+            if state.analysis:
+                report.risk_points = state.analysis.risk_points
+                report.strengths = state.analysis.strengths
+                report.weaknesses = state.analysis.weaknesses
+                report.characters = state.analysis.characters
+                report.character_relations = state.analysis.character_relations
+                report.core_conflict = state.analysis.core_conflict
         return report
 
     def run_with_state(self, script: ScriptInput) -> Tuple[FinalReport, AgentState]:

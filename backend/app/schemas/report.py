@@ -40,6 +40,13 @@ class ReviewIssue(BaseModel):
     reason: str = Field(..., description="被判定为问题的审查原因/反驳证据")
     suggested_fix: str = Field(..., description="推荐的具体整改方案建议")
 
+class NodeTrace(BaseModel):
+    node_name: str = Field(..., description="节点名称")
+    input_summary: str = Field(..., description="输入数据摘要")
+    output_summary: str = Field(..., description="输出数据或状态摘要")
+    errors: Optional[str] = Field(None, description="节点执行中的错误说明")
+    retry_count: int = Field(default=0, description="当前重试计数")
+
 class FinalReport(BaseModel):
     project_id: str = Field(..., description="项目唯一ID")
     title: str = Field(..., description="项目/剧本标题")
@@ -55,3 +62,10 @@ class FinalReport(BaseModel):
     review_issues: List[ReviewIssue] = Field(default_factory=list, description="Review Agent 审查提出的质量整改项")
     decision_suggestion: str = Field(..., description="最终立项辅助建议结论（如 PASS/REVISE/REJECT 等）")
     improvement_suggestions: List[str] = Field(default_factory=list, description="具体的可落地内容优化与修改建议列表")
+    node_traces: List[NodeTrace] = Field(default_factory=list, description="执行 Trace 链路记录")
+    risk_points: List[str] = Field(default_factory=list, description="识别出的立项潜在风险点说明")
+    strengths: List[str] = Field(default_factory=list, description="剧本核心亮点/优势维度说明")
+    weaknesses: List[str] = Field(default_factory=list, description="剧本的劣势/薄弱环节说明")
+    characters: List[CharacterProfile] = Field(default_factory=list, description="提取出的角色配置文件列表")
+    character_relations: List[str] = Field(default_factory=list, description="人物关系概览描述列表")
+    core_conflict: str = Field(default="", description="核心戏剧冲突描述")

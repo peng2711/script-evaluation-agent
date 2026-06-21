@@ -1,14 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from .script import ScriptInput
-from .report import ScriptAnalysis, RetrievalEvidence, ReviewIssue, FinalReport
-
-class NodeTrace(BaseModel):
-    node_name: str = Field(..., description="节点名称")
-    input_summary: str = Field(..., description="输入数据摘要")
-    output_summary: str = Field(..., description="输出数据或状态摘要")
-    errors: Optional[str] = Field(None, description="节点执行中的错误说明")
-    retry_count: int = Field(default=0, description="当前重试计数")
+from .report import ScriptAnalysis, RetrievalEvidence, ReviewIssue, FinalReport, NodeTrace
 
 class AgentState(BaseModel):
     script: ScriptInput = Field(..., description="输入的剧本大纲与属性配置信息")

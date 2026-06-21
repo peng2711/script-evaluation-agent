@@ -49,6 +49,13 @@
    ```
    启动成功后，API 交互文档地址为：[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
+4. **启动 Streamlit 交互式 Demo 前端页面**：
+   另开一个终端，在 `backend/` 目录下激活虚拟环境，并运行：
+   ```bash
+   streamlit run demo.py
+   ```
+   启动成功后，可在浏览器中访问：[http://localhost:8501](http://localhost:8501) 进行可视化交互式剧本评估与工作流 Trace 追踪查看。
+
 ---
 
 ## 3. 测试与评估说明
