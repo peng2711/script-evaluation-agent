@@ -4,12 +4,12 @@ from typing import Dict, Any, List
 
 def ingest_work(work: Dict[str, Any]):
     """
-    向 mock reference_works.json 注册/导入一部新的对比参考作品
+    向 mock reference_works.json 注册/导入一部新的对比参考作品。
+    支持字段：title, genre, synopsis, tags, character_setup, core_conflict
     """
     current_dir = os.path.dirname(os.path.abspath(__file__))
     db_path = os.path.normpath(os.path.join(current_dir, "..", "..", "data", "reference_works.json"))
     
-    # 确保目录存在
     os.makedirs(os.path.dirname(db_path), exist_ok=True)
     
     data: List[Dict[str, Any]] = []
@@ -35,20 +35,13 @@ def ingest_work(work: Dict[str, Any]):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 if __name__ == "__main__":
-    # 简单测试导入
     sample_work = {
         "title": "回响",
         "genre": "悬疑",
-        "description": "女警冉咚咚在侦破凶案的过程中，同时面临着对自己婚姻与丈夫忠诚度的审查。",
-        "conflicts": [
-            "冉咚咚对案件真相的执着追求与案情重重迷雾的冲突",
-            "冉咚咚内心的信任危机与情感猜疑"
-        ],
-        "key_risks": [
-            "心理独白较多，影视化视觉呈现难度高",
-            "悬疑探案与情感双线交织，处理不好容易导致节奏拖沓"
-        ],
-        "benchmark_metric": "冯小刚导演网剧，探讨人性深度，获得了一定圈层的高热度讨论"
+        "synopsis": "女警冉咚咚在侦破凶案的过程中，面临对自己婚姻和情感忠诚度的拷问与救赎。",
+        "tags": ["悬疑", "心理", "情感折磨"],
+        "character_setup": "对案件侦破具有极端偏执追求的女警冉咚咚，和其涉嫌情感出轨的文学教授丈夫。",
+        "core_conflict": "冉咚咚对杀人命案真相的侦破执念，与其面临的情感猜疑与信任危机之间的重重冲突。"
     }
     ingest_work(sample_work)
     print(f"成功将作品 '{sample_work['title']}' 导入知识库。")

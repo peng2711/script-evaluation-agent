@@ -119,3 +119,17 @@ python -m app.eval.run_eval
 ### 2. 角色人设记忆 (CharacterMemoryStore)
 * **存储位置**：`backend/storage/character_memory.json`
 * **功能**：由 `Parser Agent` 在完成角色事实抽取后批量持久化写入。能够跨评估节点锁定特定角色的动机（`motivation`）、性格标签（`personality`）和关系说明。支持特定项目下单一人物人设属性的更新（`update_character`），有效防范多轮评估中角色名混淆与背景设定崩塌。
+
+---
+
+## 7. 本地 RAG 检索设计说明
+
+为了向评估结论提供有据可依的客观对比，系统实现了一个纯 Python 轻量级本地 RAG 检索器：
+
+### 1. 算法工作原理
+* **字符级 TF-IDF 余弦相似度**：在加载 `reference_works.json` 数据库后，系统实时构建字符级文档频率索引并计算 IDF。对输入的检索 Query 进行字符分词后，通过计算其余弦夹角获得基础文本匹配度分数。
+* **题材与标签 Boost 加成**：如果检索 Query 完美包含了目标作品的 `genre`（题材）或命中其 `tags`（标签列表），会触发对应分值（最高 0.7）的 Boost 奖励分数叠加。
+* **数据归一化**：最终的匹配度评分（`score`）限制在 0.0 至 1.0 区间。
+
+### 2. 证据论证说明（非抄袭检测）
+检索返回的 `RetrievalEvidence` 会由 `Retrieval Agent` 注入评估报告，仅作为“同题材立项成功/失败市场比对依据”或“戏剧冲突对标参考”。本模块不作任何法律层面的抄袭判定或相似度指控声明。

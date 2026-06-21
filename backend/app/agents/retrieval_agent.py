@@ -10,10 +10,12 @@ class RetrievalAgent:
         state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] RetrievalAgent 开始检索相似历史参考作品素材。")
         
         genre = state.script.genre or "通用"
-        query = state.script.raw_text[:100]
+        # 组合剧本大纲、题材及受众进行混合检索
+        query_parts = [state.script.raw_text, genre, state.script.target_audience or ""]
+        query_string = " ".join(query_parts)
         
         # 检索证据库
-        evidences = mock_retriever.retrieve_similar_works(genre, query)
+        evidences = mock_retriever.search_similar_works(query_string, top_k=2)
         
         state.evidences = evidences
         titles = [ev.source_title for ev in evidences]
