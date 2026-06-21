@@ -51,3 +51,35 @@ def test_retrieval_agent_pipeline_integration():
         assert len(ev.relevance_reason) > 0
         assert "【精排依据】" in ev.relevance_reason
         assert 0.0 <= ev.score <= 1.0
+
+def test_hybrid_with_tools_rerank_tool_trace():
+    from app.workflow.graph import ScriptEvaluationWorkflow
+    
+    script_input = ScriptInput(
+        project_id="trace-test-rerank-tool-id",
+        title="破晓行动",
+        raw_text="特工林啸潜入集装箱码头，追踪走走私商人赵乾的走私帝国。",
+        genre="动作",
+        target_audience="大众"
+    )
+    
+    # 实例化开启 use_tools_via_router 的工作流
+    wf = ScriptEvaluationWorkflow(max_iterations=2, use_tools_via_router=True)
+    report, state = wf.run_with_state(script_input)
+    
+    # 验证最终报告含有 trace 属性
+    assert state.trace is not None
+    events = state.trace.get("events", [])
+    
+    # 过滤出工具调用事件中，名为 rerank_tool 且状态为 SUCCESS 的记录
+    rerank_tool_events = [
+        e for e in events 
+        if e.get("tool_name") == "rerank_tool" and e.get("status") == "SUCCESS"
+    ]
+    
+    # 验证至少有一次成功的 rerank_tool 追踪事件
+    assert len(rerank_tool_events) > 0
+    # 验证 trace 的事件中包含了正确的 agent_name
+    assert rerank_tool_events[0].get("agent_name") == "RetrievalAgent"
+    assert rerank_tool_events[0].get("latency_ms") >= 0.0
+

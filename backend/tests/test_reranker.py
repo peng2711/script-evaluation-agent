@@ -1,5 +1,5 @@
 import pytest
-from app.rag.retriever import mock_reranker
+from app.rag.reranker import mock_reranker
 from app.schemas.report import RetrievalEvidence
 
 def test_reranker_match_logic():

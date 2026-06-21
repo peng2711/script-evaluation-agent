@@ -51,9 +51,10 @@ class RerankTool(BaseTool):
         )
 
     def run(self, evidences: List[RetrievalEvidence], query: str, top_k: int = 5) -> RerankOutput:
-        from ..rag.retriever import mock_reranker
+        from ..rag.reranker import mock_reranker
         reranked = mock_reranker.rerank(evidences, query, top_k=top_k)
         return RerankOutput(evidences=reranked)
+
 
 class MemoryReadTool(BaseTool):
     def __init__(self):

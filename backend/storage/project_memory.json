@@ -683,5 +683,53 @@
     "core_conflict": "",
     "trace": null,
     "review_decision": null
+  },
+  "trace-test-rerank-tool-id": {
+    "project_id": "trace-test-rerank-tool-id",
+    "title": "破晓行动",
+    "executive_summary": "【建议人工复核】\n【执行摘要评分报告 - 特工博弈修正版】\n1. 角色人设维度: 5分。理由：林啸与赵乾双雄对立极其吸睛，黑客苏晴技术配合默契，但林啸冷酷特工特征过甚，需强化角色内心弧光。\n2. 剧情逻辑维度: 4分。理由：起获账目符合逻辑，但爆炸脱身等高潮戏份需强化现实合理性。对标《流浪地球》等工业对标作品，需要更扎实的技术支撑。\n3. 冲突密度维度: 5分。理由：警匪特工走私生死博弈，戏剧密度饱满。\n4. 市场适应度维度: 4分。理由：男频硬核动作悬疑市场空间好，但重度依赖大预算支持，需谨慎预控制作上限。\n建议剧本缩减特效镜头并做合规化调整后立项通过。",
+    "character_score": 5,
+    "plot_logic_score": 4,
+    "conflict_density_score": 5,
+    "market_fit_score": 4,
+    "evidence_list": [
+      {
+        "source_title": "隐秘的角落",
+        "source_type": "电视剧",
+        "content": "三个小孩在景区玩耍时无意间记录下了一场谋杀，从而展开了一场关于人性、罪恶与救赎的角力。",
+        "relevance_reason": "【精排依据】与《隐秘的角落》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.04，人设重合=0.04。综合推荐分=0.02。",
+        "score": 0.015
+      },
+      {
+        "source_title": "流浪地球",
+        "source_type": "电影",
+        "content": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。",
+        "relevance_reason": "【精排依据】与《流浪地球》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.03，人设重合=0.02。综合推荐分=0.01。",
+        "score": 0.0119
+      }
+    ],
+    "review_issues": [
+      {
+        "issue_type": "high_risk",
+        "severity": "HIGH",
+        "claim": "报告或修改建议中涉及了有关 '血腥暴力' 的敏感表述",
+        "reason": "剧本评估内容触发高危审查红线敏感词 '血腥暴力'，可能面临监管合规或禁映下架风险。",
+        "suggested_fix": "须立即中止自动立项流转，提交制片团队进行线下人工合规复核（建议人工复核）。"
+      }
+    ],
+    "decision_suggestion": "HUMAN_CHECK",
+    "improvement_suggestions": [
+      "在第 1 集开场削减 10% 的多余爆破动作场面，用文戏博弈代替，以缩减开拍特效制作预算。",
+      "对林啸幼年时期的极端创伤回忆画面做温和化改动，在第 2 集回忆段落中将血腥暴力场景更换为隐喻式艺术处理，以规避政策下架审查风险。"
+    ],
+    "node_traces": [],
+    "risk_points": [],
+    "strengths": [],
+    "weaknesses": [],
+    "characters": [],
+    "character_relations": [],
+    "core_conflict": "",
+    "trace": null,
+    "review_decision": null
   }
 }

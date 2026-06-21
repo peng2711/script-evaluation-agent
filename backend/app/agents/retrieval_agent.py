@@ -41,8 +41,9 @@ class RetrievalAgent:
             )
             reranked_evidences = rerank_res.evidences
         else:
-            from ..rag.retriever import mock_reranker
+            from ..rag.reranker import mock_reranker
             reranked_evidences = mock_reranker.rerank(recalled_evidences, query_string, top_k=5)
+
         
         # 3. 筛选最终最精准的 Top 2 对标证据，注入状态机上下文
         state.evidences = reranked_evidences[:2]

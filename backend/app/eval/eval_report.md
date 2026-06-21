@@ -16,7 +16,7 @@
 | 质检缺陷检出率 (review_issue_detection_rate) | 0.00% | 0.00% | 16.67% | 16.67% |
 | 工作流完成率 (workflow_success_rate) | 100.00% | 100.00% | 100.00% | 100.00% |
 | 平均工具调用次数 (avg_tool_calls) | 0.00 | 0.00 | 0.00 | 12.30 |
-| 平均执行延迟/毫秒 (avg_latency_ms) | 1.32 ms | 2.11 ms | 10.32 ms | 12.62 ms |
+| 平均执行延迟/毫秒 (avg_latency_ms) | 1.13 ms | 1.87 ms | 9.37 ms | 9.87 ms |
 | 工具降级率 (fallback_rate) | 0.00% | 0.00% | 0.00% | 0.00% |
 
 说明：所有评估数据指标均由基准测试用例 (`benchmark.json`) 严格计算所得。
