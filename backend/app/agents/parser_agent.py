@@ -1,5 +1,6 @@
 from typing import Optional, Any, List
 from ..schemas.report import CharacterProfile, PlotEvent, ScriptAnalysis
+from ..schemas.script import ScriptInput
 from ..schemas.agent_state import AgentState
 from ..memory.character_memory import global_character_memory
 import datetime
@@ -10,7 +11,7 @@ class ParserAgent:
     坚决不作任何质量或市场潜力等主观价值判断。
     """
     def __init__(self, llm_client: Optional[Any] = None):
-        # 预留 llm_client 参数，以便后续在第三阶段或之后无缝替换为真实的大语言模型 API
+        # 预留 llm_client 参数，也可通过 get_llm_client 初始化
         self.llm_client = llm_client
 
     def _split_into_paragraphs(self, text: str) -> List[str]:
@@ -206,6 +207,91 @@ class ParserAgent:
             weaknesses=[]
         )
 
+    def llm_extract(self, script: ScriptInput) -> ScriptAnalysis:
+        """
+        使用 LLMClient 从剧本文本中抽取客观 facts 信息。
+        """
+        import time
+        from ..llm.factory import get_llm_client
+        from ..observability.trace import active_trace_recorder
+        
+        client = self.llm_client or get_llm_client()
+        schema = ScriptAnalysis.model_json_schema()
+        
+        system_prompt = (
+            "你是一个专业的剧本客观事实要素解析提取器。\n"
+            "你的任务是阅读剧本文本并从中客观抽取以下内容，不要进行任何主观评估：\n"
+            "- characters (角色列表): 包含 name（角色名）、role（角色定位，例如女主角、男主角等）、personality（性格特征列表）、motivation（行为动机）、relationships（与其他人物的关系字典，key为对方名字，value为具体关系）、constraints（人设限制条件列表）、evidence_spans（原文支撑段落证据列表）。\n"
+            "- character_relations (人物关系描述): 客观概括角色间的核心关系描述列表。\n"
+            "- core_conflict (核心冲突): 用一到两句话描述客观的核心戏剧冲突，不带主观色彩。\n"
+            "- plot_events (剧情事件列表): 包含 event_id（例如EVT-001）、summary（客观摘要）、characters（参与角色列表）、conflict_type（冲突类型，例如潜入、对抗等）、evidence_span（原文段落段证据）。\n\n"
+            "【严苛红线要求】\n"
+            "- 坚决不做任何主观评价，严禁包含好坏、潜力、商业价值等词汇（例如绝不要使用'市场潜力大'、'节奏拖查'、'老套'等主观定性评价）。\n"
+            "- strengths（优点字段）和 weaknesses（缺点字段）必须为空列表。\n"
+            "- risk_points（风险点字段）暂时保持为空列表。\n"
+            "- 只能依据原文提取，严禁凭空编造不存在的角色或事件。\n"
+            "- 必须输出符合 Schema 规范的 JSON 格式。"
+        )
+        
+        prompt = (
+            f"剧本标题: {script.title}\n"
+            f"题材类型: {script.genre}\n"
+            f"目标受众: {script.target_audience or '大众'}\n"
+            f"剧本原文正文:\n{script.raw_text}"
+        )
+        
+        recorder = active_trace_recorder.get()
+        start_t = time.perf_counter()
+        
+        max_attempts = 2
+        last_error = None
+        
+        for attempt in range(max_attempts):
+            try:
+                result_dict = client.generate_json(
+                    prompt=prompt,
+                    schema=schema,
+                    system_prompt=system_prompt
+                )
+                
+                # 强行重置主观字段为空，防止 LLM 未遵照 Prompt 导致逻辑崩塌
+                result_dict["strengths"] = []
+                result_dict["weaknesses"] = []
+                result_dict["risk_points"] = []
+                
+                analysis = ScriptAnalysis.model_validate(result_dict)
+                
+                duration = (time.perf_counter() - start_t) * 1000.0
+                if recorder:
+                    recorder.record_tool_call(
+                        tool_name="parser_llm_call",
+                        agent_name="ParserAgent",
+                        input_summary=f"ParserAgent LLM Extract. Title: {script.title}",
+                        output_summary=f"SUCCESS. Extracted {len(analysis.characters)} characters",
+                        status="SUCCESS",
+                        latency_ms=duration
+                    )
+                return analysis
+            except Exception as e:
+                last_error = e
+                # 仅在需要时重试
+                if attempt < max_attempts - 1:
+                    continue
+                    
+        # 失败抛出以触发 fallback
+        duration = (time.perf_counter() - start_t) * 1000.0
+        if recorder:
+            recorder.record_tool_call(
+                tool_name="parser_llm_call",
+                agent_name="ParserAgent",
+                input_summary=f"ParserAgent LLM Extract. Title: {script.title}",
+                output_summary="FAILED. Fallback to legacy heuristic",
+                status="FALLBACK",
+                latency_ms=duration,
+                error_message=str(last_error)
+            )
+        raise last_error
+
     def execute(self, state: AgentState) -> AgentState:
         """
         工作流节点方法：抽取事实并更新状态
@@ -231,7 +317,17 @@ class ParserAgent:
                 recorder.record_parser_cache_hit()
         else:
             state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent 缓存未命中，执行客观抽取。")
-            analysis = self.extract(content)
+            
+            try:
+                analysis = self.llm_extract(state.script)
+                state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent LLM 抽取成功。")
+            except Exception as e:
+                import logging
+                logger = logging.getLogger("agent_observability")
+                logger.warning(f"ParserAgent LLM 抽取失败，将自动回退到启发式解析。错误: {str(e)}")
+                state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent LLM 抽取失败，回退到启发式解析。")
+                analysis = self.extract(content)
+                
             global_cache.set(cache_key, analysis)
         
         # 将角色特征注册进入全局人设记忆（Character Memory）进行本地持久化写入

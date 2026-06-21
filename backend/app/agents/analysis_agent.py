@@ -1,3 +1,4 @@
+from typing import Optional, Any
 from ..schemas.agent_state import AgentState
 from ..schemas.report import FinalReport
 from ..memory.character_memory import global_character_memory
@@ -7,30 +8,17 @@ class AnalysisAgent:
     """
     Analysis Agent：基于 Parser Agent 提取的事实分析、CharacterMemory 中存储的人设状态、
     以及 RetrievalEvidence 中的检索相似作品，进行多维度的客观打分评估，并提供具体集数维度的整改建议。
+    支持 mock / real LLM 和启发式规则双重评估模式。
     """
-    def execute(self, state: AgentState) -> AgentState:
-        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] AnalysisAgent 开始对剧本大纲进行多维度评估打分。")
-        
+    def __init__(self, llm_client: Optional[Any] = None):
+        self.llm_client = llm_client
+
+    def _heuristic_evaluate(self, state: AgentState) -> FinalReport:
         project_id = state.script.project_id
         title = state.script.title
         content = state.script.raw_text
         
-        # 1. 从 Character Memory 中加载该项目的角色设定数据
-        if state.use_tools_via_router:
-            from ..tools.router import global_tool_router
-            read_res = global_tool_router.call_tool(
-                agent_name="AnalysisAgent",
-                tool_name="memory_read_tool",
-                arguments={"project_id": project_id, "memory_type": "character"}
-            )
-            characters_list = [c.model_dump() for c in read_res.characters] if read_res.characters else []
-        else:
-            characters_list = global_character_memory.load_characters(project_id)
-        
-        # 2. 提取 RAG 检索出来的参考依据作品名，用以进行论据绑定
-        retrieved_titles = [ev.source_title for ev in state.evidences]
-        
-        # 3. 初始化评估打分、优缺点、风险点和修改建议（1-5 分制）
+        # 初始化评估打分、优缺点、风险点和修改建议（1-5 分制）
         char_score = 3
         plot_score = 3
         conflict_score = 3
@@ -171,7 +159,7 @@ class AnalysisAgent:
                     f"2. 剧情逻辑维度: {plot_score}分。理由：陈默以法律和舆论杠杆阻拦强拆逻辑合理，但商战收购对决过于简单粗暴。对标《狂飙》中商政关系的深度展现，本剧商战专业性需提高。\n"
                     f"3. 冲突密度维度: {conflict_score}分。理由：茶文化坚守与资本改建写字楼之间的戏剧冲突具现实探讨意义。\n"
                     f"4. 市场适应度维度: {market_score}分。理由：迎合国潮非遗受众与都市商战受众，题材融合有圈层爆款机会。\n"
-                    "建议重写核心金融反制细节，强化专业金融质感后通过立项。"
+                    "建议该项目在针对修改建议进行二稿打磨后予以立项通过。"
                 )
                 improvement_suggestions = [
                     "在第 1 集的茶馆清场戏中，引入专业金融顾问设计的‘反收购股权对赌’条款，纠正李建国强拆手段过于粗暴脱离现代商业规范的硬伤。",
@@ -191,13 +179,14 @@ class AnalysisAgent:
                 "在第二幕高潮部分加入核心人物之间的信任危机情节，提高冲突爆发的剧烈程度。"
             ]
 
-        # 4. 把 Analysis Agent 的主观分析补充写入 state.analysis 中，完成数据的双向合并与职责划分
-        state.analysis.strengths = strengths
-        state.analysis.weaknesses = weaknesses
-        state.analysis.risk_points = risk_points
+        # 把 Analysis Agent 的主观分析补充写入 state.analysis 中，完成数据的双向合并与职责划分
+        if state.analysis:
+            state.analysis.strengths = strengths
+            state.analysis.weaknesses = weaknesses
+            state.analysis.risk_points = risk_points
 
-        # 5. 渲染 FinalReport 初始草稿对象并存入 state
-        state.draft_report = FinalReport(
+        # 渲染 FinalReport 初始草稿对象并返回
+        return FinalReport(
             project_id=project_id,
             title=title,
             executive_summary=executive_summary,
@@ -208,10 +197,161 @@ class AnalysisAgent:
             evidence_list=state.evidences,
             review_issues=[],  # 待 review_agent 审核写入
             decision_suggestion=decision,
-            improvement_suggestions=improvement_suggestions
+            improvement_suggestions=improvement_suggestions,
+            risk_points=risk_points,
+            strengths=strengths,
+            weaknesses=weaknesses,
+            characters=state.analysis.characters if state.analysis else [],
+            character_relations=state.analysis.character_relations if state.analysis else [],
+            core_conflict=state.analysis.core_conflict if state.analysis else ""
+        )
+
+    def llm_analyze(self, state: AgentState) -> FinalReport:
+        import time
+        from ..llm.factory import get_llm_client
+        from ..observability.trace import active_trace_recorder
+        
+        client = self.llm_client or get_llm_client()
+        schema = FinalReport.model_json_schema()
+        
+        project_id = state.script.project_id
+        
+        # 1. 从 Character Memory 中加载该项目的角色设定数据
+        if state.use_tools_via_router:
+            from ..tools.router import global_tool_router
+            read_res = global_tool_router.call_tool(
+                agent_name="AnalysisAgent",
+                tool_name="memory_read_tool",
+                arguments={"project_id": project_id, "memory_type": "character"}
+            )
+            characters_list = [c.model_dump() for c in read_res.characters] if read_res.characters else []
+        else:
+            characters_list = global_character_memory.load_characters(project_id)
+            
+        system_prompt = (
+            "你是一个专业的剧本内容立项辅助评估分析 Agent。\n"
+            "你的任务是结合剧本解析提取的客观事实、角色记忆库以及相似作品检索证据，对剧本大纲进行多维度的客观评估打分，并输出完整的 FinalReport JSON。\n\n"
+            "【评分与摘要要求】\n"
+            "- 必须输出 1 到 5 的整数评分，包含：\n"
+            "  * character_score (人物人设维度评分)\n"
+            "  * plot_logic_score (剧情逻辑维度评分)\n"
+            "  * conflict_density_score (戏剧冲突密度评分)\n"
+            "  * market_fit_score (市场商业潜力维度评分)\n"
+            "- 在 executive_summary (执行摘要) 中，必须写明每个维度的评分及具体理由，格式例如：\n"
+            "  * 1. 角色人设维度: X分。理由：...\n"
+            "  * 2. 剧情逻辑维度: Y分。理由：...\n"
+            "  * 3. 冲突密度维度: Z分。理由：...\n"
+            "  * 4. 市场适应度维度: W分。理由：...\n"
+            "- 在 market_fit_score (市场适应度评分) 的理由中，必须显式引用/提到 evidence_list 中的检索相似作品名（如《狂飙》、《隐秘的角落》等），进行论据绑定。\n\n"
+            "【修改建议与风控要求】\n"
+            "- 在 improvement_suggestions (修改建议) 中，必须提供高度具体的可落地内容优化与修改建议。每条建议必须明确指定落地的具体剧情阶段或集数（例如：'在第 1 集结尾...'，'在第 2 集增加...'，'在第二幕高潮...'等）。\n"
+            "- 严禁包含空泛的套话，例如“加强人物塑造”、“丰富剧情细节”、“提升逻辑合理性”等没有具体修改路径的建议。\n"
+            "- 严禁包含任何侮辱性评价、讽刺、人身攻击或情绪化用词。\n"
+            "- 严禁凭空编造剧本原文中不存在的情节、人物或事实。\n"
+            "- 必须客观地填充 strengths (亮点说明)、weaknesses (薄弱环节说明) 和 risk_points (潜在风险点说明) 列表。\n\n"
+            "【输出格式规范】\n"
+            "- 必须输出符合 Schema 规范 of JSON 格式。\n"
+            "- decision_suggestion 必须是 'PASS'、'REVISE' 或 'REJECT' 之一。"
         )
         
-        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] AnalysisAgent 评估打分草稿生成完毕，最终决策为: {decision}。")
+        evidences_dump = [ev.model_dump() for ev in state.evidences]
+        analysis_dump = state.analysis.model_dump() if state.analysis else {}
+        
+        prompt = (
+            f"项目ID: {state.script.project_id}\n"
+            f"剧本标题: {state.script.title}\n"
+            f"题材类型: {state.script.genre}\n"
+            f"当前重试轮次: {state.iterations}\n\n"
+            f"--- 剧本客观事实解析结果 ---\n"
+            f"{analysis_dump}\n\n"
+            f"--- 角色记忆库数据 ---\n"
+            f"{characters_list}\n\n"
+            f"--- 检索相似作品证据 ---\n"
+            f"{evidences_dump}\n\n"
+            f"--- 剧本原文正文内容 ---\n"
+            f"{state.script.raw_text}\n"
+        )
+        
+        recorder = active_trace_recorder.get()
+        start_t = time.perf_counter()
+        
+        max_attempts = 2
+        last_error = None
+        
+        for attempt in range(max_attempts):
+            try:
+                result_dict = client.generate_json(
+                    prompt=prompt,
+                    schema=schema,
+                    system_prompt=system_prompt
+                )
+                
+                # 为确保 Schema 数据一致性，自动将部分未返回或空的基础事实回填
+                if not result_dict.get("project_id"):
+                    result_dict["project_id"] = state.script.project_id
+                if not result_dict.get("title"):
+                    result_dict["title"] = state.script.title
+                if not result_dict.get("evidence_list") and state.evidences:
+                    result_dict["evidence_list"] = [ev.model_dump() for ev in state.evidences]
+                if not result_dict.get("characters") and state.analysis:
+                    result_dict["characters"] = [c.model_dump() for c in state.analysis.characters]
+                if not result_dict.get("character_relations") and state.analysis:
+                    result_dict["character_relations"] = state.analysis.character_relations
+                if not result_dict.get("core_conflict") and state.analysis:
+                    result_dict["core_conflict"] = state.analysis.core_conflict
+                
+                report = FinalReport.model_validate(result_dict)
+                
+                duration = (time.perf_counter() - start_t) * 1000.0
+                if recorder:
+                    recorder.record_tool_call(
+                        tool_name="analysis_llm_call",
+                        agent_name="AnalysisAgent",
+                        input_summary=f"AnalysisAgent LLM Evaluate. Project ID: {state.script.project_id}",
+                        output_summary=f"SUCCESS. Scores: Char={report.character_score}, Plot={report.plot_logic_score}, Conflict={report.conflict_density_score}, Market={report.market_fit_score}",
+                        status="SUCCESS",
+                        latency_ms=duration
+                    )
+                return report
+            except Exception as e:
+                last_error = e
+                if attempt < max_attempts - 1:
+                    continue
+                    
+        duration = (time.perf_counter() - start_t) * 1000.0
+        if recorder:
+            recorder.record_tool_call(
+                tool_name="analysis_llm_call",
+                agent_name="AnalysisAgent",
+                input_summary=f"AnalysisAgent LLM Evaluate. Project ID: {state.script.project_id}",
+                output_summary="FAILED. Fallback to legacy heuristic evaluation",
+                status="FALLBACK",
+                latency_ms=duration,
+                error_message=str(last_error)
+            )
+        raise last_error
+
+    def execute(self, state: AgentState) -> AgentState:
+        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] AnalysisAgent 开始对剧本大纲进行多维度评估打分。")
+        
+        try:
+            report = self.llm_analyze(state)
+            state.draft_report = report
+            if state.analysis:
+                state.analysis.strengths = report.strengths
+                state.analysis.weaknesses = report.weaknesses
+                state.analysis.risk_points = report.risk_points
+            state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] AnalysisAgent LLM 评估成功，最终决策为: {report.decision_suggestion}。")
+        except Exception as e:
+            import logging
+            logger = logging.getLogger("agent_observability")
+            logger.warning(f"AnalysisAgent LLM 评估失败，将自动回退到启发式评估。错误: {str(e)}")
+            state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] AnalysisAgent LLM 评估失败，回退到启发式评估。")
+            
+            report = self._heuristic_evaluate(state)
+            state.draft_report = report
+            state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] AnalysisAgent 启发式评估打分草稿生成完毕，最终决策为: {report.decision_suggestion}。")
+            
         return state
 
 # 全局 AnalysisAgent 单例

@@ -9,18 +9,18 @@
     "market_fit_score": 4,
     "evidence_list": [
       {
-        "source_title": "隐秘的角落",
-        "source_type": "电视剧",
-        "content": "三个小孩在景区玩耍时无意间记录下了一场谋杀，从而展开了一场关于人性、罪恶与救赎的角力。",
-        "relevance_reason": "【精排依据】与《隐秘的角落》对标：题材匹配=1.0，标签重合度=0.25，核心冲突重合=0.03，人设重合=0.06。综合推荐分=0.39。",
-        "score": 0.3903
-      },
-      {
         "source_title": "狂飙",
         "source_type": "电视剧",
-        "content": "讲述了一名一线刑警与黑恶势力代表人物长达二十年的生死较量，通过小人物的命运沉浮展现时代变迁与扫黑除恶的坚定决心。",
-        "relevance_reason": "【精排依据】与《狂飙》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.04，人设重合=0.06。综合推荐分=0.02。",
-        "score": 0.0192
+        "content": "警匪对决",
+        "relevance_reason": "对标走私集团",
+        "score": 0.9
+      },
+      {
+        "source_title": "流浪地球",
+        "source_type": "电影",
+        "content": "科幻大片",
+        "relevance_reason": "对标大投资工业化制作",
+        "score": 0.85
       }
     ],
     "review_issues": [
@@ -199,7 +199,7 @@
     "trace": {
       "events": [
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -209,13 +209,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.590694",
+          "timestamp": "2026-06-22T04:01:07.064531",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
+          "node_name": null,
+          "agent_name": "ParserAgent",
+          "tool_name": "parser_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "ParserAgent LLM Extract. Title: 测试剧本之夜",
+          "output_summary": "SUCCESS. Extracted 3 characters",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.07360000745393336,
+          "timestamp": "2026-06-22T04:01:07.066605",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-fbc214af",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -224,14 +240,14 @@
           "output_summary": "Parsed characters: ['林啸', '赵乾', '苏晴']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.9430000063730404,
-          "timestamp": "2026-06-22T03:35:29.592780",
+          "latency_ms": 2.297200000612065,
+          "timestamp": "2026-06-22T04:01:07.067124",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -241,13 +257,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.592780",
+          "timestamp": "2026-06-22T04:01:07.067124",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -256,14 +272,14 @@
           "output_summary": "Saved characters in memory for project 'proj-999'",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.7755999977234751,
-          "timestamp": "2026-06-22T03:35:29.593808",
+          "latency_ms": 0.601400010054931,
+          "timestamp": "2026-06-22T04:01:07.068222",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -273,13 +289,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.593808",
+          "timestamp": "2026-06-22T04:01:07.068222",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: proj-999",
+          "output_summary": "SUCCESS. Scores: Char=5, Plot=4, Conflict=5, Market=4",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.1438999897800386,
+          "timestamp": "2026-06-22T04:01:07.070828",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-fbc214af",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -288,14 +320,14 @@
           "output_summary": "Draft report score: char=5, plot=4, decision=PASS",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.1832999987527728,
-          "timestamp": "2026-06-22T03:35:29.594334",
+          "latency_ms": 2.9697999998461455,
+          "timestamp": "2026-06-22T04:01:07.071348",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -305,13 +337,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.594334",
+          "timestamp": "2026-06-22T04:01:07.071348",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -320,14 +352,14 @@
           "output_summary": "Retrieved 2 evidences: ['隐秘的角落', '狂飙']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.4780000017490238,
-          "timestamp": "2026-06-22T03:35:29.594854",
+          "latency_ms": 0.4577000217977911,
+          "timestamp": "2026-06-22T04:01:07.071348",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -337,13 +369,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.594854",
+          "timestamp": "2026-06-22T04:01:07.071348",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -352,14 +384,14 @@
           "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.5504000000655651,
-          "timestamp": "2026-06-22T03:35:29.595886",
+          "latency_ms": 0.21500000730156898,
+          "timestamp": "2026-06-22T04:01:07.072364",
           "review_action": "rewrite_analysis",
           "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
           "target_node": "AnalysisNode"
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -369,13 +401,29 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.595886",
+          "timestamp": "2026-06-22T04:01:07.072364",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: proj-999",
+          "output_summary": "SUCCESS. Scores: Char=5, Plot=4, Conflict=5, Market=4",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.1303000026382506,
+          "timestamp": "2026-06-22T04:01:07.075409",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-fbc214af",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -384,14 +432,14 @@
           "output_summary": "Draft report score: char=5, plot=4, decision=REVISE",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.1652000064495951,
-          "timestamp": "2026-06-22T03:35:29.595886",
+          "latency_ms": 3.0045000021345913,
+          "timestamp": "2026-06-22T04:01:07.075409",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -401,13 +449,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.596402",
+          "timestamp": "2026-06-22T04:01:07.075409",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -416,14 +464,14 @@
           "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.2232000115327537,
-          "timestamp": "2026-06-22T03:35:29.596402",
+          "latency_ms": 0.21850000484846532,
+          "timestamp": "2026-06-22T04:01:07.075409",
           "review_action": "human_check",
           "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
           "target_node": "ReportNode"
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -433,13 +481,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.596402",
+          "timestamp": "2026-06-22T04:01:07.075409",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-3e76a8b0",
+          "trace_id": "tr-fbc214af",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -448,16 +496,16 @@
           "output_summary": "Locked final report with decision: HUMAN_CHECK",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.015199999324977398,
-          "timestamp": "2026-06-22T03:35:29.596402",
+          "latency_ms": 0.017799990018829703,
+          "timestamp": "2026-06-22T04:01:07.075409",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         }
       ],
       "metrics": {
-        "total_latency_ms": 3.33,
-        "total_tool_calls": 0,
+        "total_latency_ms": 9.78,
+        "total_tool_calls": 3,
         "failed_tool_calls": 0,
         "retry_count": 1,
         "fallback_used": 0,
@@ -466,7 +514,7 @@
         "cache_miss_count": 3,
         "cache_hit_rate": 0.0,
         "estimated_llm_calls": 5,
-        "estimated_tool_cost": 0.05
+        "estimated_tool_cost": 0.053
       }
     },
     "review_decision": null
@@ -474,7 +522,7 @@
   "test-flow-id-123": {
     "project_id": "test-flow-id-123",
     "title": "项目-测试茶香",
-    "executive_summary": "【执行摘要评分报告 - 茶馆商战修正版】\n1. 角色人设维度: 4分。理由：陈默焦虑症天才投资人人设较丰满，苏瑶温婉坚韧，李建国商业巨鳄现实冷血，角色对比明显。\n2. 剧情逻辑维度: 3分。理由：陈默以法律和舆论杠杆阻拦强拆逻辑合理，但商战收购对决过于简单粗暴。对标《狂飙》中商政关系的深度展现，本剧商战专业性需提高。\n3. 冲突密度维度: 3分。理由：茶文化坚守与资本改建写字楼之间的戏剧冲突具现实探讨意义。\n4. 市场适应度维度: 3分。理由：迎合国潮非遗受众与都市商战受众，题材融合有圈层爆款机会。\n建议重写核心金融反制细节，强化专业金融质感后通过立项。",
+    "executive_summary": "【执行摘要评分报告 - 茶馆商战修正版】\n1. 角色人设维度: 4分。理由：陈默焦虑症天才投资人人设较丰满，苏瑶温婉坚韧，李建国商业巨鳄现实冷血，角色对比明显。\n2. 剧情逻辑维度: 3分。理由：陈默以法律和舆论杠杆阻拦强拆逻辑合理，但商战收购对决过于简单粗暴。对标《狂飙》中商政关系的深度展现，本剧商战专业性需提高。\n3. 冲突密度维度: 3分。理由：茶文化坚守与资本改建写字楼之间的戏剧冲突具现实探讨意义。\n4. 市场适应度维度: 3分。理由：迎合国潮非遗受众与都市商战受众，题材融合有圈层爆款机会。\n建议该项目在针对修改建议进行二稿打磨后予以立项通过。",
     "character_score": 4,
     "plot_logic_score": 3,
     "conflict_density_score": 3,
@@ -483,16 +531,16 @@
       {
         "source_title": "狂飙",
         "source_type": "电视剧",
-        "content": "讲述了一名一线刑警与黑恶势力代表人物长达二十年的生死较量，通过小人物的命运沉浮展现时代变迁与扫黑除恶的坚定决心。",
-        "relevance_reason": "【精排依据】与《狂飙》对标：题材匹配=1.0，标签重合度=0.25，核心冲突重合=0.06，人设重合=0.10。综合推荐分=0.40。",
-        "score": 0.4013
+        "content": "警匪对赌",
+        "relevance_reason": "对标强拆博弈",
+        "score": 0.8
       },
       {
         "source_title": "流浪地球",
         "source_type": "电影",
-        "content": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。",
-        "relevance_reason": "【精排依据】与《流浪地球》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.04，人设重合=0.05。综合推荐分=0.02。",
-        "score": 0.016
+        "content": "科幻",
+        "relevance_reason": "对标大投资",
+        "score": 0.6
       }
     ],
     "review_issues": [],
@@ -672,7 +720,7 @@
     "trace": {
       "events": [
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -682,13 +730,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.629796",
+          "timestamp": "2026-06-22T04:01:07.108614",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
+          "node_name": null,
+          "agent_name": "ParserAgent",
+          "tool_name": "parser_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "ParserAgent LLM Extract. Title: 项目-测试茶香",
+          "output_summary": "SUCCESS. Extracted 3 characters",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.09070002124644816,
+          "timestamp": "2026-06-22T04:01:07.110118",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-2ad4ad99",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -697,14 +761,14 @@
           "output_summary": "Parsed characters: ['陈默', '苏瑶', '李建国']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 1.6439000028185546,
-          "timestamp": "2026-06-22T03:35:29.631887",
+          "latency_ms": 2.9701000021304935,
+          "timestamp": "2026-06-22T04:01:07.112190",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -714,13 +778,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.631887",
+          "timestamp": "2026-06-22T04:01:07.112190",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -729,14 +793,14 @@
           "output_summary": "Saved characters in memory for project 'test-flow-id-123'",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 1.1048000014852732,
-          "timestamp": "2026-06-22T03:35:29.633464",
+          "latency_ms": 0.6941999890841544,
+          "timestamp": "2026-06-22T04:01:07.112190",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -746,13 +810,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.633464",
+          "timestamp": "2026-06-22T04:01:07.112190",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-flow-id-123",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=3, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.16140000661835074,
+          "timestamp": "2026-06-22T04:01:07.115576",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-2ad4ad99",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -761,14 +841,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=REJECT",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.25800000003073364,
-          "timestamp": "2026-06-22T03:35:29.633464",
+          "latency_ms": 3.3054999948944896,
+          "timestamp": "2026-06-22T04:01:07.116577",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -778,13 +858,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.633464",
+          "timestamp": "2026-06-22T04:01:07.116577",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -793,14 +873,14 @@
           "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.5458000086946413,
-          "timestamp": "2026-06-22T03:35:29.634622",
+          "latency_ms": 0.46359997941181064,
+          "timestamp": "2026-06-22T04:01:07.116577",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -810,13 +890,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.634622",
+          "timestamp": "2026-06-22T04:01:07.116577",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -825,14 +905,14 @@
           "output_summary": "ReviewAction: retrieve_more, Reason: 检测到严重的对标引用不足或题材证据错配，必须重新对标召回数据。, TargetNode: RetrievalNode, RetryCount: 0",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.2835000050254166,
-          "timestamp": "2026-06-22T03:35:29.635145",
+          "latency_ms": 0.2358000201638788,
+          "timestamp": "2026-06-22T04:01:07.117579",
           "review_action": "retrieve_more",
           "review_reason": "检测到严重的对标引用不足或题材证据错配，必须重新对标召回数据。",
           "target_node": "RetrievalNode"
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -842,13 +922,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.635145",
+          "timestamp": "2026-06-22T04:01:07.117579",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -857,14 +937,14 @@
           "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.027300004148855805,
-          "timestamp": "2026-06-22T03:35:29.635145",
+          "latency_ms": 0.020599982235580683,
+          "timestamp": "2026-06-22T04:01:07.117579",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -874,13 +954,29 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.635145",
+          "timestamp": "2026-06-22T04:01:07.117579",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-flow-id-123",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=3, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.1404999929945916,
+          "timestamp": "2026-06-22T04:01:07.120586",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-2ad4ad99",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -889,14 +985,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.2443999983370304,
-          "timestamp": "2026-06-22T03:35:29.635661",
+          "latency_ms": 3.2223000016529113,
+          "timestamp": "2026-06-22T04:01:07.120586",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -906,13 +1002,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.635661",
+          "timestamp": "2026-06-22T04:01:07.120586",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -921,14 +1017,14 @@
           "output_summary": "ReviewAction: pass, Reason: 报告通过了全部合规及事实一致性审查。, TargetNode: ReportNode, RetryCount: 1",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.2556999970693141,
-          "timestamp": "2026-06-22T03:35:29.636185",
+          "latency_ms": 0.24029999622143805,
+          "timestamp": "2026-06-22T04:01:07.120586",
           "review_action": "pass",
           "review_reason": "报告通过了全部合规及事实一致性审查。",
           "target_node": "ReportNode"
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -938,13 +1034,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:29.636185",
+          "timestamp": "2026-06-22T04:01:07.121589",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f9c1bc3d",
+          "trace_id": "tr-2ad4ad99",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -953,16 +1049,16 @@
           "output_summary": "Locked final report with decision: REVISE",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.0018999999156221747,
-          "timestamp": "2026-06-22T03:35:29.636185",
+          "latency_ms": 0.0018999853637069464,
+          "timestamp": "2026-06-22T04:01:07.121589",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         }
       ],
       "metrics": {
-        "total_latency_ms": 4.37,
-        "total_tool_calls": 0,
+        "total_latency_ms": 11.15,
+        "total_tool_calls": 3,
         "failed_tool_calls": 0,
         "retry_count": 1,
         "fallback_used": 0,
@@ -971,7 +1067,7 @@
         "cache_miss_count": 3,
         "cache_hit_rate": 0.25,
         "estimated_llm_calls": 5,
-        "estimated_tool_cost": 0.05
+        "estimated_tool_cost": 0.053
       }
     },
     "review_decision": null
@@ -2221,18 +2317,18 @@
     "market_fit_score": 3,
     "evidence_list": [
       {
-        "source_title": "狂飙",
+        "source_title": "隐秘的角落",
         "source_type": "电视剧",
-        "content": "讲述了一名一线刑警与黑恶势力代表人物长达二十年的生死较量，通过小人物的命运沉浮展现时代变迁与扫黑除恶的坚定决心。",
-        "relevance_reason": "【精排依据】与《狂飙》对标：题材匹配=1.0，标签重合度=0.25，核心冲突重合=0.03，人设重合=0.05。综合推荐分=0.39。",
-        "score": 0.3898
+        "content": "悬疑推理",
+        "relevance_reason": "对标精品悬疑短剧",
+        "score": 0.95
       },
       {
         "source_title": "流浪地球",
         "source_type": "电影",
-        "content": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。",
-        "relevance_reason": "【精排依据】与《流浪地球》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.02，人设重合=0.07。综合推荐分=0.01。",
-        "score": 0.0114
+        "content": "科幻大片",
+        "relevance_reason": "对标制作成本",
+        "score": 0.7
       }
     ],
     "review_issues": [
@@ -2388,7 +2484,7 @@
     "trace": {
       "events": [
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -2398,13 +2494,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.111186",
+          "timestamp": "2026-06-22T04:01:08.651833",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -2413,14 +2509,14 @@
           "output_summary": "Parsed characters: ['林晚', '沈知行']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.541799992788583,
-          "timestamp": "2026-06-22T03:35:31.111702",
+          "latency_ms": 0.5144999886397272,
+          "timestamp": "2026-06-22T04:01:08.652342",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -2430,13 +2526,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.111702",
+          "timestamp": "2026-06-22T04:01:08.652342",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -2445,14 +2541,14 @@
           "output_summary": "Saved characters in memory for project 'test-wf-project'",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.6847000040579587,
-          "timestamp": "2026-06-22T03:35:31.112824",
+          "latency_ms": 0.42440000106580555,
+          "timestamp": "2026-06-22T04:01:08.652853",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -2462,13 +2558,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.112824",
+          "timestamp": "2026-06-22T04:01:08.653365",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-wf-project",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=4, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.1336999994236976,
+          "timestamp": "2026-06-22T04:01:08.656500",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-7728f5cb",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -2477,14 +2589,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=PASS",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.21739999647252262,
-          "timestamp": "2026-06-22T03:35:31.113349",
+          "latency_ms": 3.619700000854209,
+          "timestamp": "2026-06-22T04:01:08.657014",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -2494,13 +2606,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.113349",
+          "timestamp": "2026-06-22T04:01:08.657014",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -2509,14 +2621,14 @@
           "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.03709999145939946,
-          "timestamp": "2026-06-22T03:35:31.113349",
+          "latency_ms": 0.027900008717551827,
+          "timestamp": "2026-06-22T04:01:08.657014",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -2526,13 +2638,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.113349",
+          "timestamp": "2026-06-22T04:01:08.657014",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -2541,14 +2653,14 @@
           "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.30980000155977905,
-          "timestamp": "2026-06-22T03:35:31.113866",
+          "latency_ms": 0.19219997921027243,
+          "timestamp": "2026-06-22T04:01:08.657525",
           "review_action": "rewrite_analysis",
           "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
           "target_node": "AnalysisNode"
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -2558,13 +2670,29 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.113866",
+          "timestamp": "2026-06-22T04:01:08.657525",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-wf-project",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=4, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.162499985890463,
+          "timestamp": "2026-06-22T04:01:08.661158",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-7728f5cb",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -2573,14 +2701,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.19610000890679657,
-          "timestamp": "2026-06-22T03:35:31.114384",
+          "latency_ms": 3.9074000087566674,
+          "timestamp": "2026-06-22T04:01:08.661158",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -2590,13 +2718,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.114384",
+          "timestamp": "2026-06-22T04:01:08.661678",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -2605,14 +2733,14 @@
           "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.2403999969828874,
-          "timestamp": "2026-06-22T03:35:31.114910",
+          "latency_ms": 0.27469999622553587,
+          "timestamp": "2026-06-22T04:01:08.661678",
           "review_action": "human_check",
           "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
           "target_node": "ReportNode"
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -2622,13 +2750,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.114910",
+          "timestamp": "2026-06-22T04:01:08.661678",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-2f75b5d1",
+          "trace_id": "tr-7728f5cb",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -2637,16 +2765,16 @@
           "output_summary": "Locked final report with decision: HUMAN_CHECK",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.0042000028770416975,
-          "timestamp": "2026-06-22T03:35:31.114910",
+          "latency_ms": 0.0037999998312443495,
+          "timestamp": "2026-06-22T04:01:08.662189",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         }
       ],
       "metrics": {
-        "total_latency_ms": 2.23,
-        "total_tool_calls": 0,
+        "total_latency_ms": 8.96,
+        "total_tool_calls": 2,
         "failed_tool_calls": 0,
         "retry_count": 1,
         "fallback_used": 0,
@@ -2655,7 +2783,7 @@
         "cache_miss_count": 0,
         "cache_hit_rate": 1.0,
         "estimated_llm_calls": 4,
-        "estimated_tool_cost": 0.04
+        "estimated_tool_cost": 0.042
       }
     },
     "review_decision": null
@@ -7628,16 +7756,16 @@
       {
         "source_title": "狂飙",
         "source_type": "电视剧",
-        "content": "讲述了一名一线刑警与黑恶势力代表人物长达二十年的生死较量，通过小人物的命运沉浮展现时代变迁与扫黑除恶的坚定决心。",
-        "relevance_reason": "【精排依据】与《狂飙》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.03，人设重合=0.05。综合推荐分=0.02。",
-        "score": 0.0151
+        "content": "警匪对决",
+        "relevance_reason": "对标走私集团",
+        "score": 0.9
       },
       {
         "source_title": "流浪地球",
         "source_type": "电影",
-        "content": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。",
-        "relevance_reason": "【精排依据】与《流浪地球》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.03，人设重合=0.03。综合推荐分=0.01。",
-        "score": 0.013
+        "content": "科幻大片",
+        "relevance_reason": "对标大投资工业化制作",
+        "score": 0.85
       }
     ],
     "review_issues": [
@@ -7816,7 +7944,7 @@
     "trace": {
       "events": [
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -7826,13 +7954,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.019420",
+          "timestamp": "2026-06-22T04:01:08.534371",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
+          "node_name": null,
+          "agent_name": "ParserAgent",
+          "tool_name": "parser_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "ParserAgent LLM Extract. Title: 破晓猎杀",
+          "output_summary": "SUCCESS. Extracted 3 characters",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.06910000229254365,
+          "timestamp": "2026-06-22T04:01:08.536391",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-dcb3c999",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -7841,14 +7985,14 @@
           "output_summary": "Parsed characters: ['林啸', '赵乾', '苏晴']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.6090999959269539,
-          "timestamp": "2026-06-22T03:35:31.020428",
+          "latency_ms": 2.330999996047467,
+          "timestamp": "2026-06-22T04:01:08.536391",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -7858,13 +8002,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.020428",
+          "timestamp": "2026-06-22T04:01:08.536391",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -7873,14 +8017,14 @@
           "output_summary": "Saved characters in memory for project 'test-observability-id'",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.4228000034345314,
-          "timestamp": "2026-06-22T03:35:31.020428",
+          "latency_ms": 0.3871000080835074,
+          "timestamp": "2026-06-22T04:01:08.537399",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -7890,13 +8034,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.020428",
+          "timestamp": "2026-06-22T04:01:08.537399",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-observability-id",
+          "output_summary": "SUCCESS. Scores: Char=5, Plot=4, Conflict=5, Market=4",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.1336999994236976,
+          "timestamp": "2026-06-22T04:01:08.540421",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-dcb3c999",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -7905,14 +8065,14 @@
           "output_summary": "Draft report score: char=5, plot=4, decision=PASS",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.14000000373926014,
-          "timestamp": "2026-06-22T03:35:31.021505",
+          "latency_ms": 3.2395999878644943,
+          "timestamp": "2026-06-22T04:01:08.540421",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -7922,13 +8082,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.021505",
+          "timestamp": "2026-06-22T04:01:08.540421",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -7937,14 +8097,14 @@
           "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.4341000021668151,
-          "timestamp": "2026-06-22T03:35:31.021505",
+          "latency_ms": 0.4193000204395503,
+          "timestamp": "2026-06-22T04:01:08.541432",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -7954,13 +8114,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.021505",
+          "timestamp": "2026-06-22T04:01:08.541432",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -7969,14 +8129,14 @@
           "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.19350000366102904,
-          "timestamp": "2026-06-22T03:35:31.022507",
+          "latency_ms": 0.18319999799132347,
+          "timestamp": "2026-06-22T04:01:08.541432",
           "review_action": "rewrite_analysis",
           "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
           "target_node": "AnalysisNode"
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -7986,13 +8146,29 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.022507",
+          "timestamp": "2026-06-22T04:01:08.541432",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-observability-id",
+          "output_summary": "SUCCESS. Scores: Char=5, Plot=4, Conflict=5, Market=4",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.13819997548125684,
+          "timestamp": "2026-06-22T04:01:08.545483",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-dcb3c999",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -8001,14 +8177,14 @@
           "output_summary": "Draft report score: char=5, plot=4, decision=REVISE",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.1340000017080456,
-          "timestamp": "2026-06-22T03:35:31.022507",
+          "latency_ms": 3.486800007522106,
+          "timestamp": "2026-06-22T04:01:08.545483",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -8018,13 +8194,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.022507",
+          "timestamp": "2026-06-22T04:01:08.545483",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -8033,14 +8209,14 @@
           "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.22390000231098384,
-          "timestamp": "2026-06-22T03:35:31.022507",
+          "latency_ms": 0.20229999790899456,
+          "timestamp": "2026-06-22T04:01:08.545483",
           "review_action": "human_check",
           "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
           "target_node": "ReportNode"
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -8050,13 +8226,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.022507",
+          "timestamp": "2026-06-22T04:01:08.545483",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-4c86c852",
+          "trace_id": "tr-dcb3c999",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -8065,16 +8241,16 @@
           "output_summary": "Locked final report with decision: HUMAN_CHECK",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.005399997462518513,
-          "timestamp": "2026-06-22T03:35:31.022507",
+          "latency_ms": 0.0035999983083456755,
+          "timestamp": "2026-06-22T04:01:08.545483",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         }
       ],
       "metrics": {
-        "total_latency_ms": 2.16,
-        "total_tool_calls": 0,
+        "total_latency_ms": 10.25,
+        "total_tool_calls": 3,
         "failed_tool_calls": 0,
         "retry_count": 1,
         "fallback_used": 0,
@@ -8083,7 +8259,7 @@
         "cache_miss_count": 3,
         "cache_hit_rate": 0.0,
         "estimated_llm_calls": 5,
-        "estimated_tool_cost": 0.05
+        "estimated_tool_cost": 0.053
       }
     },
     "review_decision": null
@@ -8098,18 +8274,18 @@
     "market_fit_score": 3,
     "evidence_list": [
       {
-        "source_title": "狂飙",
+        "source_title": "隐秘的角落",
         "source_type": "电视剧",
-        "content": "讲述了一名一线刑警与黑恶势力代表人物长达二十年的生死较量，通过小人物的命运沉浮展现时代变迁与扫黑除恶的坚定决心。",
-        "relevance_reason": "【精排依据】与《狂飙》对标：题材匹配=1.0，标签重合度=0.25，核心冲突重合=0.03，人设重合=0.05。综合推荐分=0.39。",
-        "score": 0.3898
+        "content": "悬疑推理",
+        "relevance_reason": "对标精品悬疑短剧",
+        "score": 0.95
       },
       {
         "source_title": "流浪地球",
         "source_type": "电影",
-        "content": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。",
-        "relevance_reason": "【精排依据】与《流浪地球》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.02，人设重合=0.07。综合推荐分=0.01。",
-        "score": 0.0114
+        "content": "科幻大片",
+        "relevance_reason": "对标制作成本",
+        "score": 0.7
       }
     ],
     "review_issues": [],
@@ -8277,7 +8453,7 @@
     "trace": {
       "events": [
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -8287,13 +8463,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.180166",
+          "timestamp": "2026-06-22T04:01:08.729261",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -8302,14 +8478,14 @@
           "output_summary": "Parsed characters: ['林晚', '沈知行']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.6599999906029552,
-          "timestamp": "2026-06-22T03:35:31.181200",
+          "latency_ms": 0.542099995072931,
+          "timestamp": "2026-06-22T04:01:08.730291",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -8319,13 +8495,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.181200",
+          "timestamp": "2026-06-22T04:01:08.730291",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -8334,14 +8510,14 @@
           "output_summary": "Saved characters in memory for project 'test-reflection-wf-project'",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.5544000014197081,
-          "timestamp": "2026-06-22T03:35:31.182238",
+          "latency_ms": 0.45610000961460173,
+          "timestamp": "2026-06-22T04:01:08.730805",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -8351,13 +8527,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.182238",
+          "timestamp": "2026-06-22T04:01:08.730805",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-reflection-wf-project",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=4, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.13689999468624592,
+          "timestamp": "2026-06-22T04:01:08.734502",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-a1c861df",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -8366,14 +8558,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=PASS",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.16490000416524708,
-          "timestamp": "2026-06-22T03:35:31.182238",
+          "latency_ms": 3.770600014831871,
+          "timestamp": "2026-06-22T04:01:08.734502",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -8383,13 +8575,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.182238",
+          "timestamp": "2026-06-22T04:01:08.735017",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -8398,14 +8590,14 @@
           "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.03239999932702631,
-          "timestamp": "2026-06-22T03:35:31.182757",
+          "latency_ms": 0.030700000934302807,
+          "timestamp": "2026-06-22T04:01:08.735017",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -8415,13 +8607,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.182757",
+          "timestamp": "2026-06-22T04:01:08.735017",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -8430,14 +8622,14 @@
           "output_summary": "ReviewAction: rewrite_analysis, Reason: 故意制造死循环, TargetNode: AnalysisNode, RetryCount: 0",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.054100004490464926,
-          "timestamp": "2026-06-22T03:35:31.182757",
+          "latency_ms": 0.04549999721348286,
+          "timestamp": "2026-06-22T04:01:08.735017",
           "review_action": "rewrite_analysis",
           "review_reason": "故意制造死循环",
           "target_node": "AnalysisNode"
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -8447,13 +8639,29 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.182757",
+          "timestamp": "2026-06-22T04:01:08.735017",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-reflection-wf-project",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=4, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.14379998901858926,
+          "timestamp": "2026-06-22T04:01:08.738664",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-a1c861df",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -8462,14 +8670,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.1649999903747812,
-          "timestamp": "2026-06-22T03:35:31.183275",
+          "latency_ms": 3.414700011489913,
+          "timestamp": "2026-06-22T04:01:08.738664",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -8479,13 +8687,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.183275",
+          "timestamp": "2026-06-22T04:01:08.738664",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -8494,14 +8702,14 @@
           "output_summary": "ReviewAction: rewrite_analysis, Reason: 故意制造死循环, TargetNode: AnalysisNode, RetryCount: 1",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.03819999983534217,
-          "timestamp": "2026-06-22T03:35:31.183275",
+          "latency_ms": 0.03329999162815511,
+          "timestamp": "2026-06-22T04:01:08.738664",
           "review_action": "rewrite_analysis",
           "review_reason": "故意制造死循环",
           "target_node": "AnalysisNode"
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -8511,13 +8719,29 @@
           "error_message": null,
           "retry_count": 2,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.183275",
+          "timestamp": "2026-06-22T04:01:08.738664",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-reflection-wf-project",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=4, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.09169999975711107,
+          "timestamp": "2026-06-22T04:01:08.741189",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-a1c861df",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -8526,14 +8750,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
           "error_message": null,
           "retry_count": 2,
-          "latency_ms": 0.15969999367371202,
-          "timestamp": "2026-06-22T03:35:31.183795",
+          "latency_ms": 3.193999989889562,
+          "timestamp": "2026-06-22T04:01:08.741189",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -8543,13 +8767,13 @@
           "error_message": null,
           "retry_count": 2,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.183795",
+          "timestamp": "2026-06-22T04:01:08.741189",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -8558,14 +8782,14 @@
           "output_summary": "ReviewAction: rewrite_analysis, Reason: 故意制造死循环, TargetNode: ReportNode, RetryCount: 2",
           "error_message": null,
           "retry_count": 2,
-          "latency_ms": 0.052499992307275534,
-          "timestamp": "2026-06-22T03:35:31.183795",
+          "latency_ms": 0.029999995604157448,
+          "timestamp": "2026-06-22T04:01:08.741189",
           "review_action": "rewrite_analysis",
           "review_reason": "故意制造死循环",
           "target_node": "ReportNode"
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -8575,13 +8799,13 @@
           "error_message": null,
           "retry_count": 2,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:31.183795",
+          "timestamp": "2026-06-22T04:01:08.741189",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-f1ac33e5",
+          "trace_id": "tr-a1c861df",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -8590,16 +8814,16 @@
           "output_summary": "Locked final report with decision: REVISE",
           "error_message": null,
           "retry_count": 2,
-          "latency_ms": 0.0014999968698248267,
-          "timestamp": "2026-06-22T03:35:31.183795",
+          "latency_ms": 0.0022999884095042944,
+          "timestamp": "2026-06-22T04:01:08.742696",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         }
       ],
       "metrics": {
-        "total_latency_ms": 1.88,
-        "total_tool_calls": 0,
+        "total_latency_ms": 11.52,
+        "total_tool_calls": 3,
         "failed_tool_calls": 0,
         "retry_count": 2,
         "fallback_used": 0,
@@ -8608,7 +8832,7 @@
         "cache_miss_count": 0,
         "cache_hit_rate": 1.0,
         "estimated_llm_calls": 6,
-        "estimated_tool_cost": 0.06
+        "estimated_tool_cost": 0.063
       }
     },
     "review_decision": null
@@ -8623,18 +8847,18 @@
     "market_fit_score": 4,
     "evidence_list": [
       {
-        "source_title": "隐秘的角落",
+        "source_title": "狂飙",
         "source_type": "电视剧",
-        "content": "三个小孩在景区玩耍时无意间记录下了一场谋杀，从而展开了一场关于人性、罪恶与救赎的角力。",
-        "relevance_reason": "【精排依据】与《隐秘的角落》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.04，人设重合=0.04。综合推荐分=0.02。",
-        "score": 0.015
+        "content": "警匪对决",
+        "relevance_reason": "对标走私集团",
+        "score": 0.9
       },
       {
         "source_title": "流浪地球",
         "source_type": "电影",
-        "content": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。",
-        "relevance_reason": "【精排依据】与《流浪地球》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.03，人设重合=0.02。综合推荐分=0.01。",
-        "score": 0.0119
+        "content": "科幻大片",
+        "relevance_reason": "对标大投资工业化制作",
+        "score": 0.85
       }
     ],
     "review_issues": [
@@ -8813,7 +9037,7 @@
     "trace": {
       "events": [
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -8823,13 +9047,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.949632",
+          "timestamp": "2026-06-22T04:01:08.461968",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
+          "node_name": null,
+          "agent_name": "ParserAgent",
+          "tool_name": "parser_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "ParserAgent LLM Extract. Title: 破晓行动",
+          "output_summary": "SUCCESS. Extracted 3 characters",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.07310000364668667,
+          "timestamp": "2026-06-22T04:01:08.463523",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-2be3bf38",
           "node_name": null,
           "agent_name": "ParserAgent",
           "tool_name": "memory_write_tool",
@@ -8838,14 +9078,14 @@
           "output_summary": "success=True message='项目角色人设统一配置成功存档。'",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 1.2035999970976263,
-          "timestamp": "2026-06-22T03:35:30.951192",
+          "latency_ms": 1.0717999830376357,
+          "timestamp": "2026-06-22T04:01:08.465069",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -8854,14 +9094,14 @@
           "output_summary": "Parsed characters: ['林啸', '赵乾', '苏晴']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 1.476600009482354,
-          "timestamp": "2026-06-22T03:35:30.951192",
+          "latency_ms": 3.047100006369874,
+          "timestamp": "2026-06-22T04:01:08.465069",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -8871,13 +9111,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.951192",
+          "timestamp": "2026-06-22T04:01:08.465069",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": null,
           "agent_name": "Workflow",
           "tool_name": "memory_write_tool",
@@ -8886,14 +9126,14 @@
           "output_summary": "success=True message='项目角色人设统一配置成功存档。'",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 1.2753000046359375,
-          "timestamp": "2026-06-22T03:35:30.952763",
+          "latency_ms": 0.9563000057823956,
+          "timestamp": "2026-06-22T04:01:08.466106",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -8902,14 +9142,14 @@
           "output_summary": "Saved characters in memory for project 'trace-test-rerank-tool-id'",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 1.4432000025408342,
-          "timestamp": "2026-06-22T03:35:30.952763",
+          "latency_ms": 1.0664000001270324,
+          "timestamp": "2026-06-22T04:01:08.466106",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -8919,13 +9159,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.952763",
+          "timestamp": "2026-06-22T04:01:08.466623",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": null,
           "agent_name": "AnalysisAgent",
           "tool_name": "memory_read_tool",
@@ -8934,14 +9174,30 @@
           "output_summary": "project_report=None characters=[CharacterProfile(name='林啸', role=\"特工 (代号'风影')\", personality=['冷静', '机警', '背负旧创'], motivation='查明灭门真相，彻底铲除赵乾的跨国走私势力', r",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.258700005360879,
-          "timestamp": "2026-06-22T03:35:30.953292",
+          "latency_ms": 0.3068000078201294,
+          "timestamp": "2026-06-22T04:01:08.469718",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: trace-test-rerank-tool-id",
+          "output_summary": "SUCCESS. Scores: Char=5, Plot=4, Conflict=5, Market=4",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.13619998935610056,
+          "timestamp": "2026-06-22T04:01:08.470319",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-2be3bf38",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -8950,14 +9206,14 @@
           "output_summary": "Draft report score: char=5, plot=4, decision=PASS",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.45259999751579016,
-          "timestamp": "2026-06-22T03:35:30.953292",
+          "latency_ms": 3.9080000133253634,
+          "timestamp": "2026-06-22T04:01:08.470319",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -8967,13 +9223,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.953292",
+          "timestamp": "2026-06-22T04:01:08.470319",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": null,
           "agent_name": "RetrievalAgent",
           "tool_name": "similar_work_search_tool",
@@ -8982,14 +9238,14 @@
           "output_summary": "evidences=[RetrievalEvidence(source_title='流浪地球', source_type='电影', content='太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。', relevance_rea",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.3522000042721629,
-          "timestamp": "2026-06-22T03:35:30.953818",
+          "latency_ms": 0.3549999964889139,
+          "timestamp": "2026-06-22T04:01:08.470838",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": null,
           "agent_name": "RetrievalAgent",
           "tool_name": "rerank_tool",
@@ -8998,14 +9254,14 @@
           "output_summary": "evidences=[RetrievalEvidence(source_title='隐秘的角落', source_type='电视剧', content='三个小孩在景区玩耍时无意间记录下了一场谋杀，从而展开了一场关于人性、罪恶与救赎的角力。', relevance_reason='【精排依据】与",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.1281000004382804,
-          "timestamp": "2026-06-22T03:35:30.954335",
+          "latency_ms": 0.12829998740926385,
+          "timestamp": "2026-06-22T04:01:08.471358",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -9014,14 +9270,14 @@
           "output_summary": "Retrieved 2 evidences: ['隐秘的角落', '流浪地球']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.7584999984828755,
-          "timestamp": "2026-06-22T03:35:30.954335",
+          "latency_ms": 0.7576999778393656,
+          "timestamp": "2026-06-22T04:01:08.471358",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -9031,13 +9287,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.954335",
+          "timestamp": "2026-06-22T04:01:08.471358",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": null,
           "agent_name": "ReviewAgent",
           "tool_name": "memory_read_tool",
@@ -9046,14 +9302,14 @@
           "output_summary": "project_report=None characters=[CharacterProfile(name='林啸', role=\"特工 (代号'风影')\", personality=['冷静', '机警', '背负旧创'], motivation='查明灭门真相，彻底铲除赵乾的跨国走私势力', r",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.22879999596625566,
-          "timestamp": "2026-06-22T03:35:30.954852",
+          "latency_ms": 0.25969999842345715,
+          "timestamp": "2026-06-22T04:01:08.471878",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": null,
           "agent_name": "ReviewAgent",
           "tool_name": "review_check_tool",
@@ -9062,14 +9318,14 @@
           "output_summary": "issues=[ReviewIssue(issue_type='weak_suggestion', severity='MEDIUM', claim=\"修改建议: '直接开拍。'\", reason='该修改建议过于空泛笼统（如仅给出‘直接开机’、‘直接放弃’或简单的口号式建议），缺乏可落地的具体集数",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.5134999955771491,
-          "timestamp": "2026-06-22T03:35:30.954852",
+          "latency_ms": 0.5704000068362802,
+          "timestamp": "2026-06-22T04:01:08.471878",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -9078,14 +9334,14 @@
           "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.636199998552911,
-          "timestamp": "2026-06-22T03:35:30.954852",
+          "latency_ms": 0.7013999857008457,
+          "timestamp": "2026-06-22T04:01:08.471878",
           "review_action": "rewrite_analysis",
           "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
           "target_node": "AnalysisNode"
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -9095,13 +9351,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.955363",
+          "timestamp": "2026-06-22T04:01:08.471878",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": null,
           "agent_name": "AnalysisAgent",
           "tool_name": "memory_read_tool",
@@ -9110,14 +9366,30 @@
           "output_summary": "project_report=None characters=[CharacterProfile(name='林啸', role=\"特工 (代号'风影')\", personality=['冷静', '机警', '背负旧创'], motivation='查明灭门真相，彻底铲除赵乾的跨国走私势力', r",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.21159999596420676,
-          "timestamp": "2026-06-22T03:35:30.955363",
+          "latency_ms": 0.43360001291148365,
+          "timestamp": "2026-06-22T04:01:08.475930",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: trace-test-rerank-tool-id",
+          "output_summary": "SUCCESS. Scores: Char=5, Plot=4, Conflict=5, Market=4",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.25309997727163136,
+          "timestamp": "2026-06-22T04:01:08.475930",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-2be3bf38",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -9126,14 +9398,14 @@
           "output_summary": "Draft report score: char=5, plot=4, decision=REVISE",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.3598999901441857,
-          "timestamp": "2026-06-22T03:35:30.955363",
+          "latency_ms": 4.4584000133909285,
+          "timestamp": "2026-06-22T04:01:08.476939",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -9143,13 +9415,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.955877",
+          "timestamp": "2026-06-22T04:01:08.476939",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": null,
           "agent_name": "ReviewAgent",
           "tool_name": "memory_read_tool",
@@ -9158,14 +9430,14 @@
           "output_summary": "project_report=None characters=[CharacterProfile(name='林啸', role=\"特工 (代号'风影')\", personality=['冷静', '机警', '背负旧创'], motivation='查明灭门真相，彻底铲除赵乾的跨国走私势力', r",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.1981000095838681,
-          "timestamp": "2026-06-22T03:35:30.955877",
+          "latency_ms": 0.3237000200897455,
+          "timestamp": "2026-06-22T04:01:08.476939",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": null,
           "agent_name": "ReviewAgent",
           "tool_name": "review_check_tool",
@@ -9174,14 +9446,14 @@
           "output_summary": "issues=[ReviewIssue(issue_type='high_risk', severity='HIGH', claim=\"报告或修改建议中涉及了有关 '血腥暴力' 的敏感表述\", reason=\"剧本评估内容触发高危审查红线敏感词 '血腥暴力'，可能面临监管合规或禁映下架风险。\", s",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.5355999892344698,
-          "timestamp": "2026-06-22T03:35:30.956388",
+          "latency_ms": 0.680500001180917,
+          "timestamp": "2026-06-22T04:01:08.476939",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -9190,14 +9462,14 @@
           "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.7555000047432259,
-          "timestamp": "2026-06-22T03:35:30.956388",
+          "latency_ms": 0.8098999969661236,
+          "timestamp": "2026-06-22T04:01:08.476939",
           "review_action": "human_check",
           "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
           "target_node": "ReportNode"
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -9207,13 +9479,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.956388",
+          "timestamp": "2026-06-22T04:01:08.477954",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-99c5c3f4",
+          "trace_id": "tr-2be3bf38",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -9222,16 +9494,16 @@
           "output_summary": "Locked final report with decision: HUMAN_CHECK",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.005199995939619839,
-          "timestamp": "2026-06-22T03:35:30.956388",
+          "latency_ms": 0.0045000051613897085,
+          "timestamp": "2026-06-22T04:01:08.477954",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         }
       ],
       "metrics": {
-        "total_latency_ms": 5.89,
-        "total_tool_calls": 10,
+        "total_latency_ms": 14.75,
+        "total_tool_calls": 13,
         "failed_tool_calls": 0,
         "retry_count": 1,
         "fallback_used": 0,
@@ -9240,7 +9512,7 @@
         "cache_miss_count": 3,
         "cache_hit_rate": 0.0,
         "estimated_llm_calls": 5,
-        "estimated_tool_cost": 0.06
+        "estimated_tool_cost": 0.063
       }
     },
     "review_decision": null
@@ -9272,18 +9544,18 @@
     "market_fit_score": 3,
     "evidence_list": [
       {
-        "source_title": "狂飙",
+        "source_title": "隐秘的角落",
         "source_type": "电视剧",
-        "content": "讲述了一名一线刑警与黑恶势力代表人物长达二十年的生死较量，通过小人物的命运沉浮展现时代变迁与扫黑除恶的坚定决心。",
-        "relevance_reason": "【精排依据】与《狂飙》对标：题材匹配=1.0，标签重合度=0.25，核心冲突重合=0.00，人设重合=0.02。综合推荐分=0.38。",
-        "score": 0.377
+        "content": "悬疑推理",
+        "relevance_reason": "对标精品悬疑短剧",
+        "score": 0.95
       },
       {
         "source_title": "流浪地球",
         "source_type": "电影",
-        "content": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。",
-        "relevance_reason": "【精排依据】与《流浪地球》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.00，人设重合=0.00。综合推荐分=0.00。",
-        "score": 0.0
+        "content": "科幻大片",
+        "relevance_reason": "对标制作成本",
+        "score": 0.7
       }
     ],
     "review_issues": [
@@ -9410,6 +9682,7 @@
           "不能暴露真实身份与真实目的"
         ],
         "evidence_spans": [
+          "剧本标题: 林晚复仇记",
           "女主林晚，男主沈知行，契约婚姻复仇。"
         ]
       },
@@ -9439,7 +9712,7 @@
     "trace": {
       "events": [
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -9449,13 +9722,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.895607",
+          "timestamp": "2026-06-22T04:01:08.383390",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -9464,14 +9737,14 @@
           "output_summary": "Parsed characters: ['林晚', '沈知行']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.9137000015471131,
-          "timestamp": "2026-06-22T03:35:30.896616",
+          "latency_ms": 0.8690000104252249,
+          "timestamp": "2026-06-22T04:01:08.384396",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -9481,13 +9754,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.896616",
+          "timestamp": "2026-06-22T04:01:08.384396",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -9496,14 +9769,14 @@
           "output_summary": "Saved characters in memory for project 'proj-replay-test'",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.8951999916462228,
-          "timestamp": "2026-06-22T03:35:30.897618",
+          "latency_ms": 0.7827000226825476,
+          "timestamp": "2026-06-22T04:01:08.385405",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -9513,13 +9786,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.897618",
+          "timestamp": "2026-06-22T04:01:08.385405",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: proj-replay-test",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=4, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.1188000023830682,
+          "timestamp": "2026-06-22T04:01:08.388593",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-8ddb6c47",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -9528,14 +9817,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=PASS",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.20650000078603625,
-          "timestamp": "2026-06-22T03:35:30.897618",
+          "latency_ms": 3.278199990745634,
+          "timestamp": "2026-06-22T04:01:08.388593",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -9545,13 +9834,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.897618",
+          "timestamp": "2026-06-22T04:01:08.389598",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -9560,14 +9849,14 @@
           "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.030700000934302807,
-          "timestamp": "2026-06-22T03:35:30.897618",
+          "latency_ms": 0.020199979189783335,
+          "timestamp": "2026-06-22T04:01:08.389598",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -9577,13 +9866,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.898818",
+          "timestamp": "2026-06-22T04:01:08.389598",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -9592,14 +9881,14 @@
           "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.24979999579954892,
-          "timestamp": "2026-06-22T03:35:30.898818",
+          "latency_ms": 0.22149999858811498,
+          "timestamp": "2026-06-22T04:01:08.389598",
           "review_action": "rewrite_analysis",
           "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
           "target_node": "AnalysisNode"
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -9609,13 +9898,29 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.898818",
+          "timestamp": "2026-06-22T04:01:08.389598",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: proj-replay-test",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=4, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.1066999975591898,
+          "timestamp": "2026-06-22T04:01:08.392611",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-8ddb6c47",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -9624,14 +9929,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.17939999816007912,
-          "timestamp": "2026-06-22T03:35:30.898818",
+          "latency_ms": 3.17799998447299,
+          "timestamp": "2026-06-22T04:01:08.392611",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -9641,13 +9946,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.898818",
+          "timestamp": "2026-06-22T04:01:08.392611",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -9656,14 +9961,14 @@
           "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.23450001026503742,
-          "timestamp": "2026-06-22T03:35:30.899830",
+          "latency_ms": 0.38499999209307134,
+          "timestamp": "2026-06-22T04:01:08.393623",
           "review_action": "human_check",
           "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
           "target_node": "ReportNode"
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -9673,13 +9978,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.899830",
+          "timestamp": "2026-06-22T04:01:08.393623",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-6c7c2028",
+          "trace_id": "tr-8ddb6c47",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -9688,16 +9993,16 @@
           "output_summary": "Locked final report with decision: HUMAN_CHECK",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.0035999983083456755,
-          "timestamp": "2026-06-22T03:35:30.899830",
+          "latency_ms": 0.0041000021155923605,
+          "timestamp": "2026-06-22T04:01:08.393623",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         }
       ],
       "metrics": {
-        "total_latency_ms": 2.71,
-        "total_tool_calls": 0,
+        "total_latency_ms": 8.74,
+        "total_tool_calls": 2,
         "failed_tool_calls": 0,
         "retry_count": 1,
         "fallback_used": 0,
@@ -9706,7 +10011,7 @@
         "cache_miss_count": 0,
         "cache_hit_rate": 1.0,
         "estimated_llm_calls": 4,
-        "estimated_tool_cost": 0.04
+        "estimated_tool_cost": 0.042
       }
     },
     "review_decision": null
@@ -9714,7 +10019,7 @@
   "test-workflow-cache": {
     "project_id": "test-workflow-cache",
     "title": "双重对决",
-    "executive_summary": "【执行摘要评分报告 - 茶馆商战修正版】\n1. 角色人设维度: 4分。理由：陈默焦虑症天才投资人人设较丰满，苏瑶温婉坚韧，李建国商业巨鳄现实冷血，角色对比明显。\n2. 剧情逻辑维度: 3分。理由：陈默以法律和舆论杠杆阻拦强拆逻辑合理，但商战收购对决过于简单粗暴。对标《狂飙》中商政关系的深度展现，本剧商战专业性需提高。\n3. 冲突密度维度: 3分。理由：茶文化坚守与资本改建写字楼之间的戏剧冲突具现实探讨意义。\n4. 市场适应度维度: 3分。理由：迎合国潮非遗受众与都市商战受众，题材融合有圈层爆款机会。\n建议重写核心金融反制细节，强化专业金融质感后通过立项。",
+    "executive_summary": "【执行摘要评分报告 - 茶馆商战修正版】\n1. 角色人设维度: 4分。理由：陈默焦虑症天才投资人人设较丰满，苏瑶温婉坚韧，李建国商业巨鳄现实冷血，角色对比明显。\n2. 剧情逻辑维度: 3分。理由：陈默以法律和舆论杠杆阻拦强拆逻辑合理，但商战收购对决过于简单粗暴。对标《狂飙》中商政关系的深度展现，本剧商战专业性需提高。\n3. 冲突密度维度: 3分。理由：茶文化坚守与资本改建写字楼之间的戏剧冲突具现实探讨意义。\n4. 市场适应度维度: 3分。理由：迎合国潮非遗受众与都市商战受众，题材融合有圈层爆款机会。\n建议该项目在针对修改建议进行二稿打磨后予以立项通过。",
     "character_score": 4,
     "plot_logic_score": 3,
     "conflict_density_score": 3,
@@ -9723,16 +10028,16 @@
       {
         "source_title": "狂飙",
         "source_type": "电视剧",
-        "content": "讲述了一名一线刑警与黑恶势力代表人物长达二十年的生死较量，通过小人物的命运沉浮展现时代变迁与扫黑除恶的坚定决心。",
-        "relevance_reason": "【精排依据】与《狂飙》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.05，人设重合=0.04。综合推荐分=0.02。",
-        "score": 0.0199
+        "content": "警匪对赌",
+        "relevance_reason": "对标强拆博弈",
+        "score": 0.8
       },
       {
         "source_title": "流浪地球",
         "source_type": "电影",
-        "content": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。",
-        "relevance_reason": "【精排依据】与《流浪地球》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.03，人设重合=0.05。综合推荐分=0.02。",
-        "score": 0.0157
+        "content": "科幻",
+        "relevance_reason": "对标大投资",
+        "score": 0.6
       }
     ],
     "review_issues": [],
@@ -9912,7 +10217,7 @@
     "trace": {
       "events": [
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -9922,13 +10227,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.799977",
+          "timestamp": "2026-06-22T04:01:08.289360",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "ParserNode",
           "agent_name": "ParserAgent",
           "tool_name": null,
@@ -9937,14 +10242,14 @@
           "output_summary": "Parsed characters: ['陈默', '苏瑶', '李建国']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 1.0159000084968284,
-          "timestamp": "2026-06-22T03:35:30.801002",
+          "latency_ms": 0.853799981996417,
+          "timestamp": "2026-06-22T04:01:08.290368",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -9954,13 +10259,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.801002",
+          "timestamp": "2026-06-22T04:01:08.290368",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "MemoryNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -9969,14 +10274,14 @@
           "output_summary": "Saved characters in memory for project 'test-workflow-cache'",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.8638999861432239,
-          "timestamp": "2026-06-22T03:35:30.802005",
+          "latency_ms": 0.768599973525852,
+          "timestamp": "2026-06-22T04:01:08.291376",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -9986,13 +10291,29 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.802005",
+          "timestamp": "2026-06-22T04:01:08.291376",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-workflow-cache",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=3, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.146100006531924,
+          "timestamp": "2026-06-22T04:01:08.295406",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0fbf318b",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -10001,14 +10322,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=REJECT",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.2023999986704439,
-          "timestamp": "2026-06-22T03:35:30.802005",
+          "latency_ms": 3.634799999417737,
+          "timestamp": "2026-06-22T04:01:08.295406",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -10018,13 +10339,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.802005",
+          "timestamp": "2026-06-22T04:01:08.295406",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -10033,14 +10354,14 @@
           "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.03029999788850546,
-          "timestamp": "2026-06-22T03:35:30.802005",
+          "latency_ms": 0.030099996365606785,
+          "timestamp": "2026-06-22T04:01:08.295406",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -10050,13 +10371,13 @@
           "error_message": null,
           "retry_count": 0,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.803014",
+          "timestamp": "2026-06-22T04:01:08.295406",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -10065,14 +10386,14 @@
           "output_summary": "ReviewAction: retrieve_more, Reason: 检测到严重的对标引用不足或题材证据错配，必须重新对标召回数据。, TargetNode: RetrievalNode, RetryCount: 0",
           "error_message": null,
           "retry_count": 0,
-          "latency_ms": 0.24290000146720558,
-          "timestamp": "2026-06-22T03:35:30.803014",
+          "latency_ms": 0.2271000121254474,
+          "timestamp": "2026-06-22T04:01:08.295406",
           "review_action": "retrieve_more",
           "review_reason": "检测到严重的对标引用不足或题材证据错配，必须重新对标召回数据。",
           "target_node": "RetrievalNode"
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -10082,13 +10403,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.803014",
+          "timestamp": "2026-06-22T04:01:08.295406",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "RetrievalNode",
           "agent_name": "RetrievalAgent",
           "tool_name": null,
@@ -10097,14 +10418,14 @@
           "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.017300000763498247,
-          "timestamp": "2026-06-22T03:35:30.803014",
+          "latency_ms": 0.014599994756281376,
+          "timestamp": "2026-06-22T04:01:08.295406",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -10114,13 +10435,29 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.803014",
+          "timestamp": "2026-06-22T04:01:08.296413",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "analysis_llm_call",
+          "status": "SUCCESS",
+          "input_summary": "AnalysisAgent LLM Evaluate. Project ID: test-workflow-cache",
+          "output_summary": "SUCCESS. Scores: Char=4, Plot=3, Conflict=3, Market=3",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.11339999036863446,
+          "timestamp": "2026-06-22T04:01:08.299433",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0fbf318b",
           "node_name": "AnalysisNode",
           "agent_name": "AnalysisAgent",
           "tool_name": null,
@@ -10129,14 +10466,14 @@
           "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.1723000023048371,
-          "timestamp": "2026-06-22T03:35:30.803014",
+          "latency_ms": 3.2479999936185777,
+          "timestamp": "2026-06-22T04:01:08.299433",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -10146,13 +10483,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.803014",
+          "timestamp": "2026-06-22T04:01:08.299433",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "ReviewNode",
           "agent_name": "ReviewAgent",
           "tool_name": null,
@@ -10161,14 +10498,14 @@
           "output_summary": "ReviewAction: pass, Reason: 报告通过了全部合规及事实一致性审查。, TargetNode: ReportNode, RetryCount: 1",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.2758999908110127,
-          "timestamp": "2026-06-22T03:35:30.804018",
+          "latency_ms": 0.23479998344555497,
+          "timestamp": "2026-06-22T04:01:08.299433",
           "review_action": "pass",
           "review_reason": "报告通过了全部合规及事实一致性审查。",
           "target_node": "ReportNode"
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -10178,13 +10515,13 @@
           "error_message": null,
           "retry_count": 1,
           "latency_ms": 0.0,
-          "timestamp": "2026-06-22T03:35:30.804018",
+          "timestamp": "2026-06-22T04:01:08.299433",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         },
         {
-          "trace_id": "tr-a1e9215a",
+          "trace_id": "tr-0fbf318b",
           "node_name": "ReportNode",
           "agent_name": "Workflow",
           "tool_name": null,
@@ -10193,16 +10530,16 @@
           "output_summary": "Locked final report with decision: REVISE",
           "error_message": null,
           "retry_count": 1,
-          "latency_ms": 0.0014999968698248267,
-          "timestamp": "2026-06-22T03:35:30.804018",
+          "latency_ms": 0.001300009898841381,
+          "timestamp": "2026-06-22T04:01:08.299433",
           "review_action": null,
           "review_reason": null,
           "target_node": null
         }
       ],
       "metrics": {
-        "total_latency_ms": 2.82,
-        "total_tool_calls": 0,
+        "total_latency_ms": 9.01,
+        "total_tool_calls": 2,
         "failed_tool_calls": 0,
         "retry_count": 1,
         "fallback_used": 0,
@@ -10211,7 +10548,7 @@
         "cache_miss_count": 0,
         "cache_hit_rate": 1.0,
         "estimated_llm_calls": 4,
-        "estimated_tool_cost": 0.04
+        "estimated_tool_cost": 0.042
       }
     },
     "review_decision": null
