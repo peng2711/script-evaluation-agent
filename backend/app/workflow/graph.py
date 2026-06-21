@@ -54,6 +54,11 @@ class ScriptEvaluationWorkflow:
                 decision=final_report.decision_suggestion,
                 executive_summary=final_report.executive_summary
             )
+            # 新增：按 project_id 进行整个 FinalReport 对象的归档保存
+            global_project_memory.add_project_report(
+                project_id=final_report.project_id,
+                report=final_report
+            )
 
         return final_report
 
