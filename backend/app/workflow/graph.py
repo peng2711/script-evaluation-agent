@@ -34,10 +34,23 @@ class ScriptEvaluationWorkflow:
             # 运行质检 Review Agent
             state = review_agent.execute(state)
             
-            # 如果审查通过，或者达到了最大迭代次数，就跳出循环
-            if state.final_report is not None:
+            # 如果不需要重写报告（质检通过），则直接锁定最终报告并退出循环
+            if not state.should_rewrite_report:
+                state.final_report = state.draft_report
                 break
                 
+            # 如果已达最大迭代次数，固化当前草稿并结束
+            if state.iterations == self.max_iterations:
+                state.final_report = state.draft_report
+                break
+
+            # 如果审查认为需要补充获取更多相似作品作为证据
+            if state.should_retrieve_more:
+                state.history_logs.append(
+                    f"[{datetime.datetime.now().isoformat()}] 质检提示需补充检索数据，重新运行 Retrieval Agent 增补证据。"
+                )
+                state = retrieval_agent.execute(state)
+
             state.iterations += 1
             state.history_logs.append(
                 f"[{datetime.datetime.now().isoformat()}] 报告未通过质检。启动第 {state.iterations} 次优化修正迭代。"

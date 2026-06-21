@@ -12,3 +12,5 @@ class AgentState(BaseModel):
     final_report: Optional[FinalReport] = Field(None, description="经过审核最终固化的评估报告")
     iterations: int = Field(default=0, description="迭代审核整改次数计数器")
     history_logs: List[str] = Field(default_factory=list, description="记录各个 Agent 执行轨迹的步骤与时间戳日志")
+    should_retrieve_more: bool = Field(default=False, description="审查决定：是否需要获取更多参考证据")
+    should_rewrite_report: bool = Field(default=False, description="审查决定：是否需要重新撰写/修正评估报告")
