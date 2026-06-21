@@ -4,8 +4,12 @@
     "title": "破晓猎杀",
     "genre": "悬疑",
     "raw_text": "在边境小镇上，代号'风影'的特工林啸正在秘密追查跨国财阀首脑赵乾的军火走私线索。林啸潜入仓库搜集证据，同时面临着苏晴（天才黑客）的技术配合与敌人疯狂的包围网。故事充斥着极端的创伤回忆与爆炸场面。",
-    "target_audience": "男性，20-45岁，动作悬疑爱好者",
-    "user_preferences": ["偏好强情节动作戏", "防雷点：避免无脑爽文套路"]
+    "target_audience": "男性动作悬疑爱好者",
+    "user_preferences": ["偏好强情节动作戏"],
+    "gold_characters": ["林啸", "赵乾", "苏晴"],
+    "gold_core_conflict": "特工林啸在黑客苏晴的技术协助下潜入集装箱码头起获证据，对抗势力庞大、伪善奸诈的走私集团首脑赵乾。",
+    "gold_risk_points": ["预算爆仓风险"],
+    "expected_evidence_keywords": ["流浪地球", "隐秘的角落"]
   },
   {
     "project_id": "proj-902",
@@ -13,6 +17,106 @@
     "genre": "都市",
     "raw_text": "天才青年投资人陈默在经历并购惨败后，偶然结识了非遗茶文化继承人苏瑶。李建国强拆苏瑶的百年茶馆，陈默决定出手相助，通过金融杠杆与商业博弈，对抗强拆与强行收购，同时也在此过程中寻回了内心的宁静。",
     "target_audience": "泛受众，偏好非遗国潮与励志成长",
-    "user_preferences": ["偏好情感治愈", "要求商战细节专业合理"]
+    "user_preferences": ["要求商战细节专业合理"],
+    "gold_characters": ["陈默", "苏瑶", "李建国"],
+    "gold_core_conflict": "陈默用高超的资本防御技巧协助苏瑶，对抗冷血地产巨鳄李建国强拆百年茶馆招牌的强权行径。",
+    "gold_risk_points": ["题材受众断层"],
+    "expected_evidence_keywords": ["狂飙"]
+  },
+  {
+    "project_id": "proj-903",
+    "title": "林晚的复仇誓言",
+    "genre": "都市",
+    "raw_text": "女主角林晚为了查清父亲死亡真相复仇，与男主角沈氏集团总裁沈知行达成协议，两人进行契约婚姻，在商战与豪门争斗中联手应对背后的杀父仇人。",
+    "target_audience": "都市言情受众",
+    "user_preferences": ["偏好情感博弈"],
+    "gold_characters": ["林晚", "沈知行"],
+    "gold_core_conflict": "林晚为了查清父亲死亡真相进行复仇，与沈知行达成契约婚姻，共同应对幕后势力。",
+    "gold_risk_points": ["政策审查风险"],
+    "expected_evidence_keywords": ["隐秘的角落", "狂飙"]
+  },
+  {
+    "project_id": "proj-904",
+    "title": "猎杀赵乾",
+    "genre": "悬疑",
+    "raw_text": "故事发生在西南边境。特工林啸秘密潜入。赵乾作为走私集团老大进行残酷反抗。女黑客苏晴侵入对方网络提供战术支持，爆破冲突剧烈发生。",
+    "target_audience": "男频硬核动作悬疑爱好者",
+    "user_preferences": ["偏好紧凑节奏"],
+    "gold_characters": ["林啸", "赵乾", "苏晴"],
+    "gold_core_conflict": "特工林啸在黑客苏晴的技术协助下潜入集装箱码头起获证据，对抗势力庞大、伪善奸诈的走私集团首脑赵乾。",
+    "gold_risk_points": ["预算爆仓风险"],
+    "expected_evidence_keywords": ["流浪地球", "隐秘的角落"]
+  },
+  {
+    "project_id": "proj-905",
+    "title": "陈默的商业狙击",
+    "genre": "都市",
+    "raw_text": "投资人陈默重回商界，帮助老街百年茶馆传人苏瑶制定金融防御。地产大亨李建国雇用商业间谍打压，双方进行股权对赌，茶馆面临强拆生死关头。",
+    "target_audience": "商战职场剧爱好者",
+    "user_preferences": ["商业逻辑严密"],
+    "gold_characters": ["陈默", "苏瑶", "李建国"],
+    "gold_core_conflict": "陈默用高超的资本防御技巧协助苏瑶，对抗冷血地产巨鳄李建国强拆百年茶馆招牌的强权行径。",
+    "gold_risk_points": ["题材受众断层"],
+    "expected_evidence_keywords": ["狂飙"]
+  },
+  {
+    "project_id": "proj-906",
+    "title": "林晚沈知行的契约婚姻",
+    "genre": "都市",
+    "raw_text": "女主林晚为了查清父亲死亡真相复仇，与豪门总裁沈知行契约假结婚。两人各自隐藏底牌在沈家老宅步步为营，查明当年商会火灾的真相。",
+    "target_audience": "豪门恩怨受众",
+    "user_preferences": ["偏好暗线悬疑"],
+    "gold_characters": ["林晚", "沈知行"],
+    "gold_core_conflict": "林晚为了查清父亲死亡真相进行复仇，与沈知行达成契约婚姻，共同应对幕后势力。",
+    "gold_risk_points": ["政策审查风险"],
+    "expected_evidence_keywords": ["隐秘的角落", "狂飙"]
+  },
+  {
+    "project_id": "proj-907",
+    "title": "特工风影的最终行动",
+    "genre": "悬疑",
+    "raw_text": "风影林啸深入虎穴，要在赵乾逃亡公海前将其逮捕。苏晴黑客技术瘫痪了敌方的导弹控制系统，边境突发大规模枪战爆炸，剧情极其惊险刺激。",
+    "target_audience": "军旅动作片受众",
+    "user_preferences": ["要求大场面制作"],
+    "gold_characters": ["林啸", "赵乾", "苏晴"],
+    "gold_core_conflict": "特工林啸在黑客苏晴的技术协助下潜入集装箱码头起获证据，对抗势力庞大、伪善奸诈的走私集团首脑赵乾。",
+    "gold_risk_points": ["预算爆仓风险"],
+    "expected_evidence_keywords": ["流浪地球", "隐秘的角落"]
+  },
+  {
+    "project_id": "proj-908",
+    "title": "茶馆资本风云",
+    "genre": "都市",
+    "raw_text": "李建国的拆迁大队开进老街茶馆，苏瑶誓死守卫招牌。陈默携带百亿基金入市做多李建国旗下地产上市公司，逼迫李建国放弃强占茶馆地契。",
+    "target_audience": "现代都市金融题材受众",
+    "user_preferences": ["偏好国潮非遗"],
+    "gold_characters": ["陈默", "苏瑶", "李建国"],
+    "gold_core_conflict": "陈默用高超的资本防御技巧协助苏瑶，对抗冷血地产巨鳄李建国强拆百年茶馆招牌的强权行径。",
+    "gold_risk_points": ["题材受众断层"],
+    "expected_evidence_keywords": ["狂飙"]
+  },
+  {
+    "project_id": "proj-909",
+    "title": "契约娇妻的复仇博弈",
+    "genre": "都市",
+    "raw_text": "林晚假借假结婚掩护，秘密在沈知行总裁书房搜索关于父亲惨案的商会密信。沈知行作为沈氏总裁在暗中配合并保护她的安全，两人并肩抵抗杀父仇人。",
+    "target_audience": "甜虐剧受众",
+    "user_preferences": ["强人设双强互撩"],
+    "gold_characters": ["林晚", "沈知行"],
+    "gold_core_conflict": "林晚为了查清父亲死亡真相进行复仇，与沈知行达成契约婚姻，共同应对幕后势力。",
+    "gold_risk_points": ["政策审查风险"],
+    "expected_evidence_keywords": ["隐秘的角落", "狂飙"]
+  },
+  {
+    "project_id": "proj-910",
+    "title": "默认的秘密",
+    "genre": "都市",
+    "raw_text": "这是一个普通的无名故事，讲述张无名在平凡的人生中努力寻找自我价值，没有大富大贵与激烈商战，偏向写实主义的小人物温情故事。",
+    "target_audience": "文艺片受众",
+    "user_preferences": ["偏好生活化细节"],
+    "gold_characters": ["张无名"],
+    "gold_core_conflict": "主人公克服自身局限，实现成长的客观冲突。",
+    "gold_risk_points": [],
+    "expected_evidence_keywords": []
   }
 ]

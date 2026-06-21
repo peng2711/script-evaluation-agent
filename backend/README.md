@@ -186,3 +186,40 @@ graph TD
 * `errors` (异常/错误捕捉说明)
 * `retry_count` (节点所处的重试轮次)
 
+---
+
+## 9. Eval 评估指标设计与物理意义
+
+为了量化不同剧本评估方案在性能、准确度和稳定性上的优劣，系统定义并计算了 7 个核心的评估指标：
+
+### 1. JSON 成功率 (`json_success_rate`)
+* **定义**：计算工作流输出的报告对象转换为合法 JSON，并能成功被 Pydantic `FinalReport` 模型反序列化验证通过的概率。
+* **物理意义**：衡量输出数据的结构稳定性和规范性。由于系统有严格的 Pydantic 数据模式（如评分限制在 1-5），该指标越接近 100%，表示系统的结构鲁棒性越高。
+
+### 2. 人物抽取准确率 (`character_extraction_accuracy`)
+* **定义**：计算提取出的角色名称集合与黄金标注（Gold Standard）角色集合的 Jaccard 相似度系数。
+* **计算公式**：
+  \[\text{Accuracy}_{\text{char}} = \frac{|S_{\text{extracted}} \cap S_{\text{gold}}|}{|S_{\text{extracted}} \cup S_{\text{gold}}|}\]
+* **物理意义**：评估 Parser Agent 进行实体（人物角色）抽取的覆盖率与精确度。
+
+### 3. 核心冲突准确率 (`core_conflict_accuracy`)
+* **定义**：计算提取出的核心戏剧冲突文本与黄金核心冲突文本的字符级别（Character-level）Jaccard 相似度。
+* **物理意义**：反映系统在提取故事最主要矛盾时的语义贴合度。
+
+### 4. 证据引用准确率 (`evidence_precision`)
+* **定义**：报告中引用的对标证据作品（`evidence_list` 里的标题）命中基准要求的 `expected_evidence_keywords` 的比率。
+* **物理意义**：衡量 RAG 检索器为报告匹配合适对标证据的精确性。未引入 RAG 的 Baseline 方案该指标接近 0%。
+
+### 5. 无依据评价比例 (`unsupported_claim_rate`)
+* **定义**：最终产出的评估报告中，依然被 Review Agent 独立质检规则诊断出含有 `unsupported_claim`（无依据打分或无对标引用）问题项的报告占比。
+* **物理意义**：衡量评估报告的“主观偏见/无依据论证”概率。具有 Review 质检自环修正的 Hybrid 工作流该比例会大幅降到接近 0%。
+
+### 6. 质检缺陷检出率 (`review_issue_detection_rate`)
+* **定义**：在测试用例存在逻辑硬伤或对标错误时，工作流顺利触发 Review 质检并记录缺陷问题列表的比率。
+* **物理意义**：反映审查机制的参与度和主动检出效率。非自环/无质检方案该指标为 0.0。
+
+### 7. 工作流完成率 (`workflow_success_rate`)
+* **定义**：工作流顺利执行到底，各节点在执行中未捕获到崩溃性 Exception 异常的概率。
+* **物理意义**：评估系统整体的稳定运行效率。
+
+

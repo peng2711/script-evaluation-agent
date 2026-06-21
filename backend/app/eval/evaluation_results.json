@@ -1,0 +1,29 @@
+{
+  "baseline": {
+    "json_success_rate": 1.0,
+    "character_extraction_accuracy": 1.0,
+    "core_conflict_accuracy": 0.9142857142857143,
+    "evidence_precision": 0.1,
+    "unsupported_claim_rate": 1.0,
+    "review_issue_detection_rate": 0.0,
+    "workflow_success_rate": 1.0
+  },
+  "fixed": {
+    "json_success_rate": 1.0,
+    "character_extraction_accuracy": 1.0,
+    "core_conflict_accuracy": 0.9142857142857143,
+    "evidence_precision": 0.75,
+    "unsupported_claim_rate": 0.4,
+    "review_issue_detection_rate": 0.0,
+    "workflow_success_rate": 1.0
+  },
+  "hybrid": {
+    "json_success_rate": 1.0,
+    "character_extraction_accuracy": 1.0,
+    "core_conflict_accuracy": 0.9142857142857143,
+    "evidence_precision": 0.75,
+    "unsupported_claim_rate": 0.1,
+    "review_issue_detection_rate": 1.0,
+    "workflow_success_rate": 1.0
+  }
+}
