@@ -137,6 +137,12 @@ def evaluate_metrics(runs: List[Tuple[FinalReport, AgentState]], samples: List[D
     total_latency = 0.0
     total_tool_calls = 0
     total_fallback_calls = 0
+
+    # 报告质量评分汇总
+    quality_score_sum = 0.0
+    evidence_score_sum = 0.0
+    actionable_score_sum = 0.0
+    consistency_score_sum = 0.0
     
     for idx, (report, state) in enumerate(runs):
         sample = samples[idx]
@@ -171,6 +177,7 @@ def evaluate_metrics(runs: List[Tuple[FinalReport, AgentState]], samples: List[D
             evidence_precision_sum += (match_count / len(gold_evidences))
             
         # 5. unsupported_claim_rate
+        issues = []
         if report and state.analysis:
             issues = review_agent.review(
                 script_title=state.script.title,
@@ -211,6 +218,19 @@ def evaluate_metrics(runs: List[Tuple[FinalReport, AgentState]], samples: List[D
         else:
             # Check metrics key directly if trace metrics are available
             total_latency += state.trace.get("metrics", {}).get("total_latency_ms", 0.0) if state.trace else 0.0
+
+        # 11. 报告质量评分计算
+        from ..quality.scorer import score_report
+        q_score = score_report(
+            report=report,
+            review_issues=issues,
+            evidence_list=report.evidence_list if report else [],
+            trace=state.trace
+        )
+        quality_score_sum += q_score.final_score
+        evidence_score_sum += q_score.evidence_score
+        actionable_score_sum += q_score.actionable_score
+        consistency_score_sum += q_score.consistency_score
             
     avg_tool_calls = total_tool_calls / total
     fallback_rate = (total_fallback_calls / total_tool_calls) if total_tool_calls > 0 else 0.0
@@ -226,7 +246,11 @@ def evaluate_metrics(runs: List[Tuple[FinalReport, AgentState]], samples: List[D
         "workflow_success_rate": workflow_success_count / total,
         "avg_tool_calls": avg_tool_calls,
         "avg_latency_ms": total_latency / total,
-        "fallback_rate": fallback_rate
+        "fallback_rate": fallback_rate,
+        "avg_quality_score": quality_score_sum / total,
+        "avg_evidence_score": evidence_score_sum / total,
+        "avg_actionable_score": actionable_score_sum / total,
+        "avg_consistency_score": consistency_score_sum / total
     }
 
 def print_markdown_table(metrics: Dict[str, Dict[str, float]], to_file_path: str = None) -> str:
@@ -246,14 +270,19 @@ def print_markdown_table(metrics: Dict[str, Dict[str, float]], to_file_path: str
         "workflow_success_rate": "工作流完成率 (workflow_success_rate)",
         "avg_tool_calls": "平均工具调用次数 (avg_tool_calls)",
         "avg_latency_ms": "平均执行延迟/毫秒 (avg_latency_ms)",
-        "fallback_rate": "工具降级率 (fallback_rate)"
+        "fallback_rate": "工具降级率 (fallback_rate)",
+        "avg_quality_score": "平均综合质量得分 (avg_quality_score)",
+        "avg_evidence_score": "平均证据得分 (avg_evidence_score)",
+        "avg_actionable_score": "平均建议可执行得分 (avg_actionable_score)",
+        "avg_consistency_score": "平均一致性得分 (avg_consistency_score)"
     }
     
     for key, name in indicator_names.items():
-        val_baseline = f"{metrics['single_prompt'][key]:.2%}" if key != "avg_tool_calls" and key != "avg_latency_ms" else f"{metrics['single_prompt'][key]:.2f}"
-        val_fixed = f"{metrics['fixed'][key]:.2%}" if key != "avg_tool_calls" and key != "avg_latency_ms" else f"{metrics['fixed'][key]:.2f}"
-        val_hybrid = f"{metrics['hybrid'][key]:.2%}" if key != "avg_tool_calls" and key != "avg_latency_ms" else f"{metrics['hybrid'][key]:.2f}"
-        val_hybrid_tools = f"{metrics['hybrid_with_tools'][key]:.2%}" if key != "avg_tool_calls" and key != "avg_latency_ms" else f"{metrics['hybrid_with_tools'][key]:.2f}"
+        is_float_format = key in ["avg_tool_calls", "avg_latency_ms", "avg_quality_score", "avg_evidence_score", "avg_actionable_score", "avg_consistency_score"]
+        val_baseline = f"{metrics['single_prompt'][key]:.2f}" if is_float_format else f"{metrics['single_prompt'][key]:.2%}"
+        val_fixed = f"{metrics['fixed'][key]:.2f}" if is_float_format else f"{metrics['fixed'][key]:.2%}"
+        val_hybrid = f"{metrics['hybrid'][key]:.2f}" if is_float_format else f"{metrics['hybrid'][key]:.2%}"
+        val_hybrid_tools = f"{metrics['hybrid_with_tools'][key]:.2f}" if is_float_format else f"{metrics['hybrid_with_tools'][key]:.2%}"
         
         # avg_latency_ms format suffix
         if key == "avg_latency_ms":

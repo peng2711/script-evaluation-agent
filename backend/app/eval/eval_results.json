@@ -8,8 +8,12 @@
     "review_issue_detection_rate": 0.0,
     "workflow_success_rate": 1.0,
     "avg_tool_calls": 0.0,
-    "avg_latency_ms": 1.1313100010738708,
-    "fallback_rate": 0.0
+    "avg_latency_ms": 1.2380700005451217,
+    "fallback_rate": 0.0,
+    "avg_quality_score": 63.6,
+    "avg_evidence_score": 37.0,
+    "avg_actionable_score": 68.5,
+    "avg_consistency_score": 94.0
   },
   "fixed": {
     "json_success_rate": 1.0,
@@ -20,8 +24,12 @@
     "review_issue_detection_rate": 0.0,
     "workflow_success_rate": 1.0,
     "avg_tool_calls": 0.0,
-    "avg_latency_ms": 1.8730899959336966,
-    "fallback_rate": 0.0
+    "avg_latency_ms": 1.8959599998197518,
+    "fallback_rate": 0.0,
+    "avg_quality_score": 80.4,
+    "avg_evidence_score": 89.0,
+    "avg_actionable_score": 68.5,
+    "avg_consistency_score": 94.0
   },
   "hybrid": {
     "json_success_rate": 1.0,
@@ -32,8 +40,12 @@
     "review_issue_detection_rate": 0.16666666666666666,
     "workflow_success_rate": 1.0,
     "avg_tool_calls": 0.0,
-    "avg_latency_ms": 9.37104000186082,
-    "fallback_rate": 0.0
+    "avg_latency_ms": 17.68859000003431,
+    "fallback_rate": 0.0,
+    "avg_quality_score": 97.4,
+    "avg_evidence_score": 98.0,
+    "avg_actionable_score": 100.0,
+    "avg_consistency_score": 100.0
   },
   "hybrid_with_tools": {
     "json_success_rate": 1.0,
@@ -43,8 +55,12 @@
     "unsupported_claim_rate": 0.1,
     "review_issue_detection_rate": 0.16666666666666666,
     "workflow_success_rate": 1.0,
-    "avg_tool_calls": 12.3,
-    "avg_latency_ms": 9.868729999288917,
-    "fallback_rate": 0.0
+    "avg_tool_calls": 11.3,
+    "avg_latency_ms": 23.010010001598857,
+    "fallback_rate": 0.0,
+    "avg_quality_score": 97.4,
+    "avg_evidence_score": 98.0,
+    "avg_actionable_score": 100.0,
+    "avg_consistency_score": 100.0
   }
 }

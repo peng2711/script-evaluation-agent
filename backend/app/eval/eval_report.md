@@ -15,8 +15,12 @@
 | 无依据评价比例 (unsupported_claim_rate) | 90.00% | 30.00% | 10.00% | 10.00% |
 | 质检缺陷检出率 (review_issue_detection_rate) | 0.00% | 0.00% | 16.67% | 16.67% |
 | 工作流完成率 (workflow_success_rate) | 100.00% | 100.00% | 100.00% | 100.00% |
-| 平均工具调用次数 (avg_tool_calls) | 0.00 | 0.00 | 0.00 | 12.30 |
-| 平均执行延迟/毫秒 (avg_latency_ms) | 1.13 ms | 1.87 ms | 9.37 ms | 9.87 ms |
+| 平均工具调用次数 (avg_tool_calls) | 0.00 | 0.00 | 0.00 | 11.30 |
+| 平均执行延迟/毫秒 (avg_latency_ms) | 1.24 ms | 1.90 ms | 17.69 ms | 23.01 ms |
 | 工具降级率 (fallback_rate) | 0.00% | 0.00% | 0.00% | 0.00% |
+| 平均综合质量得分 (avg_quality_score) | 63.60 | 80.40 | 97.40 | 97.40 |
+| 平均证据得分 (avg_evidence_score) | 37.00 | 89.00 | 98.00 | 98.00 |
+| 平均建议可执行得分 (avg_actionable_score) | 68.50 | 68.50 | 100.00 | 100.00 |
+| 平均一致性得分 (avg_consistency_score) | 94.00 | 94.00 | 100.00 | 100.00 |
 
 说明：所有评估数据指标均由基准测试用例 (`benchmark.json`) 严格计算所得。
