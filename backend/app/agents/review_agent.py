@@ -21,6 +21,13 @@ class ReviewAgent:
         
         draft = state.draft_report
         if not draft:
+            from ..schemas.report import ReviewDecision
+            state.review_decision = ReviewDecision(
+                passed=False,
+                issues=[],
+                action="rewrite_analysis",
+                reason="未能找到评估草稿报告。"
+            )
             state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ReviewAgent 质检失败：缺少草稿报告。")
             state.should_retrieve_more = False
             state.should_rewrite_report = False
@@ -41,24 +48,46 @@ class ReviewAgent:
         state.review_issues = issues
         draft.review_issues = issues
         
-        # 决定修正回路的标志位
-        state.should_rewrite_report = len(issues) > 0
-        
-        # 判断是否需要获取更多检索证据：
-        # 如果存在 evidence_mismatch 或 unsupported_claim 且证据列表不够丰富（数量 < 2），则标记需要检索更多证据
-        has_mismatch = any(i.issue_type == "evidence_mismatch" for i in issues)
-        has_unsupported = any(i.issue_type == "unsupported_claim" for i in issues)
-        state.should_retrieve_more = has_mismatch or (has_unsupported and len(state.evidences) < 2)
+        # 统计各类型的缺陷以进行智能决策决策
+        has_high_risk = any(i.issue_type == "high_risk" for i in issues)
+        has_retrieve = any(i.issue_type in ("unsupported_claim", "evidence_mismatch") for i in issues)
+        has_rewrite = any(i.issue_type in ("weak_suggestion", "character_inconsistency", "hallucinated_event", "wrong_relation") for i in issues)
 
-        if not issues:
+        if has_high_risk:
+            action = "human_check"
+            reason = "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。"
+        elif has_retrieve:
+            action = "retrieve_more"
+            reason = "检测到严重的对标引用不足或题材证据错配，必须重新对标召回数据。"
+        elif has_rewrite:
+            action = "rewrite_analysis"
+            reason = "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。"
+        else:
+            action = "pass"
+            reason = "报告通过了全部合规及事实一致性审查。"
+
+        passed = (action == "pass")
+        
+        # 构造 ReviewDecision 写入状态
+        from ..schemas.report import ReviewDecision
+        decision = ReviewDecision(
+            passed=passed,
+            issues=issues,
+            action=action,
+            reason=reason
+        )
+        state.review_decision = decision
+
+        # 写入兼容旧状态机的标志位
+        state.should_rewrite_report = (action == "rewrite_analysis")
+        state.should_retrieve_more = (action == "retrieve_more")
+
+        if passed:
             state.final_report = draft
-            state.should_rewrite_report = False
-            state.should_retrieve_more = False
             state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ReviewAgent 质检审查通过！报告正式锁定。")
         else:
             state.history_logs.append(
-                f"[{datetime.datetime.now().isoformat()}] ReviewAgent 质检审查未通过。共发现 {len(issues)} 个整改项。"
-                f" should_rewrite_report={state.should_rewrite_report}, should_retrieve_more={state.should_retrieve_more}"
+                f"[{datetime.datetime.now().isoformat()}] ReviewAgent 质检审查未通过：action={action}, 原因: {reason}"
             )
             
         return state
@@ -251,6 +280,18 @@ class ReviewAgent:
                                 reason=f"剧本主要为都市爱情题材，而引用的对标作品《隐秘的角落》是硬核悬疑犯罪题材，两者的核心卖点和受众不匹配。",
                                 suggested_fix="请改用更为贴合都市爱情或商战题材的作品（如《狂飙》中商战博弈或其它同类剧目）作为参考证据。"
                             ))
+
+        # 7. 政策违规与高危内容检测 (high_risk)
+        high_risk_keywords = ["私刑制裁", "血腥暴力", "法律红线", "监管下架", "政策红线"]
+        for kw in high_risk_keywords:
+            if kw in summary or any(kw in sug for sug in suggestions):
+                issues.append(ReviewIssue(
+                    issue_type="high_risk",
+                    severity="HIGH",
+                    claim=f"报告或修改建议中涉及了有关 '{kw}' 的敏感表述",
+                    reason=f"剧本评估内容触发高危审查红线敏感词 '{kw}'，可能面临监管合规或禁映下架风险。",
+                    suggested_fix=f"须立即中止自动立项流转，提交制片团队进行线下人工合规复核（建议人工复核）。"
+                ))
 
         return issues
 

@@ -92,7 +92,10 @@ class ScriptEvaluationWorkflow:
         err_msg = None
         input_summary = ""
         output_summary = ""
-
+        next_node = None
+        action = None
+        reason = None
+        
         # 获取当前节点的 Agent 映射名称
         agent_mapping = {
             "ParserNode": "ParserAgent",
@@ -148,19 +151,39 @@ class ScriptEvaluationWorkflow:
                 
             elif node_name == "ReviewNode":
                 state = review_agent.execute(state)
+                next_node, _ = self._get_next_node("ReviewNode", state, retry_count)
+                action = state.review_decision.action if state.review_decision else "pass"
+                reason = state.review_decision.reason if state.review_decision else ""
                 output_summary = (
-                    f"Found {len(state.review_issues)} review issues. "
-                    f"should_retrieve_more={state.should_retrieve_more}, "
-                    f"should_rewrite_report={state.should_rewrite_report}"
+                    f"ReviewAction: {action}, Reason: {reason}, "
+                    f"TargetNode: {next_node}, RetryCount: {retry_count}"
                 )
                 
             elif node_name == "ReportNode":
                 state.final_report = state.draft_report
+                if state.final_report and state.review_decision and state.review_decision.action == "human_check":
+                    state.final_report.decision_suggestion = "HUMAN_CHECK"
+                    if not state.final_report.executive_summary.startswith("【建议人工复核】"):
+                        state.final_report.executive_summary = "【建议人工复核】\n" + state.final_report.executive_summary
+                
                 output_summary = f"Locked final report with decision: {state.final_report.decision_suggestion if state.final_report else 'N/A'}"
 
             duration = (time.perf_counter() - start_t) * 1000.0
             if recorder:
-                recorder.record_node_end(node_name, agent_name, output_summary, "SUCCESS", duration)
+                if node_name == "ReviewNode":
+                    recorder.record_node_end(
+                        node_name,
+                        agent_name,
+                        output_summary,
+                        "SUCCESS",
+                        duration,
+                        retry_count=retry_count,
+                        review_action=action,
+                        review_reason=reason,
+                        target_node=next_node
+                    )
+                else:
+                    recorder.record_node_end(node_name, agent_name, output_summary, "SUCCESS", duration, retry_count=retry_count)
                 
         except Exception as e:
             err_msg = str(e)
@@ -175,6 +198,10 @@ class ScriptEvaluationWorkflow:
                 errors=err_msg,
                 retry_count=retry_count
             )
+            if node_name == "ReviewNode":
+                trace.review_action = action
+                trace.review_reason = reason
+                trace.target_node = next_node
             state.node_traces.append(trace)
             
         return state, err_msg
@@ -201,22 +228,42 @@ class ScriptEvaluationWorkflow:
                 # 打回补充检索证据后，需回到分析节点重新打分写草稿
                 return "AnalysisNode", retry_count
         elif current_node == "ReviewNode":
-            # 存在质检项，且重试未达最大次数
-            if (state.should_rewrite_report or state.should_retrieve_more) and retry_count < self.max_iterations:
-                next_retry = retry_count + 1
-                if state.should_retrieve_more:
+            if not state.review_decision:
+                return "ReportNode", retry_count
+                
+            action = state.review_decision.action
+            
+            if action == "pass":
+                return "ReportNode", retry_count
+            elif action == "human_check":
+                state.history_logs.append(
+                    f"[{datetime.datetime.now().isoformat()}] 质检决策：安全红线触发 (human_check)，需要人工核对。直接进入 ReportNode 标记报告。"
+                )
+                return "ReportNode", retry_count
+            elif action == "retrieve_more":
+                if retry_count < self.max_iterations:
+                    next_retry = retry_count + 1
                     state.history_logs.append(
-                        f"[{datetime.datetime.now().isoformat()}] 质检第 {next_retry} 次未通过：需要补充获取证据。回滚至 RetrievalNode。"
+                        f"[{datetime.datetime.now().isoformat()}] 质检决策：打回补充对标数据 (retrieve_more)，重试 {next_retry}/{self.max_iterations}。回滚至 RetrievalNode。"
                     )
                     return "RetrievalNode", next_retry
                 else:
                     state.history_logs.append(
-                        f"[{datetime.datetime.now().isoformat()}] 质检第 {next_retry} 次未通过：需要重新分析报告。回滚至 AnalysisNode。"
+                        f"[{datetime.datetime.now().isoformat()}] 质检决策：需要重新召回数据，但已达最大重试限制 {self.max_iterations}。强制进入 ReportNode。"
+                    )
+                    return "ReportNode", retry_count
+            elif action == "rewrite_analysis":
+                if retry_count < self.max_iterations:
+                    next_retry = retry_count + 1
+                    state.history_logs.append(
+                        f"[{datetime.datetime.now().isoformat()}] 质检决策：打回重新分析报告 (rewrite_analysis)，重试 {next_retry}/{self.max_iterations}。回滚至 AnalysisNode。"
                     )
                     return "AnalysisNode", next_retry
-            else:
-                # 无问题，或已达最大重试限制
-                return "ReportNode", retry_count
+                else:
+                    state.history_logs.append(
+                        f"[{datetime.datetime.now().isoformat()}] 质检决策：需要重新分析报告，但已达最大重试限制 {self.max_iterations}。强制进入 ReportNode。"
+                    )
+                    return "ReportNode", retry_count
         elif current_node == "ReportNode":
             return "End", retry_count
             

@@ -20,6 +20,9 @@ class TraceEvent(BaseModel):
         default_factory=lambda: datetime.datetime.now().isoformat(),
         description="事件发生时间戳"
     )
+    review_action: Optional[str] = Field(None, description="审查动作")
+    review_reason: Optional[str] = Field(None, description="审查原因")
+    target_node: Optional[str] = Field(None, description="目标跳转节点")
 
 # 声明线程/协程安全的 ContextVar 作为上下文追踪器
 active_trace_recorder: ContextVar[Optional['TraceRecorder']] = ContextVar("active_trace_recorder", default=None)
@@ -79,7 +82,18 @@ class TraceRecorder:
         from .logger import log_trace_event
         log_trace_event(event)
 
-    def record_node_end(self, node_name: str, agent_name: str, output_summary: str, status: str, latency_ms: float) -> None:
+    def record_node_end(
+        self,
+        node_name: str,
+        agent_name: str,
+        output_summary: str,
+        status: str,
+        latency_ms: float,
+        retry_count: int = 0,
+        review_action: Optional[str] = None,
+        review_reason: Optional[str] = None,
+        target_node: Optional[str] = None
+    ) -> None:
         event = TraceEvent(
             trace_id=self.trace_id,
             node_name=node_name,
@@ -87,7 +101,11 @@ class TraceRecorder:
             status=status,
             input_summary="",
             output_summary=output_summary,
-            latency_ms=latency_ms
+            latency_ms=latency_ms,
+            retry_count=retry_count,
+            review_action=review_action,
+            review_reason=review_reason,
+            target_node=target_node
         )
         self.events.append(event)
         from .logger import log_trace_event

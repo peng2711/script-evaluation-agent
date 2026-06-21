@@ -86,6 +86,13 @@ def test_workflow_retry_limit():
         ]
         if state.draft_report:
             state.draft_report.review_issues = state.review_issues
+        from app.schemas.report import ReviewDecision
+        state.review_decision = ReviewDecision(
+            passed=False,
+            issues=state.review_issues,
+            action="rewrite_analysis",
+            reason="Mock 强力拦截"
+        )
         return state
 
     mock_review_agent.execute = MagicMock(side_effect=mock_execute)

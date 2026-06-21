@@ -188,7 +188,7 @@ def test_review_agent_unsupported_score():
     
     state = agent.execute(state)
     
-    assert state.should_rewrite_report is True
+    assert state.should_retrieve_more is True
     # 因为 evidences 为空，并且没有 《...》 引用，应该判定为 unsupported_claim
     unsupported_issues = [i for i in state.review_issues if i.issue_type == "unsupported_claim"]
     assert len(unsupported_issues) > 0

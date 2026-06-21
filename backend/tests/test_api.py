@@ -39,7 +39,7 @@ def test_evaluate_endpoint_with_valid_payload():
     assert "source_title" in data["evidence_list"][0]
     
     # 验证决策类型
-    assert data["decision_suggestion"] in ["PASS", "REVISE", "REJECT"]
+    assert data["decision_suggestion"] in ["PASS", "REVISE", "REJECT", "HUMAN_CHECK"]
 
 def test_evaluate_endpoint_validation_error():
     # 故意提交缺失必填字段 project_id 的载荷

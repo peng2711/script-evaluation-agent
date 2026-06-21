@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Literal
 
 class CharacterProfile(BaseModel):
     name: str = Field(..., description="人物角色姓名")
@@ -40,12 +40,21 @@ class ReviewIssue(BaseModel):
     reason: str = Field(..., description="被判定为问题的审查原因/反驳证据")
     suggested_fix: str = Field(..., description="推荐的具体整改方案建议")
 
+class ReviewDecision(BaseModel):
+    passed: bool = Field(..., description="是否通过质检审核")
+    issues: List[ReviewIssue] = Field(default_factory=list, description="发现的具体问题列表")
+    action: Literal["pass", "retrieve_more", "rewrite_analysis", "human_check"] = Field(..., description="决策后续执行动作")
+    reason: str = Field(..., description="生成此动作的决策原因说明")
+
 class NodeTrace(BaseModel):
     node_name: str = Field(..., description="节点名称")
     input_summary: str = Field(..., description="输入数据摘要")
     output_summary: str = Field(..., description="输出数据或状态摘要")
     errors: Optional[str] = Field(None, description="节点执行中的错误说明")
     retry_count: int = Field(default=0, description="当前重试计数")
+    review_action: Optional[str] = Field(None, description="审查做出的决策动作")
+    review_reason: Optional[str] = Field(None, description="审查原因说明")
+    target_node: Optional[str] = Field(None, description="下一个跳转目标节点")
 
 class FinalReport(BaseModel):
     project_id: str = Field(..., description="项目唯一ID")
@@ -70,3 +79,4 @@ class FinalReport(BaseModel):
     character_relations: List[str] = Field(default_factory=list, description="人物关系概览描述列表")
     core_conflict: str = Field(default="", description="核心戏剧冲突描述")
     trace: Optional[Dict[str, Any]] = Field(None, description="可观测性 Trace 和 Metrics 数据")
+    review_decision: Optional[ReviewDecision] = Field(None, description="Review Agent 质检决策记录")

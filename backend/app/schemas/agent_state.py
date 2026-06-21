@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 from .script import ScriptInput
-from .report import ScriptAnalysis, RetrievalEvidence, ReviewIssue, FinalReport, NodeTrace
+from .report import ScriptAnalysis, RetrievalEvidence, ReviewIssue, FinalReport, NodeTrace, ReviewDecision
 
 class AgentState(BaseModel):
     script: ScriptInput = Field(..., description="输入的剧本大纲与属性配置信息")
@@ -16,3 +16,4 @@ class AgentState(BaseModel):
     should_rewrite_report: bool = Field(default=False, description="审查决定：是否需要重新撰写/修正评估报告")
     node_traces: List[NodeTrace] = Field(default_factory=list, description="节点执行 Trace 记录")
     trace: Optional[Dict[str, Any]] = Field(None, description="可观测性 Trace 和 Metrics 数据")
+    review_decision: Optional[ReviewDecision] = Field(None, description="Review Agent 质检决策记录")
