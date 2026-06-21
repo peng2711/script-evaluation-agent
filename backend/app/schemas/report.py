@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 
 class CharacterProfile(BaseModel):
     name: str = Field(..., description="人物角色姓名")
@@ -69,3 +69,4 @@ class FinalReport(BaseModel):
     characters: List[CharacterProfile] = Field(default_factory=list, description="提取出的角色配置文件列表")
     character_relations: List[str] = Field(default_factory=list, description="人物关系概览描述列表")
     core_conflict: str = Field(default="", description="核心戏剧冲突描述")
+    trace: Optional[Dict[str, Any]] = Field(None, description="可观测性 Trace 和 Metrics 数据")
