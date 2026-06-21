@@ -3,6 +3,13 @@ from typing import List, Optional
 from .script import ScriptInput
 from .report import ScriptAnalysis, RetrievalEvidence, ReviewIssue, FinalReport
 
+class NodeTrace(BaseModel):
+    node_name: str = Field(..., description="节点名称")
+    input_summary: str = Field(..., description="输入数据摘要")
+    output_summary: str = Field(..., description="输出数据或状态摘要")
+    errors: Optional[str] = Field(None, description="节点执行中的错误说明")
+    retry_count: int = Field(default=0, description="当前重试计数")
+
 class AgentState(BaseModel):
     script: ScriptInput = Field(..., description="输入的剧本大纲与属性配置信息")
     analysis: Optional[ScriptAnalysis] = Field(None, description="Parser Agent 与 Analysis Agent 产出的静态要素分析")
@@ -14,3 +21,4 @@ class AgentState(BaseModel):
     history_logs: List[str] = Field(default_factory=list, description="记录各个 Agent 执行轨迹的步骤与时间戳日志")
     should_retrieve_more: bool = Field(default=False, description="审查决定：是否需要获取更多参考证据")
     should_rewrite_report: bool = Field(default=False, description="审查决定：是否需要重新撰写/修正评估报告")
+    node_traces: List[NodeTrace] = Field(default_factory=list, description="节点执行 Trace 记录")

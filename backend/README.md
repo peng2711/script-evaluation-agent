@@ -140,3 +140,49 @@ python -m app.eval.run_eval
 
 ### 2. 证据论证说明（非抄袭检测）
 检索返回的 `RetrievalEvidence` 会由 `Retrieval Agent` 注入评估报告，仅作为“同题材立项成功/失败市场比对依据”或“戏剧冲突对标参考”。本模块不作任何法律层面的抄袭判定或相似度指控声明。
+
+---
+
+## 8. Hybrid Agent Workflow 工作流设计说明
+
+为了保证剧本评估的关键业务环节不被遗漏，并兼顾在特定阶段（如检索不全、质检不合格）的灵活回退修正，系统设计并实现了 **Hybrid Agent Workflow（混合 Agent 工作流）** 状态机：
+
+### 1. 确定性外层流程 (Outer Deterministic Flow)
+外层工作流是一个确定性的顺序流程，首个生命周期严格按照以下顺序执行各节点，不被模型随意跳过：
+1. **ParserNode**：解析并抽取剧本角色与事件要素；
+2. **MemoryNode**：将抽取的人物与项目初始信息注册进入持久化记忆库；
+3. **AnalysisNode**：多维度评估剧本质量、亮点和风险，生成报告草稿；
+4. **RetrievalNode**：利用 TF-IDF 与题材 Boost 检索本地同类对标作品作为证据；
+5. **ReviewNode**：独立核对评估草稿中的逻辑、幻觉和证据质量；
+6. **ReportNode**：锁定并输出最终校验格式报告。
+
+### 2. 局部补充自环修正 (Inner Correction Loop)
+在 `ReviewNode` 质检过程中，内层逻辑通过评估报告中的反馈控制标志位控制状态路由回退：
+- **打回检索 (`should_retrieve_more == True`)**：当发现检索证据不足或对标不匹配时，打回至 `RetrievalNode`。流转路径：`RetrievalNode` -> `AnalysisNode` -> `ReviewNode`；
+- **打回重新分析 (`should_rewrite_report == True`)**：当发现人设冲突或评分无依据时，打回至 `AnalysisNode`。流转路径：`AnalysisNode` -> `ReviewNode`；
+- **重试上限保护 (Retry Limit)**：质检迭代最大次数为 2 次。一旦达到重试上限，系统会自动锁定并流转至 `ReportNode` 生成报告，坚决杜绝无限循环。
+
+### 3. 工作流状态图 (Workflow Diagram)
+```mermaid
+graph TD
+    Start([开始]) --> ParserNode[1. ParserNode: 剧本解析]
+    ParserNode --> MemoryNode[2. MemoryNode: 记忆持久化]
+    MemoryNode --> AnalysisNode[3. AnalysisNode: 多维内容评估]
+    AnalysisNode --> RetrievalNode[4. RetrievalNode: 检索同类证据]
+    RetrievalNode --> ReviewNode{5. ReviewNode: 质检审查}
+    
+    ReviewNode -- "通过 / 达到重试上限(2次)" --> ReportNode[6. ReportNode: 生成最终报告]
+    ReviewNode -- "证据不足 (should_retrieve_more)" --> RetrievalNode
+    ReviewNode -- "报告有误 (should_rewrite_report)" --> AnalysisNode
+    
+    ReportNode --> End([结束])
+```
+
+### 4. 节点执行 Trace 追踪记录
+为提升工作流透明度和可追溯性，系统使用 `NodeTrace` 数据结构记录每个执行节点，包含：
+* `node_name` (节点名称)
+* `input_summary` (输入数据摘要)
+* `output_summary` (输出数据或状态摘要)
+* `errors` (异常/错误捕捉说明)
+* `retry_count` (节点所处的重试轮次)
+
