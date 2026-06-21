@@ -1,7 +1,7 @@
 import os
 import json
 from typing import List, Dict, Any
-from ..schemas.report import ReferenceWork
+from ..schemas.report import RetrievalEvidence
 
 class MockRetriever:
     """
@@ -23,11 +23,10 @@ class MockRetriever:
         else:
             self._data = []
 
-    def retrieve_similar_works(self, genre: str, content_query: str) -> List[ReferenceWork]:
+    def retrieve_similar_works(self, genre: str, content_query: str) -> List[RetrievalEvidence]:
         """
-        根据题材(genre)及内容关键词进行模糊检索，返回匹配度最高的 1-2 部作品。
+        根据题材(genre)进行检索，返回匹配度最高的 1-2 部作品并包装为 RetrievalEvidence。
         """
-        # 重新加载数据，防止数据在运行时发生修改而未同步
         self._load_data()
 
         results = []
@@ -38,11 +37,15 @@ class MockRetriever:
         if not matched_works:
             matched_works = self._data
 
-        for work in matched_works[:2]:  # 最多返回2个
-            results.append(ReferenceWork(
-                title=work.get("title", "未知作品"),
-                similarity_reason=f"匹配题材类型：{genre}。该作品在核心冲突 '{work.get('conflicts', ['暂无冲突描述'])[0]}' 上与本项目有较高参考度。",
-                benchmark_metric=work.get("benchmark_metric", "暂无参考指标数据")
+        for idx, work in enumerate(matched_works[:2]):  # 最多返回2个
+            # 模拟一个匹配度得分
+            score = 0.95 - (idx * 0.1)
+            results.append(RetrievalEvidence(
+                source_title=work.get("title", "未知作品"),
+                source_type="电视剧" if genre != "科幻" else "电影",
+                content=work.get("description", "暂无详情描述"),
+                relevance_reason=f"匹配题材：{genre}。两者在戏剧冲突 '{work.get('conflicts', ['暂无核心冲突'])[0]}' 的展现方式上具有高度相似度。",
+                score=score
             ))
         
         return results

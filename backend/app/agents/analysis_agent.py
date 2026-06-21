@@ -1,74 +1,93 @@
 from ..schemas.agent_state import AgentState
-from ..schemas.report import EvaluationReport, RiskPoint, SeverityType, DecisionType, ReviewResult
+from ..schemas.report import FinalReport
 import datetime
-import uuid
 
 class AnalysisAgent:
     """
-    Analysis Agent (Mock 实现)：对解析结果进行多维度评估，并结合检索的同类参考作品，产生初始立项评估报告草稿。
+    Analysis Agent (Mock 实现)：结合元素解析与检索的类似作品证据，评估多维度指标（打分 1-5），产出初始评估报告草稿。
     """
     def execute(self, state: AgentState) -> AgentState:
-        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] AnalysisAgent 开始生成草稿评估报告。")
+        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] AnalysisAgent 开始评估打分并编写草稿。")
         
+        project_id = state.script.project_id
         title = state.script.title
-        genre = state.script.genre or "通用"
-        content = state.script.content
+        content = state.script.raw_text
         
-        # 1. 模拟根据题材与内容评估风险点
-        risks = []
-        conclusion = DecisionType.REVISE
+        # 默认分值（1-5 范围）
+        char_score = 4
+        plot_score = 3
+        conflict_score = 4
+        market_score = 3
+        
+        decision = "REVISE"
         summary = ""
+        improvement_suggestions = []
         
         if "林啸" in content:
-            risks = [
-                RiskPoint(category="政策审核", description="剧情中主角涉及未成年时的极端创伤行为描写，审查尺度较严，需要合理规避敏感血腥画面。", severity=SeverityType.MEDIUM),
-                RiskPoint(category="制作成本", description="动作戏占比高达 45%，包含大量追车与爆破场景，对动作特技导演与现场调度安全要求高。", severity=SeverityType.HIGH)
-            ]
-            # 如果是第1次生成，故意设计一个不合格的结论，让 ReviewAgent 纠错。如果是第2次（修改后），则调整为合格。
-            if state.iterations == 0:
-                conclusion = DecisionType.PASS
-                summary = "（草稿阶段）该项目人设新颖，节奏明快，极具爆款潜质，建议直接立项推进开发。" # 这是一个故意不写风险的过于主观结论，用来测试 ReviewAgent 的纠错
-            else:
-                conclusion = DecisionType.REVISE
-                summary = "（已根据 Review 修改）本项目特工复仇题材动作张力大，商业看点足。但由于动作戏占比过高及部分敏感画面，建议在二稿中压缩15%的爆破动作戏以控制预算，并对林啸过去的心理创伤描写进行温和化修改后，予以立项通过。"
-        elif "陈默" in content:
-            risks = [
-                RiskPoint(category="市场同质化", description="都市商战题材与非遗文化结合较新颖，但商战核心套路（恶意收购、逆袭）市场较为常见，需做出差异化。", severity=SeverityType.LOW),
-                RiskPoint(category="受众画像偏差", description="商战受众偏男性/成熟期，非遗茶文化受众偏佛系/年轻化，两类人群融合有一定壁垒。", severity=SeverityType.MEDIUM)
-            ]
-            if state.iterations == 0:
-                conclusion = DecisionType.REJECT
-                summary = "（草稿阶段）都市商战老套，不建议立项。" # 过于主观、无事实根据的负面评价，用于测试 ReviewAgent 纠正
-            else:
-                conclusion = DecisionType.REVISE
-                summary = "（已根据 Review 修改）项目结合了非遗茶文化与现代商战，切入点具独特性。李建国强拆茶馆等戏剧冲突合理，但商战收购逻辑需进一步细化，增强专业性。建议编剧团队引入金融顾问修正商战细节后，再行重新评估。"
-        else:
-            risks = [
-                RiskPoint(category="市场同质化", description="题材属于常见流派，竞争激烈，面临较大的宣发压力。", severity=SeverityType.MEDIUM)
-            ]
-            conclusion = DecisionType.REVISE
-            summary = f"本项目题材属于 {genre}，目前整体结构框架完整，但核心冲突还需进一步打磨。建议对剧本进行一轮修改以增强人物动机，完成后可考虑推进立项。"
+            char_score = 5
+            plot_score = 4
+            conflict_score = 5
+            market_score = 4
             
-        state.parsed_risks = risks
-        
-        # 2. 生成 Draft Report (在被 Review 审核通过之前，Review 状态先设为未通过，待 ReviewAgent 审核)
-        draft = EvaluationReport(
-            script_id=str(uuid.uuid4())[:8],
+            # 第一轮：故意制造逻辑矛盾（分值极高，有高风险，但写直接通过）
+            if state.iterations == 0:
+                decision = "PASS"
+                summary = "林啸的特工复仇设定极富视觉张力与心理深度，虽然爆破特效制作难度大且预算风险极高，但故事极佳，强烈建议直接立项推进开发。"
+                improvement_suggestions = ["直接开机。"]
+            else:
+                # 接收到 ReviewAgent 修改建议后的修正版
+                decision = "REVISE"
+                summary = "该项目特工动作悬疑题材商业看点足。但由于动作戏占比过高及部分主角童年创伤情节过于血腥敏感，建议将立项等级调整为修改后通过。"
+                improvement_suggestions = [
+                    "建议二稿中压缩15%的爆破动作场面，控制特效制作预算。",
+                    "温和化处理林啸早期的创伤回忆场景，确保符合国内相关政策审查标准。"
+                ]
+                
+        elif "陈默" in content:
+            char_score = 4
+            plot_score = 3
+            conflict_score = 3
+            market_score = 3
+            
+            # 第一轮：故意制造主观偏见评价
+            if state.iterations == 0:
+                decision = "REJECT"
+                summary = "都市商战强拆老街的桥段过于俗套，陈默和苏瑶的感情线也莫名其妙，不建议立项开发。"
+                improvement_suggestions = ["建议放弃。"]
+            else:
+                # 修正版
+                decision = "REVISE"
+                summary = "项目将非遗茶文化与现代金融商战相结合，切入点较为新颖。虽李建国强拆茶馆等外部冲突戏剧张力强，但商战细节过于简单粗暴，不符合专业逻辑。建议充实商战技术细节后予以通过。"
+                improvement_suggestions = [
+                    "编剧团队应引入专业金融顾问，重新设计陈默阻拦恶意收购的金融反制细节。",
+                    "深化陈默与苏瑶关于现代资本理念与传统文化传承之间的情感碰撞，使感情升温更显自然。"
+                ]
+        else:
+            char_score = 3
+            plot_score = 3
+            conflict_score = 3
+            market_score = 3
+            decision = "REVISE"
+            summary = "本项目故事结构完整，但整体戏剧矛盾较为平淡，题材市场同质化严重。建议对剧本冲突点进行一轮充实优化后再行评估。"
+            improvement_suggestions = ["增加核心冲突的爆发力度", "提炼配角的存在感"]
+
+        # 构建 FinalReport 模型（注意：此为 draft 阶段，review 字段在 review_agent 中会更新）
+        draft = FinalReport(
+            project_id=project_id,
             title=title,
-            genre=genre,
-            characters=state.parsed_characters,
-            relations=state.parsed_relations,
-            events=state.parsed_events,
-            conflicts=state.parsed_conflicts,
-            risks=risks,
-            references=state.retrieved_references,
-            review=ReviewResult(is_passed=False, findings=["草稿生成完成，待审核"], revision_suggestions=[]),
-            conclusion=conclusion,
-            summary=summary
+            executive_summary=summary,
+            character_score=char_score,
+            plot_logic_score=plot_score,
+            conflict_density_score=conflict_score,
+            market_fit_score=market_score,
+            evidence_list=state.evidences,
+            review_issues=[],  # 初始为空，待 ReviewAgent 审核写入
+            decision_suggestion=decision,
+            improvement_suggestions=improvement_suggestions
         )
         
         state.draft_report = draft
-        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] AnalysisAgent 草稿报告已生成，立项建议为: {conclusion.value}。")
+        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] AnalysisAgent 草稿已生成，决策建议为: {decision}。")
         return state
 
 # 全局 AnalysisAgent 单例

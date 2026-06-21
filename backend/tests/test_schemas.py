@@ -1,84 +1,94 @@
 import pytest
 from pydantic import ValidationError
-from app.schemas.script import ScriptSubmission
-from app.schemas.report import EvaluationReport, Character, CharacterRelation, PlotEvent, Conflict, RiskPoint, ReferenceWork, ReviewResult, RoleType, SeverityType, DecisionType
+from app.schemas.script import ScriptInput
+from app.schemas.report import FinalReport, CharacterProfile, PlotEvent, ScriptAnalysis, RetrievalEvidence, ReviewIssue
 
-def test_script_submission_validation():
-    # 正确的数据
-    script = ScriptSubmission(
-        title="我的科幻大片",
-        content="讲述了未来的故事...",
-        author="张三",
-        genre="科幻"
+def test_script_input_validation():
+    # 1. 测试合法输入
+    script = ScriptInput(
+        project_id="proj-101",
+        title="测试项目",
+        raw_text="正文大纲",
+        genre="科幻",
+        target_audience="大众",
+        user_preferences=["偏好快节奏"]
     )
-    assert script.title == "我的科幻大片"
-    assert script.author == "张三"
+    assert script.project_id == "proj-101"
+    assert script.title == "测试项目"
+    assert script.user_preferences == ["偏好快节奏"]
 
-    # 缺失必填字段 title
+    # 2. 测试非法输入（缺失必填字段 project_id）
     with pytest.raises(ValidationError):
-        ScriptSubmission(content="仅有正文")
+        ScriptInput(title="测试", raw_text="正文")
 
-    # 缺失必填字段 content
+    # 3. 测试 JSON 序列化与反序列化
+    json_data = script.model_dump_json()
+    parsed = ScriptInput.model_validate_json(json_data)
+    assert parsed.project_id == "proj-101"
+    assert parsed.title == "测试项目"
+
+def test_final_report_score_ranges():
+    # 构建合法的嵌套字段
+    evidence = RetrievalEvidence(
+        source_title="相似电影",
+        source_type="电影",
+        content="内容详情",
+        relevance_reason="相似理由",
+        score=0.9
+    )
+    
+    # 1. 测试合法输入（分数全为 1-5 之间）
+    report = FinalReport(
+        project_id="proj-101",
+        title="项目名称",
+        executive_summary="执行总结说明",
+        character_score=5,
+        plot_logic_score=4,
+        conflict_density_score=3,
+        market_fit_score=1,
+        evidence_list=[evidence],
+        review_issues=[],
+        decision_suggestion="PASS",
+        improvement_suggestions=["修改台词"]
+    )
+    assert report.character_score == 5
+    assert report.market_fit_score == 1
+    
+    # 2. 测试非法输入（分数大于 5）
     with pytest.raises(ValidationError):
-        ScriptSubmission(title="仅有标题")
+        FinalReport(
+            project_id="proj-101",
+            title="项目名称",
+            executive_summary="执行总结说明",
+            character_score=6,  # 非法！超出了 le=5 限制
+            plot_logic_score=4,
+            conflict_density_score=3,
+            market_fit_score=1,
+            evidence_list=[evidence],
+            review_issues=[],
+            decision_suggestion="PASS",
+            improvement_suggestions=[]
+        )
 
-def test_evaluation_report_schema():
-    # 测试完整的结构化报告校验
-    char1 = Character(name="林啸", role=RoleType.PROTAGONIST, description="特工")
-    char2 = Character(name="赵乾", role=RoleType.ANTAGONIST, description="反派")
-    
-    relation = CharacterRelation(
-        source_character="林啸",
-        target_character="赵乾",
-        relation_type="敌对",
-        description="追捕关系"
-    )
-    
-    event = PlotEvent(
-        title="潜入起获",
-        description="秘密潜入赵乾仓库",
-        significance="重要转折"
-    )
-    
-    conflict = Conflict(
-        description="黑白对立博弈",
-        characters_involved=["林啸", "赵乾"]
-    )
-    
-    risk = RiskPoint(
-        category="政策安全",
-        description="爆破戏过多",
-        severity=SeverityType.HIGH
-    )
-    
-    ref = ReferenceWork(
-        title="隐秘的角落",
-        similarity_reason="同款暗黑对抗悬疑",
-        benchmark_metric="豆瓣 8.8"
-    )
-    
-    review = ReviewResult(
-        is_passed=True,
-        findings=[],
-        revision_suggestions=[]
-    )
-    
-    report = EvaluationReport(
-        script_id="test-123",
-        title="测试剧本",
-        genre="悬疑",
-        characters=[char1, char2],
-        relations=[relation],
-        events=[event],
-        conflicts=[conflict],
-        risks=[risk],
-        references=[ref],
-        review=review,
-        conclusion=DecisionType.REVISE,
-        summary="评估完成"
-    )
-    
-    assert report.script_id == "test-123"
-    assert len(report.characters) == 2
-    assert report.conclusion == DecisionType.REVISE
-    assert report.review.is_passed is True
+    # 3. 测试非法输入（分数小于 1）
+    with pytest.raises(ValidationError):
+        FinalReport(
+            project_id="proj-101",
+            title="项目名称",
+            executive_summary="执行总结说明",
+            character_score=5,
+            plot_logic_score=0,  # 非法！低于了 ge=1 限制
+            conflict_density_score=3,
+            market_fit_score=1,
+            evidence_list=[evidence],
+            review_issues=[],
+            decision_suggestion="PASS",
+            improvement_suggestions=[]
+        )
+
+    # 4. 测试 JSON 序列化/反序列化
+    json_str = report.model_dump_json()
+    parsed_report = FinalReport.model_validate_json(json_str)
+    assert parsed_report.character_score == 5
+    assert parsed_report.plot_logic_score == 4
+    assert parsed_report.evidence_list[0].source_title == "相似电影"

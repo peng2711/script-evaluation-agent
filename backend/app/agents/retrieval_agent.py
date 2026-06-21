@@ -4,21 +4,20 @@ import datetime
 
 class RetrievalAgent:
     """
-    Retrieval Agent (Mock 实现)：检索同类作品或素材库，为评估结论提供证据。
+    Retrieval Agent (Mock 实现)：调用 RAG 检索器，匹配同类作品作为评估论证证据，并填入 state.evidences。
     """
     def execute(self, state: AgentState) -> AgentState:
-        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] RetrievalAgent 开始检索同类作品。")
+        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] RetrievalAgent 开始检索相似历史参考作品素材。")
         
         genre = state.script.genre or "通用"
-        query = state.script.content[:100]  # 使用内容的前100字作为简要查询
+        query = state.script.raw_text[:100]
         
-        # 调用 mock 检索器
-        references = mock_retriever.retrieve_similar_works(genre, query)
+        # 检索证据库
+        evidences = mock_retriever.retrieve_similar_works(genre, query)
         
-        state.retrieved_references = references
-        
-        titles = [ref.title for ref in references]
-        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] RetrievalAgent 检索完成。找到相似作品：{', '.join(titles) if titles else '无'}")
+        state.evidences = evidences
+        titles = [ev.source_title for ev in evidences]
+        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] RetrievalAgent 检索完成。获取对比依据: {', '.join(titles) if titles else '无'}")
         return state
 
 # 全局 RetrievalAgent 单例
