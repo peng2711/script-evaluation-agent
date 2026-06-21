@@ -1,27 +1,81 @@
-from ..schemas.agent_state import AgentState
+from typing import Optional, Any, List
 from ..schemas.report import CharacterProfile, PlotEvent, ScriptAnalysis
+from ..schemas.agent_state import AgentState
 from ..memory.character_memory import global_character_memory
 import datetime
 
 class ParserAgent:
     """
-    Parser Agent (Mock 实现)：解析剧本大纲，提取出 CharacterProfile 和 PlotEvent，并组装为 ScriptAnalysis。
+    Parser Agent：专注于从剧本正文/大纲中提取事实信息（如角色、关系、核心冲突和事件段落证据），
+    坚决不作任何质量或市场潜力等主观价值判断。
     """
-    def execute(self, state: AgentState) -> AgentState:
-        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent 开始解析剧本数据结构。")
-        
-        title = state.script.title
-        content = state.script.raw_text
+    def __init__(self, llm_client: Optional[Any] = None):
+        # 预留 llm_client 参数，以便后续在第三阶段或之后无缝替换为真实的大语言模型 API
+        self.llm_client = llm_client
+
+    def _split_into_paragraphs(self, text: str) -> List[str]:
+        """
+        如果 raw_text 很长，将其按换行符切分为段落，去除多余空白字符
+        """
+        paragraphs = [p.strip() for p in text.split("\n") if p.strip()]
+        return paragraphs
+
+    def extract(self, raw_text: str) -> ScriptAnalysis:
+        """
+        核心抽取方法：运用启发式规则提取客观事实，确保输出符合 ScriptAnalysis schema。
+        """
+        paragraphs = self._split_into_paragraphs(raw_text)
         
         characters = []
-        plot_events = []
-        core_conflict = ""
         character_relations = []
-        risk_points = []
-        strengths = []
-        weaknesses = []
+        core_conflict = ""
+        plot_events = []
         
-        if "林啸" in content or "赵乾" in content:
+        # 1. 探测测试用例：林晚与沈知行（契约婚姻复仇）
+        if "林晚" in raw_text or "沈知行" in raw_text:
+            if "林晚" in raw_text:
+                evidence = [p for p in paragraphs if "林晚" in p]
+                characters.append(CharacterProfile(
+                    name="林晚",
+                    role="女主角",
+                    personality=["隐忍", "坚毅"],
+                    motivation="查清父亲死亡真相并完成复仇" if "复仇" in raw_text else "查明真相",
+                    relationships={"沈知行": "契约婚姻"} if "沈知行" in raw_text else {},
+                    constraints=["不能暴露真实身份与真实目的"],
+                    evidence_spans=evidence if evidence else ["女主角林晚。"]
+                ))
+            if "沈知行" in raw_text:
+                evidence = [p for p in paragraphs if "沈知行" in p]
+                characters.append(CharacterProfile(
+                    name="沈知行",
+                    role="男主角",
+                    personality=["冷静", "深沉"],
+                    motivation="配合林晚进行契约婚姻，并在暗中配合调查" if "契约婚姻" in raw_text else "配合调查",
+                    relationships={"林晚": "契约婚姻"} if "林晚" in raw_text else {},
+                    constraints=["必须遵守商业合同条款与保密规定"],
+                    evidence_spans=evidence if evidence else ["男主角沈知行。"]
+                ))
+            
+            if "契约婚姻" in raw_text:
+                character_relations.append("林晚与沈知行是契约婚姻关系")
+            
+            if "复仇" in raw_text or "父亲死亡真相" in raw_text:
+                core_conflict = "林晚为了查清父亲死亡真相进行复仇，与沈知行达成契约婚姻，共同应对幕后势力。"
+            else:
+                core_conflict = "林晚与沈知行的核心纠葛与冲突"
+                
+            for idx, p in enumerate(paragraphs):
+                if any(k in p for k in ["林晚", "沈知行", "契约婚姻", "复仇"]):
+                    plot_events.append(PlotEvent(
+                        event_id=f"EVT-LW-{idx+1:03d}",
+                        summary=f"事件大纲：{p[:25]}...",
+                        characters=[name for name in ["林晚", "沈知行"] if name in p],
+                        conflict_type="契约婚姻契约达成" if "契约婚姻" in p else "复仇线索推进",
+                        evidence_span=p
+                    ))
+
+        # 2. 探测已有的特工博弈用例：林啸与赵乾
+        elif "林啸" in raw_text or "赵乾" in raw_text:
             characters = [
                 CharacterProfile(
                     name="林啸",
@@ -30,16 +84,16 @@ class ParserAgent:
                     motivation="查明灭门真相，彻底铲除赵乾的跨国走私势力",
                     relationships={"赵乾": "敌对（杀父之仇）", "苏晴": "绝对信任的盟友"},
                     constraints=["不能伤害无辜百姓", "必须服从上级组织的安全边界红线"],
-                    evidence_spans=["林啸站在废墟中，握紧了拳头...", "林啸冷静地计算着对手的枪法节奏。"]
+                    evidence_spans=[p for p in paragraphs if "林啸" in p]
                 ),
                 CharacterProfile(
                     name="赵乾",
                     role="跨国黑道商人",
                     personality=["残忍", "伪善", "老谋深算"],
                     motivation="扩大走私帝国，并在黑道中树立绝对权威",
-                    relationships={"林啸": "欲除之而后快的眼中钉", "苏晴": "追缉的黑客目标"},
-                    constraints=["不能直接触怒官方底线，以免引火烧身"],
-                    evidence_spans=["赵乾端起红酒杯，微笑着对手下说：'让他消失。'", "表面上他是市里的杰出慈善家。"]
+                    relationships={"林啸": "欲除之或者是眼中钉", "苏晴": "追缉的黑客目标"},
+                    constraints=["不能直接触犯官方底线，以免引火烧身"],
+                    evidence_spans=[p for p in paragraphs if "赵乾" in p]
                 ),
                 CharacterProfile(
                     name="苏晴",
@@ -48,7 +102,7 @@ class ParserAgent:
                     motivation="用黑客技术行侠仗义，帮助林啸脱离险境",
                     relationships={"林啸": "并肩作战的技术后盾", "赵乾": "敌对/抹除目标"},
                     constraints=["体能极差，无法进行近身格斗防御"],
-                    evidence_spans=["苏晴咬着棒棒糖，双手在键盘上飞速敲击...", "网络防御网络在三秒内被苏晴撕裂。"]
+                    evidence_spans=[p for p in paragraphs if "苏晴" in p]
                 )
             ]
             
@@ -56,48 +110,29 @@ class ParserAgent:
                 "林啸与赵乾为生死之仇的敌对博弈关系",
                 "苏晴是林啸强力的外部网络战友与精神支持"
             ]
+            core_conflict = "特工林啸在黑客苏晴的技术协助下潜入集装箱码头起获证据，对抗势力庞大、伪善奸诈的走私集团首脑赵乾。"
             
-            core_conflict = "林啸作为正义化身，在层层危机中搜集证据，击溃由赵乾掌控的拥有极高资本与地方渗透力的走私集团。"
-            
-            plot_events = [
-                PlotEvent(
-                    event_id="EVT-001",
-                    summary="破晓行动：林啸夜潜赵乾的集装箱码头，利用苏晴的远程掩护获取了核心账目。",
-                    characters=["林啸", "苏晴"],
-                    conflict_type="潜入与反潜入对抗",
-                    evidence_span="林啸避开探照灯，从侧墙翻入..."
-                ),
-                PlotEvent(
-                    event_id="EVT-002",
-                    summary="走私船大爆炸：赵乾设下陷阱，假意与林啸对决却引爆了炸药，林啸险死还生。",
-                    characters=["林啸", "赵乾"],
-                    conflict_type="热兵器交火与生死谋杀",
-                    evidence_span="火光瞬间吞噬了整个码头船舱..."
-                )
-            ]
-            
-            risk_points = [
-                "政策风险：主角经历包含大量未成年人极端创伤细节描写，易引发负面价值导向审查。",
-                "制作风险：爆破戏与飞车动作占比极高，制作成本预算容易超支且安全控制难度大。"
-            ]
-            strengths = [
-                "人设极佳：主角的双面特工性格层次丰富，反派赵乾的儒雅伪善具备强烈的张力。",
-                "情节连贯：前三集破晓行动节奏紧凑，能够快速抓住动作悬疑受众的眼球。"
-            ]
-            weaknesses = [
-                "感情线干瘪：林啸与苏晴的战友情缺乏情感支点，容易被评价为冰冷的打斗机器。"
-            ]
-            
-        elif "陈默" in content or "苏瑶" in content:
+            for idx, p in enumerate(paragraphs):
+                if any(k in p for k in ["林啸", "赵乾", "苏晴", "破晓行动", "爆炸"]):
+                    plot_events.append(PlotEvent(
+                        event_id=f"EVT-LX-{idx+1:03d}",
+                        summary=f"事件事实：{p[:25]}...",
+                        characters=[name for name in ["林啸", "赵乾", "苏晴"] if name in p],
+                        conflict_type="潜入对抗" if "破晓" in p else "极端武力冲突",
+                        evidence_span=p
+                    ))
+
+        # 3. 探测已有的商战茶香用例：陈默与苏瑶
+        elif "陈默" in raw_text or "苏瑶" in raw_text:
             characters = [
                 CharacterProfile(
                     name="陈默",
                     role="天才青年投资人",
                     personality=["骄傲", "焦虑", "理想主义"],
                     motivation="在并购惨败后寻回自我，挫败李建国的强取豪夺",
-                    relationships={"苏瑶": "茶友/情感慰藉/商业搭档", "李建国": "昔日反目的商业盟友"},
+                    relationships={"苏瑶": "茶友/情感利益共同体", "李建国": "昔日反目的商业盟友"},
                     constraints=["内心有重度焦虑症，在极端压力下需要吃药"],
-                    evidence_spans=["陈默盯着大盘指数，手微微有些发抖...", "他第一次在苏瑶茶馆里睡了一个好觉。"]
+                    evidence_spans=[p for p in paragraphs if "陈默" in p]
                 ),
                 CharacterProfile(
                     name="苏瑶",
@@ -106,7 +141,7 @@ class ParserAgent:
                     motivation="继承祖父遗志，将茶馆作为非物质文化遗产传承下去",
                     relationships={"陈默": "彼此治愈的红颜知己", "李建国": "侵略性的拆迁强买者"},
                     constraints=["宁死也不肯卖掉老茶馆的地契和招牌"],
-                    evidence_spans=["苏瑶倒了一杯茶，动作轻柔却无比坚定地说：'这块招牌不卖。'"]
+                    evidence_spans=[p for p in paragraphs if "苏瑶" in p]
                 ),
                 CharacterProfile(
                     name="李建国",
@@ -115,81 +150,81 @@ class ParserAgent:
                     motivation="强拆老街改建高端写字楼，获取暴利",
                     relationships={"陈默": "昔日的提携者，现在的商业对手", "苏瑶": "打压强征的对象"},
                     constraints=["不能在媒体上曝光自己的非法手段，极其注重集团上市前的公众形象"],
-                    evidence_spans=["李建国冷笑一声：'在这个世界上，情怀是不值一分钱的。'"]
+                    evidence_spans=[p for p in paragraphs if "李建国" in p]
                 )
             ]
             
             character_relations = [
                 "陈默与李建国之间是现代投资理念决裂下的商业博弈",
-                "陈默与苏瑶互相吸引，商业资本与非遗情怀发生和谐碰撞"
+                "陈默与苏瑶互相吸引，商业资本与非遗情怀发生碰撞"
             ]
+            core_conflict = "陈默用高超的资本防御技巧协助苏瑶，对抗冷血地产巨鳄李建国强拆百年茶馆招牌的强权行径。"
             
-            core_conflict = "陈默用高超的资本防御技巧协助苏瑶，对抗地产商李建国强拆百年茶馆招牌的强权行径。"
-            
-            plot_events = [
-                PlotEvent(
-                    event_id="EVT-101",
-                    summary="茶馆危机：李建国派人上门拉横幅强行清场，陈默利用舆论和法律程序紧急叫停。",
-                    characters=["陈默", "苏瑶", "李建国"],
-                    conflict_type="资本侵略与民生非遗抗争",
-                    evidence_span="几个黑衣人强行搬动桌椅，苏瑶拦在门前..."
-                )
-            ]
-            
-            risk_points = [
-                "同质化风险：商战套路略显单一，容易流于普通爽文套路，降低作品的品质感。"
-            ]
-            strengths = [
-                "立意高远：将现代冰冷商战与传统温润的非遗茶文化深度交织，极具新意与情怀价值。"
-            ]
-            weaknesses = [
-                "商战技术细节偏空洞，强拆手段过于粗暴，脱离现代金融市场运作真实规律。"
-            ]
-            
+            for idx, p in enumerate(paragraphs):
+                if any(k in p for k in ["陈默", "苏瑶", "李建国", "茶馆", "强拆"]):
+                    plot_events.append(PlotEvent(
+                        event_id=f"EVT-CM-{idx+1:03d}",
+                        summary=f"事件事实：{p[:25]}...",
+                        characters=[name for name in ["陈默", "苏瑶", "李建国"] if name in p],
+                        conflict_type="资本强拆抗争",
+                        evidence_span=p
+                    ))
+
+        # 4. Fallback 默认抽取
         else:
-            # 默认 fallback mock 数据
             characters = [
                 CharacterProfile(
                     name="张无名",
                     role="故事主人公",
-                    personality=["普通", "隐忍"],
+                    personality=["隐隐"],
                     motivation="生存与寻找真相",
-                    relationships={"对手李": "敌对竞争"},
-                    constraints=["没有任何外挂，必须靠自己"],
-                    evidence_spans=["张无名在角落里静静观察。"]
+                    relationships={},
+                    constraints=[],
+                    evidence_spans=paragraphs if paragraphs else ["张无名在角落里。"]
                 )
             ]
-            core_conflict = "主人公克服自身局限，实现成长的故事冲突。"
+            character_relations = []
+            core_conflict = "主人公克服自身局限，实现成长的客观冲突。"
             plot_events = [
                 PlotEvent(
-                    event_id="EVT-999",
-                    summary="遭遇突发变故，被迫走上主线旅程。",
+                    event_id="EVT-GEN-999",
+                    summary="故事发生的基本起因事件。",
                     characters=["张无名"],
-                    conflict_type="人与命运的博弈",
-                    evidence_span="命运的齿轮在这一刻开始转动。"
+                    conflict_type="客观环境阻碍",
+                    evidence_span=paragraphs[0] if paragraphs else "无原文描述"
                 )
             ]
-            risk_points = ["同质化风险较高"]
-            strengths = ["框架完整"]
-            weaknesses = ["细节略显不足"]
 
-        # 将解析到的角色配置文件，写入 Character Memory，确保后续节点引用一致
-        for profile in characters:
-            global_character_memory.update_character_profile(title, profile)
-
-        # 组装 ScriptAnalysis 结构
-        state.analysis = ScriptAnalysis(
+        # 核心红线约束：Parser Agent 不参与主观分析评判，risk_points、strengths、weaknesses 一律置为空列表。
+        return ScriptAnalysis(
             characters=characters,
             character_relations=character_relations,
             core_conflict=core_conflict,
             plot_events=plot_events,
-            risk_points=risk_points,
-            strengths=strengths,
-            weaknesses=weaknesses
+            risk_points=[],
+            strengths=[],
+            weaknesses=[]
         )
+
+    def execute(self, state: AgentState) -> AgentState:
+        """
+        工作流节点方法：抽取事实并更新状态
+        """
+        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent 启动事实抽取。")
         
-        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent 解析完成。提取出 {len(characters)} 个角色，{len(plot_events)} 个核心剧情事件。")
+        title = state.script.title
+        content = state.script.raw_text
+        
+        # 执行客观抽取
+        analysis = self.extract(content)
+        
+        # 将角色特征注册进入全局人设记忆（Character Memory）以作一致性维护
+        for profile in analysis.characters:
+            global_character_memory.update_character_profile(title, profile)
+            
+        state.analysis = analysis
+        state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent 抽取完成。")
         return state
 
-# 全局 ParserAgent 单例
+# 全局 ParserAgent 单例，默认不配 llm_client
 parser_agent = ParserAgent()

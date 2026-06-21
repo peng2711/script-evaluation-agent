@@ -76,7 +76,7 @@ def test_parse_endpoint_success():
     
     # 验证剧情事件
     assert len(data["plot_events"]) > 0
-    assert data["plot_events"][0]["event_id"] == "EVT-001"
+    assert data["plot_events"][0]["event_id"] == "EVT-LX-001"
 
 def test_get_project_by_id_flow():
     # 1. 产生一个随机的ID提交评估
