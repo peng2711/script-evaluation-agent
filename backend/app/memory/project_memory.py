@@ -1,53 +1,82 @@
+import os
+import json
 from typing import Dict, List, Any, Optional
-from ..schemas.report import FinalReport
+from pydantic import BaseModel
 
-class ProjectMemory:
+class ProjectMemoryStore:
     """
-    项目级别记忆管理器 (在内存中运行，记录各个项目在多轮评估中的决策演变，并支持通过 project_id 查询)
+    项目级别记忆管理器：通过本地 JSON 文件持久化存储每个项目的评估报告。
+    存储路径：backend/storage/project_memory.json
     """
-    def __init__(self):
-        # 键为 project_title, 值为该项目历史多次评估报告的简要摘要和立项建议
-        self._history_storage: Dict[str, List[Dict[str, Any]]] = {}
-        # 键为 project_id, 值为最新评估出的 FinalReport 对象
-        self._reports_storage: Dict[str, FinalReport] = {}
-
-    def add_evaluation_record(self, project_title: str, project_id: str, decision: str, executive_summary: str):
-        """
-        向项目历史记忆中添加一条评估快照记录
-        """
-        if project_title not in self._history_storage:
-            self._history_storage[project_title] = []
+    def __init__(self, filepath: Optional[str] = None):
+        if filepath:
+            self.filepath = filepath
+        else:
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            self.filepath = os.path.normpath(os.path.join(current_dir, "..", "..", "storage", "project_memory.json"))
         
-        self._history_storage[project_title].append({
-            "project_id": project_id,
-            "decision": decision,
-            "executive_summary": executive_summary
-        })
+        # 确保存储目录存在
+        os.makedirs(os.path.dirname(self.filepath), exist_ok=True)
 
-    def get_history(self, project_title: str) -> List[Dict[str, Any]]:
-        """
-        获取项目的评估历史纪录
-        """
-        return self._history_storage.get(project_title, [])
+    def _read_file(self) -> Dict[str, Dict[str, Any]]:
+        if not os.path.exists(self.filepath):
+            return {}
+        try:
+            with open(self.filepath, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return {}
 
-    def add_project_report(self, project_id: str, report: FinalReport):
-        """
-        以 project_id 为键归档保存最新的评估报告到内存中
-        """
-        self._reports_storage[project_id] = report
+    def _write_file(self, data: Dict[str, Dict[str, Any]]):
+        with open(self.filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
 
-    def get_project_report(self, project_id: str) -> Optional[FinalReport]:
+    def save_project(self, project_id: str, project_summary: Any):
         """
-        根据 project_id 在内存中查询项目的最新报告
+        保存整个项目评估报告（支持 dict 或 Pydantic 结构模型）
         """
-        return self._reports_storage.get(project_id)
+        data = self._read_file()
+        
+        # 兼容 Pydantic 模型
+        if isinstance(project_summary, BaseModel):
+            summary_dict = project_summary.model_dump()
+        else:
+            summary_dict = dict(project_summary)
+            
+        data[project_id] = summary_dict
+        self._write_file(data)
+
+    def load_project(self, project_id: str) -> Optional[Dict[str, Any]]:
+        """
+        读取项目，如果不存在则返回 None
+        """
+        data = self._read_file()
+        return data.get(project_id)
+
+    def update_project(self, project_id: str, fields: Dict[str, Any]):
+        """
+        局部更新项目报告的特定字段
+        """
+        data = self._read_file()
+        if project_id in data:
+            data[project_id].update(fields)
+            self._write_file(data)
+        else:
+            # 如果不存在，抛出异常或静默忽略？单元测试需要测试“更新”，我们通常抛出 KeyError
+            raise KeyError(f"Project with ID '{project_id}' does not exist.")
+
+    def list_projects(self) -> List[Dict[str, Any]]:
+        """
+        列出所有已评估的项目总结报告
+        """
+        data = self._read_file()
+        return list(data.values())
 
     def clear(self):
         """
-        清空内存中的所有项目记忆
+        清空持久化文件中的全部项目记忆
         """
-        self._history_storage.clear()
-        self._reports_storage.clear()
+        self._write_file({})
 
-# 全局内存单例
-global_project_memory = ProjectMemory()
+# 全局项目持久化记忆单例
+global_project_memory = ProjectMemoryStore()

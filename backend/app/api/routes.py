@@ -60,29 +60,46 @@ def parse_script(script: ScriptInput):
 @router.get("/projects/{project_id}", response_model=FinalReport)
 def get_project_report_by_id(project_id: str):
     """
-    根据项目唯一 ID (project_id) 从内存中检索最新的评估报告。若不存在，返回 404 状态码。
+    根据项目唯一 ID (project_id) 从持久化存储中检索最新的评估报告。若不存在，返回 404 状态码。
     """
-    report = global_project_memory.get_project_report(project_id)
-    if not report:
+    report_dict = global_project_memory.load_project(project_id)
+    if not report_dict:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
             detail=f"未找到项目ID为 '{project_id}' 的评估报告"
         )
-    return report
+    return FinalReport.model_validate(report_dict)
 
 @router.get("/memory/project/{title}", response_model=List[Dict[str, Any]])
 def get_project_history(title: str):
     """
     查询指定项目的多轮评估决策历史。
     """
-    return global_project_memory.get_history(title)
+    projects = global_project_memory.list_projects()
+    matched = []
+    for proj in projects:
+        if proj.get("title") == title:
+            matched.append({
+                "project_id": proj.get("project_id"),
+                "decision": proj.get("decision_suggestion"),
+                "executive_summary": proj.get("executive_summary")
+            })
+    return matched
 
 @router.get("/memory/character/{title}", response_model=Dict[str, Any])
 def get_character_profiles(title: str):
     """
     查询指定项目在评估中确立的统一角色人设库。
     """
-    return global_character_memory.get_all_profiles(title)
+    projects = global_project_memory.list_projects()
+    project_ids = [proj.get("project_id") for proj in projects if proj.get("title") == title]
+    
+    profiles_dict = {}
+    for pid in project_ids:
+        chars = global_character_memory.load_characters(pid)
+        for char in chars:
+            profiles_dict[char.get("name")] = char
+    return profiles_dict
 
 @router.post("/memory/clear", response_model=Dict[str, str])
 def clear_all_memories():

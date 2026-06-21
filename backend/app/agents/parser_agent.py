@@ -218,9 +218,8 @@ class ParserAgent:
         # 执行客观抽取
         analysis = self.extract(content)
         
-        # 将角色特征注册进入全局人设记忆（Character Memory）以作一致性维护
-        for profile in analysis.characters:
-            global_character_memory.update_character_profile(title, profile)
+        # 将角色特征注册进入全局人设记忆（Character Memory）进行本地持久化写入
+        global_character_memory.save_characters(state.script.project_id, analysis.characters)
             
         state.analysis = analysis
         state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent 抽取完成。")

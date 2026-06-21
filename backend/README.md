@@ -103,5 +103,19 @@ python -m app.eval.run_eval
 
 具体详情请参阅文档：[limitations.md](docs/limitations.md)
 - 所有推理均为 Mock，不消耗大模型 Token；
-- RAG 知识库基于本地 JSON；
-- 记忆模块（Memory）在内存中运行，服务重启后将丢失。
+- RAG 知识库基于本地 JSON 文件；
+- 记忆模块支持 JSON 文件持久化，但在多并发高负载场景下未加文件锁防死锁保护。
+
+---
+
+## 6. 系统记忆模块设计说明
+
+为了在影视项目的长周期多轮修改与评估中保持人物设定、戏剧冲突以及个性化用户偏好的一致性，系统设计了双重记忆存储架构：
+
+### 1. 项目决策记忆 (ProjectMemoryStore)
+* **存储位置**：`backend/storage/project_memory.json`
+* **功能**：归档每次对特定项目评估产出的 `FinalReport`。支持多轮评估的版本保存（`save_project`）、特定字段的局部更新（`update_project`）和列表导出，供 `/projects/{project_id}` 接口进行历史报告还原。
+
+### 2. 角色人设记忆 (CharacterMemoryStore)
+* **存储位置**：`backend/storage/character_memory.json`
+* **功能**：由 `Parser Agent` 在完成角色事实抽取后批量持久化写入。能够跨评估节点锁定特定角色的动机（`motivation`）、性格标签（`personality`）和关系说明。支持特定项目下单一人物人设属性的更新（`update_character`），有效防范多轮评估中角色名混淆与背景设定崩塌。

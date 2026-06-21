@@ -1,0 +1,98 @@
+{
+  "proj-999": {
+    "project_id": "proj-999",
+    "title": "测试剧本之夜",
+    "executive_summary": "该项目特工动作悬疑题材商业看点足。但由于动作戏占比过高及部分主角童年创伤情节过于血腥敏感，建议将立项等级调整为修改后通过。",
+    "character_score": 5,
+    "plot_logic_score": 4,
+    "conflict_density_score": 5,
+    "market_fit_score": 4,
+    "evidence_list": [
+      {
+        "source_title": "隐秘的角落",
+        "source_type": "电视剧",
+        "content": "三个小孩在景区玩耍时无意间记录下了一场谋杀，从而展开了一场关于人性、罪恶与救赎的角力。",
+        "relevance_reason": "匹配题材：悬疑。两者在戏剧冲突 '三个小孩与杀人犯张东升之间的勒索与博弈' 的展现方式上具有高度相似度。",
+        "score": 0.95
+      }
+    ],
+    "review_issues": [],
+    "decision_suggestion": "REVISE",
+    "improvement_suggestions": [
+      "建议二稿中压缩15%的爆破动作场面，控制特效制作预算。",
+      "温和化处理林啸早期的创伤回忆场景，确保符合国内相关政策审查标准。"
+    ]
+  },
+  "test-flow-id-123": {
+    "project_id": "test-flow-id-123",
+    "title": "项目-测试茶香",
+    "executive_summary": "项目将非遗茶文化与现代金融商战相结合，切入点较为新颖。虽李建国强拆茶馆等外部冲突戏剧张力强，但商战细节过于简单粗暴，不符合专业逻辑。建议充实商战技术细节后予以通过。",
+    "character_score": 4,
+    "plot_logic_score": 3,
+    "conflict_density_score": 3,
+    "market_fit_score": 3,
+    "evidence_list": [
+      {
+        "source_title": "狂飙",
+        "source_type": "电视剧",
+        "content": "讲述了一名一线刑警与黑恶势力代表人物长达二十年的生死较量，通过小人物的命运沉浮展现时代变迁与扫黑除恶的坚定决心。",
+        "relevance_reason": "匹配题材：都市。两者在戏剧冲突 '刑警安欣与黑恶势力高启强之间横跨二十年的宿命对决' 的展现方式上具有高度相似度。",
+        "score": 0.95
+      }
+    ],
+    "review_issues": [],
+    "decision_suggestion": "REVISE",
+    "improvement_suggestions": [
+      "编剧团队应引入专业金融顾问，重新设计陈默阻拦恶意收购的金融反制细节。",
+      "深化陈默与苏瑶关于现代资本理念与传统文化传承之间的情感碰撞，使感情升温更显自然。"
+    ]
+  },
+  "proj-901": {
+    "project_id": "proj-901",
+    "title": "破晓猎杀",
+    "executive_summary": "该项目特工动作悬疑题材商业看点足。但由于动作戏占比过高及部分主角童年创伤情节过于血腥敏感，建议将立项等级调整为修改后通过。",
+    "character_score": 5,
+    "plot_logic_score": 4,
+    "conflict_density_score": 5,
+    "market_fit_score": 4,
+    "evidence_list": [
+      {
+        "source_title": "隐秘的角落",
+        "source_type": "电视剧",
+        "content": "三个小孩在景区玩耍时无意间记录下了一场谋杀，从而展开了一场关于人性、罪恶与救赎的角力。",
+        "relevance_reason": "匹配题材：悬疑。两者在戏剧冲突 '三个小孩与杀人犯张东升之间的勒索与博弈' 的展现方式上具有高度相似度。",
+        "score": 0.95
+      }
+    ],
+    "review_issues": [],
+    "decision_suggestion": "REVISE",
+    "improvement_suggestions": [
+      "建议二稿中压缩15%的爆破动作场面，控制特效制作预算。",
+      "温和化处理林啸早期的创伤回忆场景，确保符合国内相关政策审查标准。"
+    ]
+  },
+  "proj-902": {
+    "project_id": "proj-902",
+    "title": "非遗茶香与金融风暴",
+    "executive_summary": "项目将非遗茶文化与现代金融商战相结合，切入点较为新颖。虽李建国强拆茶馆等外部冲突戏剧张力强，但商战细节过于简单粗暴，不符合专业逻辑。建议充实商战技术细节后予以通过。",
+    "character_score": 4,
+    "plot_logic_score": 3,
+    "conflict_density_score": 3,
+    "market_fit_score": 3,
+    "evidence_list": [
+      {
+        "source_title": "狂飙",
+        "source_type": "电视剧",
+        "content": "讲述了一名一线刑警与黑恶势力代表人物长达二十年的生死较量，通过小人物的命运沉浮展现时代变迁与扫黑除恶的坚定决心。",
+        "relevance_reason": "匹配题材：都市。两者在戏剧冲突 '刑警安欣与黑恶势力高启强之间横跨二十年的宿命对决' 的展现方式上具有高度相似度。",
+        "score": 0.95
+      }
+    ],
+    "review_issues": [],
+    "decision_suggestion": "REVISE",
+    "improvement_suggestions": [
+      "编剧团队应引入专业金融顾问，重新设计陈默阻拦恶意收购的金融反制细节。",
+      "深化陈默与苏瑶关于现代资本理念与传统文化传承之间的情感碰撞，使感情升温更显自然。"
+    ]
+  }
+}

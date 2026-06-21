@@ -46,18 +46,11 @@ class ScriptEvaluationWorkflow:
         # 5. 提取最终评估报告
         final_report = state.final_report or state.draft_report
         
-        # 6. 将最终决策归档至全局项目记忆中 (Project Memory)
+        # 6. 将最终报告持久化保存至本地项目记忆 (Project Memory)
         if final_report:
-            global_project_memory.add_evaluation_record(
-                project_title=script.title,
-                project_id=final_report.project_id,
-                decision=final_report.decision_suggestion,
-                executive_summary=final_report.executive_summary
-            )
-            # 新增：按 project_id 进行整个 FinalReport 对象的归档保存
-            global_project_memory.add_project_report(
-                project_id=final_report.project_id,
-                report=final_report
+            global_project_memory.save_project(
+                project_id=script.project_id,
+                project_summary=final_report
             )
 
         return final_report
