@@ -8,7 +8,7 @@
     "review_issue_detection_rate": 0.0,
     "workflow_success_rate": 1.0,
     "avg_tool_calls": 0.0,
-    "avg_latency_ms": 1.2645300026633777,
+    "avg_latency_ms": 1.3179600005969405,
     "fallback_rate": 0.0
   },
   "fixed": {
@@ -20,7 +20,7 @@
     "review_issue_detection_rate": 0.0,
     "workflow_success_rate": 1.0,
     "avg_tool_calls": 0.0,
-    "avg_latency_ms": 2.173940002103336,
+    "avg_latency_ms": 2.1052900003269315,
     "fallback_rate": 0.0
   },
   "hybrid": {
@@ -32,7 +32,7 @@
     "review_issue_detection_rate": 0.16666666666666666,
     "workflow_success_rate": 1.0,
     "avg_tool_calls": 0.0,
-    "avg_latency_ms": 8.547839999664575,
+    "avg_latency_ms": 10.32433999935165,
     "fallback_rate": 0.0
   },
   "hybrid_with_tools": {
@@ -44,7 +44,7 @@
     "review_issue_detection_rate": 0.16666666666666666,
     "workflow_success_rate": 1.0,
     "avg_tool_calls": 12.3,
-    "avg_latency_ms": 9.72017999883974,
+    "avg_latency_ms": 12.623530002019834,
     "fallback_rate": 0.0
   }
 }
