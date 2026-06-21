@@ -54,7 +54,8 @@ class ToolRouter:
 
         # 4. 执行工具逻辑，拦截执行报错进行降级
         try:
-            result = tool.run(**validated_input.model_dump())
+            kwargs = {f: getattr(validated_input, f) for f in validated_input.__class__.model_fields}
+            result = tool.run(**kwargs)
             duration = (time.perf_counter() - start_t) * 1000.0
         except Exception as run_error:
             duration = (time.perf_counter() - start_t) * 1000.0

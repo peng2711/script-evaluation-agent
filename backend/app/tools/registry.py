@@ -50,9 +50,9 @@ class RerankTool(BaseTool):
             allowed_agents=["RetrievalAgent"]
         )
 
-    def run(self, evidences: List[RetrievalEvidence], query: str) -> RerankOutput:
-        # 重排示例：简单基于原分数由高到低排序，保持 schema 匹配且便于后续第二阶段扩展
-        reranked = sorted(evidences, key=lambda x: x.score, reverse=True)
+    def run(self, evidences: List[RetrievalEvidence], query: str, top_k: int = 5) -> RerankOutput:
+        from ..rag.retriever import mock_reranker
+        reranked = mock_reranker.rerank(evidences, query, top_k=top_k)
         return RerankOutput(evidences=reranked)
 
 class MemoryReadTool(BaseTool):

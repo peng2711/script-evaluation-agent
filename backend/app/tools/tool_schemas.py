@@ -21,6 +21,7 @@ class SimilarWorkSearchOutput(BaseModel):
 class RerankInput(BaseModel):
     evidences: List[RetrievalEvidence] = Field(..., description="待重排的初筛相似作品证据列表")
     query: str = Field(..., description="用于重排比对的查询文本")
+    top_k: int = Field(default=5, description="精排返回的数量上限")
 
 class RerankOutput(BaseModel):
     evidences: List[RetrievalEvidence] = Field(..., description="经过精细重排后的前 Top-k 证据列表")
