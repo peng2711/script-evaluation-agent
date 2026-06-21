@@ -1,0 +1,60 @@
+{
+  "proj-999": {
+    "project_id": "proj-999",
+    "title": "测试剧本之夜",
+    "raw_text": "这是一部关于黑客与特工的故事，里面包含林啸和赵乾，背景是一次破晓行动。",
+    "genre": "悬疑",
+    "target_audience": "男性动作片受众",
+    "user_preferences": [
+      "偏好紧凑"
+    ]
+  },
+  "test-flow-id-123": {
+    "project_id": "test-flow-id-123",
+    "title": "项目-测试茶香",
+    "raw_text": "陈默与苏瑶一起反抗李建国强拆茶馆的行为。",
+    "genre": "都市",
+    "target_audience": "泛大众",
+    "user_preferences": []
+  },
+  "proj-replay-test": {
+    "project_id": "proj-replay-test",
+    "title": "林晚复仇记",
+    "raw_text": "女主林晚，男主沈知行，契约婚姻复仇。",
+    "genre": "都市",
+    "target_audience": "大众",
+    "user_preferences": []
+  },
+  "trace-test-rerank-tool-id": {
+    "project_id": "trace-test-rerank-tool-id",
+    "title": "破晓行动",
+    "raw_text": "特工林啸潜入集装箱码头，追踪走走私商人赵乾的走私帝国。",
+    "genre": "动作",
+    "target_audience": "大众",
+    "user_preferences": []
+  },
+  "test-observability-id": {
+    "project_id": "test-observability-id",
+    "title": "破晓猎杀",
+    "raw_text": "特工林啸与反派赵乾在集装箱码头起获账目发生爆炸脱身。",
+    "genre": "动作",
+    "target_audience": "大众",
+    "user_preferences": []
+  },
+  "test-wf-project": {
+    "project_id": "test-wf-project",
+    "title": "测试工作流剧本",
+    "raw_text": "林晚和沈知行的契约婚姻，女主林晚为了查清父亲死亡真相复仇。",
+    "genre": "都市",
+    "target_audience": "都市剧观众",
+    "user_preferences": []
+  },
+  "test-reflection-wf-project": {
+    "project_id": "test-reflection-wf-project",
+    "title": "测试反射工作流剧本",
+    "raw_text": "林晚和沈知行的契约婚姻，女主林晚为了查清父亲死亡真相复仇。",
+    "genre": "都市",
+    "target_audience": "都市剧观众",
+    "user_preferences": []
+  }
+}

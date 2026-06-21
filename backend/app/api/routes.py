@@ -6,7 +6,10 @@ from ..agents.parser_agent import parser_agent
 from ..workflow.graph import evaluation_workflow
 from ..memory.project_memory import global_project_memory
 from ..memory.character_memory import global_character_memory
+from ..feedback.schemas import FeedbackInput
+from ..failure.schemas import FailureCase
 from typing import Dict, Any, List
+
 
 router = APIRouter()
 
@@ -109,3 +112,55 @@ def clear_all_memories():
     global_project_memory.clear()
     global_character_memory.clear()
     return {"message": "项目记忆和人设记忆已成功清空"}
+
+@router.post("/feedback")
+def submit_feedback(feedback: FeedbackInput):
+    """
+    提交用户对剧本评估报告的反馈，自动触发失败案例沉淀逻辑。
+    """
+    from ..feedback.collector import global_feedback_collector
+    try:
+        failure_case = global_feedback_collector.collect_feedback(feedback)
+        response = {"message": "反馈收集成功"}
+        if failure_case:
+            response["failure_case_created"] = True
+            response["case_id"] = failure_case.case_id
+        else:
+            response["failure_case_created"] = False
+        return response
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"收集反馈出错: {str(e)}"
+        )
+
+@router.get("/feedback/{project_id}", response_model=List[FeedbackInput])
+def get_feedback_by_project_id(project_id: str):
+    """
+    检索特定项目的历史用户反馈记录。
+    """
+    from ..feedback.store import global_feedback_store
+    return global_feedback_store.load_feedback_by_project(project_id)
+
+@router.get("/failure-cases", response_model=List[FailureCase])
+def list_failure_cases():
+    """
+    列出所有沉淀下来的失败案例。
+    """
+    from ..failure.case_store import global_failure_case_store
+    return global_failure_case_store.list_failure_cases()
+
+@router.get("/failure-cases/{case_id}", response_model=FailureCase)
+def get_failure_case_by_id(case_id: str):
+    """
+    根据唯一 ID 检索指定的失败案例诊断详情。
+    """
+    from ..failure.case_store import global_failure_case_store
+    case = global_failure_case_store.load_failure_case(case_id)
+    if not case:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"未找到ID为 '{case_id}' 的失败案例"
+        )
+    return case
+

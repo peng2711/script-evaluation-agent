@@ -217,7 +217,30 @@ graph TD
 
 ---
 
-## 9. Eval 评估指标设计与物理意义
+## 9. 用户反馈收集与失败案例迭代闭环 (Feedback & Failure Case Loop)
+
+为了实现 Agent 系统的自我迭代和无回归优化，系统构建了**用户反馈收集 (Feedback Collector)** 与**失败案例库 (Failure Case Store)**。
+
+### 1. 闭环流转架构
+1. **反馈收集**：用户通过接口或页面提交对报告的评分和修改评论（Pydantic 校验的 `FeedbackInput`）。
+2. **失败案例自动判定**：反馈收集器 (Collector) 综合用户反馈、Review Agent 问题项和 Trace 链路状态。若满足以下条件之一，则自动将该次评估沉淀为 `FailureCase`，持久化至 `backend/storage/failure_cases.json`：
+   - 用户反馈 `helpful == False` 或 `evidence_accurate == False`；
+   - 用户反馈的 `wrong_claims` 非空；
+   - Review 模块检出严重级别（severity == HIGH）的质量缺陷；
+   - 链路 Trace 中存在 `FAILED` / `FALLBACK` 状态事件。
+3. **案例重放与回归**：重放引擎 (Replay Engine) 提取失败案例并加载其对应的原始 `ScriptInput`（项目启动时已自动持久化于 `backend/storage/script_inputs.json`），完全重新执行评估工作流。
+4. **系统优化依据**：开发人员可以通过重放失败案例来测试和微调 Prompt 模板、Rerank 检索权重或 Review 规则，从而在零回归的保障下，不断提升 Agent 系统的评估精准度与稳定性。
+
+### 2. 相关接口与数据流
+- `POST /feedback`：提交用户对剧本评估报告的反馈。
+- `GET /feedback/{project_id}`：检索特定项目的历史用户反馈记录。
+- `GET /failure-cases`：获取所有记录的失败案例列表。
+- `GET /failure-cases/{case_id}`：根据唯一 ID 检索指定的失败案例诊断详情。
+- `replay_failure_case(case_id)` 方法：编程方式触发重放，以便在流水线或调试中重现缺陷。
+
+---
+
+## 10. Eval 评估指标设计与物理意义
 
 为了量化不同剧本评估方案在性能、准确度和稳定性上的优劣，系统定义并计算了 10 个核心的评估指标：
 

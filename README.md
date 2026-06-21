@@ -174,7 +174,44 @@ D:\ANACONDA\envs\script-agent\python.exe -m streamlit run demo.py
 
 ---
 
-## 8. 示例输入输出
+## 8. 用户反馈收集与失败案例迭代闭环 (Feedback & Failure Case Loop)
+
+本系统设计了完整的**用户反馈收集 (Feedback Collector)** 与**失败案例库 (Failure Case Store)**，实现了 Multi-Agent 系统的“评测-反馈-诊断-重放-回归”工程闭环。
+
+### 1. 闭环工作流示意图
+```mermaid
+graph LR
+    User[用户提交反馈] --> FeedbackCollector[反馈收集器]
+    WorkflowTrace[工作流 Trace & Review 异常] --> FeedbackCollector
+    FeedbackCollector -- 判定启发式规则 --> FailureCaseStore[(失败案例库)]
+    FailureCaseStore --> ReplayEngine[失败案例重放引擎]
+    ReplayEngine --> Prompts[优化 Prompt/Retrieval/Review 规则]
+    Prompts --> NextIteration[进入下一轮评估迭代]
+```
+
+### 2. 失败案例自动判定标准
+系统在用户提交反馈后，如果满足以下任一条件，将自动将该项目及其链路数据沉淀为 **Failure Case**：
+- **用户主观不满意**：反馈中 `helpful == False` 或 `evidence_accurate == False`；
+- **用户指出事实错误**：反馈中 `wrong_claims` 列表非空；
+- **Review 质检拦截高危缺陷**：Review Agent 检查出的问题项中存在 `severity == HIGH` 的缺陷；
+- **执行链路异常或降级**：Trace 记录中任意节点或工具调用的状态为 `FAILED` 或 `FALLBACK`。
+
+### 3. API 接口支持
+- `POST /feedback`：提交用户对剧本评估报告的反馈，自动触发失败案例判定与沉淀。
+- `GET /feedback/{project_id}`：检索特定项目的历史用户反馈记录。
+- `GET /failure-cases`：列出所有沉淀下来的失败案例。
+- `GET /failure-cases/{case_id}`：根据唯一 ID 检索指定的失败案例诊断详情。
+
+### 4. 失败案例重放与系统迭代
+失败案例库不仅存储了反馈，还通过 `ScriptInput` 缓存保留了当时的原始输入。
+开发者或自动化 CI 脚本可通过调用 `replay_failure_case(case_id)`：
+1. **还原现场**：重新加载对应的原始剧本输入；
+2. **重放流转**：完全重新运行当前的 `evaluation_workflow` 工作流；
+3. **回归验证**：比对优化前后的评估报告，验证修改后的 Prompt、精排比重（Reranker 权重）、Review Agent 质检规则是否成功修复了该失败案例，从而在无回归风险的情况下实现系统的持续迭代。
+
+---
+
+## 9. 示例输入输出
 
 ### 1. `/evaluate` 接口输入示例
 ```json
@@ -238,7 +275,7 @@ D:\ANACONDA\envs\script-agent\python.exe -m streamlit run demo.py
 
 ---
 
-## 9. 当前限制与后续优化方向
+## 10. 当前限制与后续优化方向
 
 ### 当前工程限制
 - **Mock 节点推理**：系统目前采用本地启发式规则匹配模拟模型的推理与输出，未消耗大模型真实 Token，主要用以验证状态路由机制的鲁棒性。

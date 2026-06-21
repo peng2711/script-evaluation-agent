@@ -50,6 +50,24 @@ class ScriptEvaluationWorkflow:
         state.use_tools_via_router = self.use_tools_via_router
         state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] 启动剧本评估工作流，标题: '{script.title}'")
 
+        # 保存原始剧本输入，用于失败重放案例定位
+        try:
+            import os
+            import json
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            script_inputs_path = os.path.normpath(os.path.join(current_dir, "..", "..", "storage", "script_inputs.json"))
+            os.makedirs(os.path.dirname(script_inputs_path), exist_ok=True)
+            inputs = {}
+            if os.path.exists(script_inputs_path):
+                with open(script_inputs_path, "r", encoding="utf-8") as f:
+                    inputs = json.load(f)
+            inputs[script.project_id] = script.model_dump()
+            with open(script_inputs_path, "w", encoding="utf-8") as f:
+                json.dump(inputs, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+
+
         current_node = "ParserNode"
         retry_count = 0
         workflow_success = True
@@ -68,9 +86,28 @@ class ScriptEvaluationWorkflow:
             current_node = next_node
             retry_count = next_retry
 
-        # 3. 最终归档到项目记忆中
+        # 3. 统计并导出可观测性指标，存入 state.trace
+        exported_events = recorder.export_trace()
+        metrics = calculate_metrics(exported_events, workflow_success=workflow_success)
+        state.trace = {
+            "events": [event.model_dump() for event in exported_events],
+            "metrics": metrics.model_dump()
+        }
+
+        # 4. 最终归档到项目记忆中
         final_report = state.final_report or state.draft_report
         if final_report:
+            # 提前注入可观测性链路数据和分析结果，确保持久化存档完整
+            final_report.node_traces = state.node_traces
+            if state.analysis:
+                final_report.risk_points = state.analysis.risk_points
+                final_report.strengths = state.analysis.strengths
+                final_report.weaknesses = state.analysis.weaknesses
+                final_report.characters = state.analysis.characters
+                final_report.character_relations = state.analysis.character_relations
+                final_report.core_conflict = state.analysis.core_conflict
+            final_report.trace = state.trace
+
             if state.use_tools_via_router:
                 from ..tools.router import global_tool_router
                 global_tool_router.call_tool(
@@ -84,14 +121,6 @@ class ScriptEvaluationWorkflow:
                 )
             else:
                 global_project_memory.save_project(script.project_id, final_report)
-
-        # 4. 统计并导出可观测性指标，存入 state.trace
-        exported_events = recorder.export_trace()
-        metrics = calculate_metrics(exported_events, workflow_success=workflow_success)
-        state.trace = {
-            "events": [event.model_dump() for event in exported_events],
-            "metrics": metrics.model_dump()
-        }
 
         # 5. 销毁上下文
         active_trace_recorder.reset(token)

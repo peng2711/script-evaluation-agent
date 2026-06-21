@@ -37,14 +37,433 @@
       "在第 1 集开场削减 10% 的多余爆破动作场面，用文戏博弈代替，以缩减开拍特效制作预算。",
       "对林啸幼年时期的极端创伤回忆画面做温和化改动，在第 2 集回忆段落中将血腥暴力场景更换为隐喻式艺术处理，以规避政策下架审查风险。"
     ],
-    "node_traces": [],
-    "risk_points": [],
-    "strengths": [],
-    "weaknesses": [],
-    "characters": [],
-    "character_relations": [],
-    "core_conflict": "",
-    "trace": null,
+    "node_traces": [
+      {
+        "node_name": "ParserNode",
+        "input_summary": "Title: '测试剧本之夜', Raw Text Length: 35",
+        "output_summary": "Parsed characters: ['林啸', '赵乾', '苏晴']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "MemoryNode",
+        "input_summary": "Project ID: 'proj-999'",
+        "output_summary": "Saved characters in memory for project 'proj-999'",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '测试剧本之夜', evidences count: 0",
+        "output_summary": "Draft report score: char=5, plot=4, decision=PASS",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "RetrievalNode",
+        "input_summary": "Script Title: '测试剧本之夜', Genre: '悬疑'",
+        "output_summary": "Retrieved 2 evidences: ['隐秘的角落', '狂飙']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: PASS",
+        "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": "rewrite_analysis",
+        "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
+        "target_node": "AnalysisNode"
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '测试剧本之夜', evidences count: 2",
+        "output_summary": "Draft report score: char=5, plot=4, decision=REVISE",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": "human_check",
+        "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
+        "target_node": "ReportNode"
+      },
+      {
+        "node_name": "ReportNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "Locked final report with decision: HUMAN_CHECK",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      }
+    ],
+    "risk_points": [
+      "预算爆仓风险：爆破戏份极多，特效与现场特技成本极易超支。"
+    ],
+    "strengths": [
+      "张力极大：林啸特工‘风影’的双重人设与杀人犯赵乾的儒雅伪善形成极佳宿命博弈。",
+      "节奏紧密：前两集剧情包含潜入码头和爆炸事件，矛盾迅速爆发。"
+    ],
+    "weaknesses": [
+      "制作门槛极高：动作与爆破占比超过 40%，极度依赖电影级重工业供应链协助。",
+      "主角性格偏冰冷：打斗戏过多，缺乏对特工林啸内心温情戏的刻画。"
+    ],
+    "characters": [
+      {
+        "name": "林啸",
+        "role": "特工 (代号'风影')",
+        "personality": [
+          "冷静",
+          "机警",
+          "背负旧创"
+        ],
+        "motivation": "查明灭门真相，彻底铲除赵乾的跨国走私势力",
+        "relationships": {
+          "赵乾": "敌对（杀父之仇）",
+          "苏晴": "绝对信任的盟友"
+        },
+        "constraints": [
+          "不能伤害无辜百姓",
+          "必须服从上级组织的安全边界红线"
+        ],
+        "evidence_spans": [
+          "这是一部关于黑客与特工的故事，里面包含林啸和赵乾，背景是一次破晓行动。"
+        ]
+      },
+      {
+        "name": "赵乾",
+        "role": "跨国黑道商人",
+        "personality": [
+          "残忍",
+          "伪善",
+          "老谋深算"
+        ],
+        "motivation": "扩大走私帝国，并在黑道中树立绝对权威",
+        "relationships": {
+          "林啸": "欲除之或者是眼中钉",
+          "苏晴": "追缉的黑客目标"
+        },
+        "constraints": [
+          "不能直接触犯官方底线，以免引火烧身"
+        ],
+        "evidence_spans": [
+          "这是一部关于黑客与特工的故事，里面包含林啸和赵乾，背景是一次破晓行动。"
+        ]
+      },
+      {
+        "name": "苏晴",
+        "role": "天才女黑客",
+        "personality": [
+          "活泼",
+          "正义",
+          "技术高超"
+        ],
+        "motivation": "用黑客技术行侠仗义，帮助林啸脱离险境",
+        "relationships": {
+          "林啸": "并肩作战的技术后盾",
+          "赵乾": "敌对/抹除目标"
+        },
+        "constraints": [
+          "体能极差，无法进行近身格斗防御"
+        ],
+        "evidence_spans": []
+      }
+    ],
+    "character_relations": [
+      "林啸与赵乾为生死之仇的敌对博弈关系",
+      "苏晴是林啸强力的外部网络战友与精神支持"
+    ],
+    "core_conflict": "特工林啸在黑客苏晴的技术协助下潜入集装箱码头起获证据，对抗势力庞大、伪善奸诈的走私集团首脑赵乾。",
+    "trace": {
+      "events": [
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Title: '测试剧本之夜', Raw Text Length: 35",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.360874",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Parsed characters: ['林啸', '赵乾', '苏晴']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.6931999960215762,
+          "timestamp": "2026-06-22T03:18:50.362429",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Project ID: 'proj-999'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.363461",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Saved characters in memory for project 'proj-999'",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.5708999960916117,
+          "timestamp": "2026-06-22T03:18:50.363973",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '测试剧本之夜', evidences count: 0",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.363973",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=5, plot=4, decision=PASS",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.16599999798927456,
+          "timestamp": "2026-06-22T03:18:50.364487",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '测试剧本之夜', Genre: '悬疑'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.364487",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Retrieved 2 evidences: ['隐秘的角落', '狂飙']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.41009999404195696,
+          "timestamp": "2026-06-22T03:18:50.365007",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: PASS",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.365007",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.5058000097051263,
+          "timestamp": "2026-06-22T03:18:50.365518",
+          "review_action": "rewrite_analysis",
+          "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
+          "target_node": "AnalysisNode"
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '测试剧本之夜', evidences count: 2",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.365518",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=5, plot=4, decision=REVISE",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.14590000500902534,
+          "timestamp": "2026-06-22T03:18:50.366032",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.366032",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.24530000519007444,
+          "timestamp": "2026-06-22T03:18:50.366543",
+          "review_action": "human_check",
+          "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
+          "target_node": "ReportNode"
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.366543",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-e5f8403f",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Locked final report with decision: HUMAN_CHECK",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.013600001693703234,
+          "timestamp": "2026-06-22T03:18:50.366543",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        }
+      ],
+      "metrics": {
+        "total_latency_ms": 2.75,
+        "total_tool_calls": 0,
+        "failed_tool_calls": 0,
+        "retry_count": 1,
+        "fallback_used": 0,
+        "workflow_success": true
+      }
+    },
     "review_decision": null
   },
   "test-flow-id-123": {
@@ -77,14 +496,474 @@
       "在第 1 集的茶馆清场戏中，引入专业金融顾问设计的‘反收购股权对赌’条款，纠正李建国强拆手段过于粗暴脱离现代商业规范的硬伤。",
       "在第 2 集深入设计陈默面对现代资本逻辑与苏瑶守候非遗传承的理念碰撞，用一杯茶化解焦虑的情节点强化两人情感升温的转变合理性。"
     ],
-    "node_traces": [],
-    "risk_points": [],
-    "strengths": [],
-    "weaknesses": [],
-    "characters": [],
-    "character_relations": [],
-    "core_conflict": "",
-    "trace": null,
+    "node_traces": [
+      {
+        "node_name": "ParserNode",
+        "input_summary": "Title: '项目-测试茶香', Raw Text Length: 20",
+        "output_summary": "Parsed characters: ['陈默', '苏瑶', '李建国']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "MemoryNode",
+        "input_summary": "Project ID: 'test-flow-id-123'",
+        "output_summary": "Saved characters in memory for project 'test-flow-id-123'",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '项目-测试茶香', evidences count: 0",
+        "output_summary": "Draft report score: char=4, plot=3, decision=REJECT",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "RetrievalNode",
+        "input_summary": "Script Title: '项目-测试茶香', Genre: '都市'",
+        "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: REJECT",
+        "output_summary": "ReviewAction: retrieve_more, Reason: 检测到严重的对标引用不足或题材证据错配，必须重新对标召回数据。, TargetNode: RetrievalNode, RetryCount: 0",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": "retrieve_more",
+        "review_reason": "检测到严重的对标引用不足或题材证据错配，必须重新对标召回数据。",
+        "target_node": "RetrievalNode"
+      },
+      {
+        "node_name": "RetrievalNode",
+        "input_summary": "Script Title: '项目-测试茶香', Genre: '都市'",
+        "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '项目-测试茶香', evidences count: 2",
+        "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "ReviewAction: pass, Reason: 报告通过了全部合规及事实一致性审查。, TargetNode: ReportNode, RetryCount: 1",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": "pass",
+        "review_reason": "报告通过了全部合规及事实一致性审查。",
+        "target_node": "ReportNode"
+      },
+      {
+        "node_name": "ReportNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "Locked final report with decision: REVISE",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      }
+    ],
+    "risk_points": [
+      "题材受众断层：商战受众与非遗文化受众画像有融合难度。"
+    ],
+    "strengths": [
+      "立意具差异化：将商业资本金融博弈，与百年非遗茶馆传承相碰撞，极具人文主义情怀。"
+    ],
+    "weaknesses": [
+      "强拆反派脸谱化：地产商李建国的强拆强占行径过于直白暴力，脱离现代金融法治常识。"
+    ],
+    "characters": [
+      {
+        "name": "陈默",
+        "role": "天才青年投资人",
+        "personality": [
+          "骄傲",
+          "焦虑",
+          "理想主义"
+        ],
+        "motivation": "在并购惨败后寻回自我，挫败李建国的强取豪夺",
+        "relationships": {
+          "苏瑶": "茶友/情感利益共同体",
+          "李建国": "昔日反目的商业盟友"
+        },
+        "constraints": [
+          "内心有重度焦虑症，在极端压力下需要吃药"
+        ],
+        "evidence_spans": [
+          "陈默与苏瑶一起反抗李建国强拆茶馆的行为。"
+        ]
+      },
+      {
+        "name": "苏瑶",
+        "role": "百年老茶馆继承人",
+        "personality": [
+          "温婉",
+          "坚韧",
+          "不向资本妥协"
+        ],
+        "motivation": "继承祖父遗志，将茶馆作为非物质文化遗产传承下去",
+        "relationships": {
+          "陈默": "彼此治愈的红颜知己",
+          "李建国": "侵略性的拆迁强买者"
+        },
+        "constraints": [
+          "宁死也不肯卖掉老茶馆的地契和招牌"
+        ],
+        "evidence_spans": [
+          "陈默与苏瑶一起反抗李建国强拆茶馆的行为。"
+        ]
+      },
+      {
+        "name": "李建国",
+        "role": "冷血地产巨鳄",
+        "personality": [
+          "现实",
+          "唯利是图",
+          "不择手段"
+        ],
+        "motivation": "强拆老街改建高端写字楼，获取暴利",
+        "relationships": {
+          "陈默": "昔日的提携者，现在的商业对手",
+          "苏瑶": "打压强征的对象"
+        },
+        "constraints": [
+          "不能在媒体上曝光自己的非法手段，极其注重集团上市前的公众形象"
+        ],
+        "evidence_spans": [
+          "陈默与苏瑶一起反抗李建国强拆茶馆的行为。"
+        ]
+      }
+    ],
+    "character_relations": [
+      "陈默与李建国之间是现代投资理念决裂下的商业博弈",
+      "陈默与苏瑶互相吸引，商业资本与非遗情怀发生碰撞"
+    ],
+    "core_conflict": "陈默用高超的资本防御技巧协助苏瑶，对抗冷血地产巨鳄李建国强拆百年茶馆招牌的强权行径。",
+    "trace": {
+      "events": [
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Title: '项目-测试茶香', Raw Text Length: 20",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.387817",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Parsed characters: ['陈默', '苏瑶', '李建国']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 1.6189000016311184,
+          "timestamp": "2026-06-22T03:18:50.389878",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Project ID: 'test-flow-id-123'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.389878",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Saved characters in memory for project 'test-flow-id-123'",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.7043000077828765,
+          "timestamp": "2026-06-22T03:18:50.390906",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '项目-测试茶香', evidences count: 0",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.390906",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=4, plot=3, decision=REJECT",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.1714000100037083,
+          "timestamp": "2026-06-22T03:18:50.390906",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '项目-测试茶香', Genre: '都市'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.391422",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.4022000066470355,
+          "timestamp": "2026-06-22T03:18:50.391938",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REJECT",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.391938",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: retrieve_more, Reason: 检测到严重的对标引用不足或题材证据错配，必须重新对标召回数据。, TargetNode: RetrievalNode, RetryCount: 0",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.22090000857133418,
+          "timestamp": "2026-06-22T03:18:50.391938",
+          "review_action": "retrieve_more",
+          "review_reason": "检测到严重的对标引用不足或题材证据错配，必须重新对标召回数据。",
+          "target_node": "RetrievalNode"
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '项目-测试茶香', Genre: '都市'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.391938",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.3366999881109223,
+          "timestamp": "2026-06-22T03:18:50.392452",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '项目-测试茶香', evidences count: 2",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.392452",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.18820000695995986,
+          "timestamp": "2026-06-22T03:18:50.392974",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.392974",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: pass, Reason: 报告通过了全部合规及事实一致性审查。, TargetNode: ReportNode, RetryCount: 1",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.2536999963922426,
+          "timestamp": "2026-06-22T03:18:50.393487",
+          "review_action": "pass",
+          "review_reason": "报告通过了全部合规及事实一致性审查。",
+          "target_node": "ReportNode"
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.393487",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-af2ade81",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Locked final report with decision: REVISE",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.001500011421740055,
+          "timestamp": "2026-06-22T03:18:50.393487",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        }
+      ],
+      "metrics": {
+        "total_latency_ms": 3.9,
+        "total_tool_calls": 0,
+        "failed_tool_calls": 0,
+        "retry_count": 1,
+        "fallback_used": 0,
+        "workflow_success": true
+      }
+    },
     "review_decision": null
   },
   "proj-901": {
@@ -214,14 +1093,409 @@
       "在第 2 集增加高层会议中沈知行面对股权对赌被迫与林晚达成假结婚的博弈细节，解决契约婚姻动机不足的硬伤。",
       "针对政策红线，在二稿第 3 集中设计官方刑警力量的暗中协助，将女主复仇的行为转化为辅助警方的正义举措，以规避违规私刑审查风险。"
     ],
-    "node_traces": [],
-    "risk_points": [],
-    "strengths": [],
-    "weaknesses": [],
-    "characters": [],
-    "character_relations": [],
-    "core_conflict": "",
-    "trace": null,
+    "node_traces": [
+      {
+        "node_name": "ParserNode",
+        "input_summary": "Title: '测试工作流剧本', Raw Text Length: 29",
+        "output_summary": "Parsed characters: ['林晚', '沈知行']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "MemoryNode",
+        "input_summary": "Project ID: 'test-wf-project'",
+        "output_summary": "Saved characters in memory for project 'test-wf-project'",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '测试工作流剧本', evidences count: 0",
+        "output_summary": "Draft report score: char=4, plot=3, decision=PASS",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "RetrievalNode",
+        "input_summary": "Script Title: '测试工作流剧本', Genre: '都市'",
+        "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: PASS",
+        "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": "rewrite_analysis",
+        "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
+        "target_node": "AnalysisNode"
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '测试工作流剧本', evidences count: 2",
+        "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": "human_check",
+        "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
+        "target_node": "ReportNode"
+      },
+      {
+        "node_name": "ReportNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "Locked final report with decision: HUMAN_CHECK",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      }
+    ],
+    "risk_points": [
+      "政策审查风险：林晚以‘复仇’为主线，若后期涉及过多法律红线外的私刑制裁，极易导致项目无法上线或下架。"
+    ],
+    "strengths": [
+      "人设讨喜：女主角林晚的复仇动机‘查清父亲死亡真相’（原文证据见 CharacterProfile 证据片段）逻辑清晰且具备极强的情感支点。",
+      "戏剧性好：‘契约婚姻’配合‘复仇主线’，双重身份的掩护给故事带来了极佳的秘密博弈空间。"
+    ],
+    "weaknesses": [
+      "男主角功能化：沈知行在剧情前期的介入理由略显薄弱，有过度服务剧情的‘工具人霸总’倾向。",
+      "商战细节空洞：两人签订婚姻协议并决定联手对付幕后势力的商业博弈细节空洞，缺乏现实金融常识。"
+    ],
+    "characters": [
+      {
+        "name": "林晚",
+        "role": "女主角",
+        "personality": [
+          "隐忍",
+          "坚毅"
+        ],
+        "motivation": "查清父亲死亡真相并完成复仇",
+        "relationships": {
+          "沈知行": "契约婚姻"
+        },
+        "constraints": [
+          "不能暴露真实身份与真实目的"
+        ],
+        "evidence_spans": [
+          "林晚和沈知行的契约婚姻，女主林晚为了查清父亲死亡真相复仇。"
+        ]
+      },
+      {
+        "name": "沈知行",
+        "role": "男主角",
+        "personality": [
+          "冷静",
+          "深沉"
+        ],
+        "motivation": "配合林晚进行契约婚姻，并在暗中配合调查",
+        "relationships": {
+          "林晚": "契约婚姻"
+        },
+        "constraints": [
+          "必须遵守商业合同条款与保密规定"
+        ],
+        "evidence_spans": [
+          "林晚和沈知行的契约婚姻，女主林晚为了查清父亲死亡真相复仇。"
+        ]
+      }
+    ],
+    "character_relations": [
+      "林晚与沈知行是契约婚姻关系"
+    ],
+    "core_conflict": "林晚为了查清父亲死亡真相进行复仇，与沈知行达成契约婚姻，共同应对幕后势力。",
+    "trace": {
+      "events": [
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Title: '测试工作流剧本', Raw Text Length: 29",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.604265",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Parsed characters: ['林晚', '沈知行']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.5182000022614375,
+          "timestamp": "2026-06-22T03:18:50.604783",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Project ID: 'test-wf-project'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.604783",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Saved characters in memory for project 'test-wf-project'",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.4476999893086031,
+          "timestamp": "2026-06-22T03:18:50.605297",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '测试工作流剧本', evidences count: 0",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.605297",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=4, plot=3, decision=PASS",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.13749999925494194,
+          "timestamp": "2026-06-22T03:18:50.605809",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '测试工作流剧本', Genre: '都市'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.605809",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.3932999970857054,
+          "timestamp": "2026-06-22T03:18:50.606322",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: PASS",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.606322",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.19869999960064888,
+          "timestamp": "2026-06-22T03:18:50.606837",
+          "review_action": "rewrite_analysis",
+          "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
+          "target_node": "AnalysisNode"
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '测试工作流剧本', evidences count: 2",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.606837",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.12350000906735659,
+          "timestamp": "2026-06-22T03:18:50.606837",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.606837",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.16989999858196825,
+          "timestamp": "2026-06-22T03:18:50.607353",
+          "review_action": "human_check",
+          "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
+          "target_node": "ReportNode"
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.607353",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-cee31944",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Locked final report with decision: HUMAN_CHECK",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.003300010575912893,
+          "timestamp": "2026-06-22T03:18:50.607353",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        }
+      ],
+      "metrics": {
+        "total_latency_ms": 1.99,
+        "total_tool_calls": 0,
+        "failed_tool_calls": 0,
+        "retry_count": 1,
+        "fallback_used": 0,
+        "workflow_success": true
+      }
+    },
     "review_decision": null
   },
   "proj-903": {
@@ -633,14 +1907,433 @@
       "在第 1 集开场削减 10% 的多余爆破动作场面，用文戏博弈代替，以缩减开拍特效制作预算。",
       "对林啸幼年时期的极端创伤回忆画面做温和化改动，在第 2 集回忆段落中将血腥暴力场景更换为隐喻式艺术处理，以规避政策下架审查风险。"
     ],
-    "node_traces": [],
-    "risk_points": [],
-    "strengths": [],
-    "weaknesses": [],
-    "characters": [],
-    "character_relations": [],
-    "core_conflict": "",
-    "trace": null,
+    "node_traces": [
+      {
+        "node_name": "ParserNode",
+        "input_summary": "Title: '破晓猎杀', Raw Text Length: 26",
+        "output_summary": "Parsed characters: ['林啸', '赵乾', '苏晴']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "MemoryNode",
+        "input_summary": "Project ID: 'test-observability-id'",
+        "output_summary": "Saved characters in memory for project 'test-observability-id'",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '破晓猎杀', evidences count: 0",
+        "output_summary": "Draft report score: char=5, plot=4, decision=PASS",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "RetrievalNode",
+        "input_summary": "Script Title: '破晓猎杀', Genre: '动作'",
+        "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: PASS",
+        "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": "rewrite_analysis",
+        "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
+        "target_node": "AnalysisNode"
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '破晓猎杀', evidences count: 2",
+        "output_summary": "Draft report score: char=5, plot=4, decision=REVISE",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": "human_check",
+        "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
+        "target_node": "ReportNode"
+      },
+      {
+        "node_name": "ReportNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "Locked final report with decision: HUMAN_CHECK",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      }
+    ],
+    "risk_points": [
+      "预算爆仓风险：爆破戏份极多，特效与现场特技成本极易超支。"
+    ],
+    "strengths": [
+      "张力极大：林啸特工‘风影’的双重人设与杀人犯赵乾的儒雅伪善形成极佳宿命博弈。",
+      "节奏紧密：前两集剧情包含潜入码头和爆炸事件，矛盾迅速爆发。"
+    ],
+    "weaknesses": [
+      "制作门槛极高：动作与爆破占比超过 40%，极度依赖电影级重工业供应链协助。",
+      "主角性格偏冰冷：打斗戏过多，缺乏对特工林啸内心温情戏的刻画。"
+    ],
+    "characters": [
+      {
+        "name": "林啸",
+        "role": "特工 (代号'风影')",
+        "personality": [
+          "冷静",
+          "机警",
+          "背负旧创"
+        ],
+        "motivation": "查明灭门真相，彻底铲除赵乾的跨国走私势力",
+        "relationships": {
+          "赵乾": "敌对（杀父之仇）",
+          "苏晴": "绝对信任的盟友"
+        },
+        "constraints": [
+          "不能伤害无辜百姓",
+          "必须服从上级组织的安全边界红线"
+        ],
+        "evidence_spans": [
+          "特工林啸与反派赵乾在集装箱码头起获账目发生爆炸脱身。"
+        ]
+      },
+      {
+        "name": "赵乾",
+        "role": "跨国黑道商人",
+        "personality": [
+          "残忍",
+          "伪善",
+          "老谋深算"
+        ],
+        "motivation": "扩大走私帝国，并在黑道中树立绝对权威",
+        "relationships": {
+          "林啸": "欲除之或者是眼中钉",
+          "苏晴": "追缉的黑客目标"
+        },
+        "constraints": [
+          "不能直接触犯官方底线，以免引火烧身"
+        ],
+        "evidence_spans": [
+          "特工林啸与反派赵乾在集装箱码头起获账目发生爆炸脱身。"
+        ]
+      },
+      {
+        "name": "苏晴",
+        "role": "天才女黑客",
+        "personality": [
+          "活泼",
+          "正义",
+          "技术高超"
+        ],
+        "motivation": "用黑客技术行侠仗义，帮助林啸脱离险境",
+        "relationships": {
+          "林啸": "并肩作战的技术后盾",
+          "赵乾": "敌对/抹除目标"
+        },
+        "constraints": [
+          "体能极差，无法进行近身格斗防御"
+        ],
+        "evidence_spans": []
+      }
+    ],
+    "character_relations": [
+      "林啸与赵乾为生死之仇的敌对博弈关系",
+      "苏晴是林啸强力的外部网络战友与精神支持"
+    ],
+    "core_conflict": "特工林啸在黑客苏晴的技术协助下潜入集装箱码头起获证据，对抗势力庞大、伪善奸诈的走私集团首脑赵乾。",
+    "trace": {
+      "events": [
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Title: '破晓猎杀', Raw Text Length: 26",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.554766",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Parsed characters: ['林啸', '赵乾', '苏晴']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.6531000108225271,
+          "timestamp": "2026-06-22T03:18:50.554766",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Project ID: 'test-observability-id'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.555798",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Saved characters in memory for project 'test-observability-id'",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.43700000969693065,
+          "timestamp": "2026-06-22T03:18:50.555798",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '破晓猎杀', evidences count: 0",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.555798",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=5, plot=4, decision=PASS",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.1449000119464472,
+          "timestamp": "2026-06-22T03:18:50.555798",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '破晓猎杀', Genre: '动作'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.556809",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.4102000093553215,
+          "timestamp": "2026-06-22T03:18:50.556809",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: PASS",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.556809",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.19449999672360718,
+          "timestamp": "2026-06-22T03:18:50.556809",
+          "review_action": "rewrite_analysis",
+          "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
+          "target_node": "AnalysisNode"
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '破晓猎杀', evidences count: 2",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.556809",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=5, plot=4, decision=REVISE",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.12749999586958438,
+          "timestamp": "2026-06-22T03:18:50.557811",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.557811",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.18440000712871552,
+          "timestamp": "2026-06-22T03:18:50.557811",
+          "review_action": "human_check",
+          "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
+          "target_node": "ReportNode"
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.557811",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-c3e054e7",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Locked final report with decision: HUMAN_CHECK",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0039000005926936865,
+          "timestamp": "2026-06-22T03:18:50.557811",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        }
+      ],
+      "metrics": {
+        "total_latency_ms": 2.16,
+        "total_tool_calls": 0,
+        "failed_tool_calls": 0,
+        "retry_count": 1,
+        "fallback_used": 0,
+        "workflow_success": true
+      }
+    },
     "review_decision": null
   },
   "test-reflection-wf-project": {
@@ -674,14 +2367,493 @@
       "在第 2 集增加高层会议中沈知行面对股权对赌被迫与林晚达成假结婚的博弈细节，解决契约婚姻动机不足的硬伤。",
       "针对政策红线，在二稿第 3 集中设计官方刑警力量的暗中协助，将女主复仇的行为转化为辅助警方的正义举措，以规避违规私刑审查风险。"
     ],
-    "node_traces": [],
-    "risk_points": [],
-    "strengths": [],
-    "weaknesses": [],
-    "characters": [],
-    "character_relations": [],
-    "core_conflict": "",
-    "trace": null,
+    "node_traces": [
+      {
+        "node_name": "ParserNode",
+        "input_summary": "Title: '测试反射工作流剧本', Raw Text Length: 29",
+        "output_summary": "Parsed characters: ['林晚', '沈知行']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "MemoryNode",
+        "input_summary": "Project ID: 'test-reflection-wf-project'",
+        "output_summary": "Saved characters in memory for project 'test-reflection-wf-project'",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '测试反射工作流剧本', evidences count: 0",
+        "output_summary": "Draft report score: char=4, plot=3, decision=PASS",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "RetrievalNode",
+        "input_summary": "Script Title: '测试反射工作流剧本', Genre: '都市'",
+        "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: PASS",
+        "output_summary": "ReviewAction: rewrite_analysis, Reason: 故意制造死循环, TargetNode: AnalysisNode, RetryCount: 0",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": "rewrite_analysis",
+        "review_reason": "故意制造死循环",
+        "target_node": "AnalysisNode"
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '测试反射工作流剧本', evidences count: 2",
+        "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "ReviewAction: rewrite_analysis, Reason: 故意制造死循环, TargetNode: AnalysisNode, RetryCount: 1",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": "rewrite_analysis",
+        "review_reason": "故意制造死循环",
+        "target_node": "AnalysisNode"
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '测试反射工作流剧本', evidences count: 2",
+        "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
+        "errors": null,
+        "retry_count": 2,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "ReviewAction: rewrite_analysis, Reason: 故意制造死循环, TargetNode: ReportNode, RetryCount: 2",
+        "errors": null,
+        "retry_count": 2,
+        "review_action": "rewrite_analysis",
+        "review_reason": "故意制造死循环",
+        "target_node": "ReportNode"
+      },
+      {
+        "node_name": "ReportNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "Locked final report with decision: REVISE",
+        "errors": null,
+        "retry_count": 2,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      }
+    ],
+    "risk_points": [
+      "政策审查风险：林晚以‘复仇’为主线，若后期涉及过多法律红线外的私刑制裁，极易导致项目无法上线或下架。"
+    ],
+    "strengths": [
+      "人设讨喜：女主角林晚的复仇动机‘查清父亲死亡真相’（原文证据见 CharacterProfile 证据片段）逻辑清晰且具备极强的情感支点。",
+      "戏剧性好：‘契约婚姻’配合‘复仇主线’，双重身份的掩护给故事带来了极佳的秘密博弈空间。"
+    ],
+    "weaknesses": [
+      "男主角功能化：沈知行在剧情前期的介入理由略显薄弱，有过度服务剧情的‘工具人霸总’倾向。",
+      "商战细节空洞：两人签订婚姻协议并决定联手对付幕后势力的商业博弈细节空洞，缺乏现实金融常识。"
+    ],
+    "characters": [
+      {
+        "name": "林晚",
+        "role": "女主角",
+        "personality": [
+          "隐忍",
+          "坚毅"
+        ],
+        "motivation": "查清父亲死亡真相并完成复仇",
+        "relationships": {
+          "沈知行": "契约婚姻"
+        },
+        "constraints": [
+          "不能暴露真实身份与真实目的"
+        ],
+        "evidence_spans": [
+          "林晚和沈知行的契约婚姻，女主林晚为了查清父亲死亡真相复仇。"
+        ]
+      },
+      {
+        "name": "沈知行",
+        "role": "男主角",
+        "personality": [
+          "冷静",
+          "深沉"
+        ],
+        "motivation": "配合林晚进行契约婚姻，并在暗中配合调查",
+        "relationships": {
+          "林晚": "契约婚姻"
+        },
+        "constraints": [
+          "必须遵守商业合同条款与保密规定"
+        ],
+        "evidence_spans": [
+          "林晚和沈知行的契约婚姻，女主林晚为了查清父亲死亡真相复仇。"
+        ]
+      }
+    ],
+    "character_relations": [
+      "林晚与沈知行是契约婚姻关系"
+    ],
+    "core_conflict": "林晚为了查清父亲死亡真相进行复仇，与沈知行达成契约婚姻，共同应对幕后势力。",
+    "trace": {
+      "events": [
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Title: '测试反射工作流剧本', Raw Text Length: 29",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.638090",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Parsed characters: ['林晚', '沈知行']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.63929999305401,
+          "timestamp": "2026-06-22T03:18:50.639129",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Project ID: 'test-reflection-wf-project'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.639129",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Saved characters in memory for project 'test-reflection-wf-project'",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.5308999971020967,
+          "timestamp": "2026-06-22T03:18:50.639669",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '测试反射工作流剧本', evidences count: 0",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.639669",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=4, plot=3, decision=PASS",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.17020000086631626,
+          "timestamp": "2026-06-22T03:18:50.640187",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '测试反射工作流剧本', Genre: '都市'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.640187",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.4397000011522323,
+          "timestamp": "2026-06-22T03:18:50.640706",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: PASS",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.640706",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: rewrite_analysis, Reason: 故意制造死循环, TargetNode: AnalysisNode, RetryCount: 0",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.05549998604692519,
+          "timestamp": "2026-06-22T03:18:50.640706",
+          "review_action": "rewrite_analysis",
+          "review_reason": "故意制造死循环",
+          "target_node": "AnalysisNode"
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '测试反射工作流剧本', evidences count: 2",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.641222",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.24870000197552145,
+          "timestamp": "2026-06-22T03:18:50.641222",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.641809",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: rewrite_analysis, Reason: 故意制造死循环, TargetNode: AnalysisNode, RetryCount: 1",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.047900000936351717,
+          "timestamp": "2026-06-22T03:18:50.641809",
+          "review_action": "rewrite_analysis",
+          "review_reason": "故意制造死循环",
+          "target_node": "AnalysisNode"
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '测试反射工作流剧本', evidences count: 2",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 2,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.641809",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
+          "error_message": null,
+          "retry_count": 2,
+          "latency_ms": 0.17479999223724008,
+          "timestamp": "2026-06-22T03:18:50.641809",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 2,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.642324",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: rewrite_analysis, Reason: 故意制造死循环, TargetNode: ReportNode, RetryCount: 2",
+          "error_message": null,
+          "retry_count": 2,
+          "latency_ms": 0.032199997804127634,
+          "timestamp": "2026-06-22T03:18:50.642324",
+          "review_action": "rewrite_analysis",
+          "review_reason": "故意制造死循环",
+          "target_node": "ReportNode"
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 2,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.642324",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-0190f498",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Locked final report with decision: REVISE",
+          "error_message": null,
+          "retry_count": 2,
+          "latency_ms": 0.0017999991541728377,
+          "timestamp": "2026-06-22T03:18:50.642324",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        }
+      ],
+      "metrics": {
+        "total_latency_ms": 2.34,
+        "total_tool_calls": 0,
+        "failed_tool_calls": 0,
+        "retry_count": 2,
+        "fallback_used": 0,
+        "workflow_success": true
+      }
+    },
     "review_decision": null
   },
   "trace-test-rerank-tool-id": {
@@ -722,14 +2894,1054 @@
       "在第 1 集开场削减 10% 的多余爆破动作场面，用文戏博弈代替，以缩减开拍特效制作预算。",
       "对林啸幼年时期的极端创伤回忆画面做温和化改动，在第 2 集回忆段落中将血腥暴力场景更换为隐喻式艺术处理，以规避政策下架审查风险。"
     ],
-    "node_traces": [],
-    "risk_points": [],
-    "strengths": [],
-    "weaknesses": [],
-    "characters": [],
-    "character_relations": [],
-    "core_conflict": "",
-    "trace": null,
+    "node_traces": [
+      {
+        "node_name": "ParserNode",
+        "input_summary": "Title: '破晓行动', Raw Text Length: 27",
+        "output_summary": "Parsed characters: ['林啸', '赵乾', '苏晴']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "MemoryNode",
+        "input_summary": "Project ID: 'trace-test-rerank-tool-id'",
+        "output_summary": "Saved characters in memory for project 'trace-test-rerank-tool-id'",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '破晓行动', evidences count: 0",
+        "output_summary": "Draft report score: char=5, plot=4, decision=PASS",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "RetrievalNode",
+        "input_summary": "Script Title: '破晓行动', Genre: '动作'",
+        "output_summary": "Retrieved 2 evidences: ['隐秘的角落', '流浪地球']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: PASS",
+        "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": "rewrite_analysis",
+        "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
+        "target_node": "AnalysisNode"
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '破晓行动', evidences count: 2",
+        "output_summary": "Draft report score: char=5, plot=4, decision=REVISE",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": "human_check",
+        "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
+        "target_node": "ReportNode"
+      },
+      {
+        "node_name": "ReportNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "Locked final report with decision: HUMAN_CHECK",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      }
+    ],
+    "risk_points": [
+      "预算爆仓风险：爆破戏份极多，特效与现场特技成本极易超支。"
+    ],
+    "strengths": [
+      "张力极大：林啸特工‘风影’的双重人设与杀人犯赵乾的儒雅伪善形成极佳宿命博弈。",
+      "节奏紧密：前两集剧情包含潜入码头和爆炸事件，矛盾迅速爆发。"
+    ],
+    "weaknesses": [
+      "制作门槛极高：动作与爆破占比超过 40%，极度依赖电影级重工业供应链协助。",
+      "主角性格偏冰冷：打斗戏过多，缺乏对特工林啸内心温情戏的刻画。"
+    ],
+    "characters": [
+      {
+        "name": "林啸",
+        "role": "特工 (代号'风影')",
+        "personality": [
+          "冷静",
+          "机警",
+          "背负旧创"
+        ],
+        "motivation": "查明灭门真相，彻底铲除赵乾的跨国走私势力",
+        "relationships": {
+          "赵乾": "敌对（杀父之仇）",
+          "苏晴": "绝对信任的盟友"
+        },
+        "constraints": [
+          "不能伤害无辜百姓",
+          "必须服从上级组织的安全边界红线"
+        ],
+        "evidence_spans": [
+          "特工林啸潜入集装箱码头，追踪走走私商人赵乾的走私帝国。"
+        ]
+      },
+      {
+        "name": "赵乾",
+        "role": "跨国黑道商人",
+        "personality": [
+          "残忍",
+          "伪善",
+          "老谋深算"
+        ],
+        "motivation": "扩大走私帝国，并在黑道中树立绝对权威",
+        "relationships": {
+          "林啸": "欲除之或者是眼中钉",
+          "苏晴": "追缉的黑客目标"
+        },
+        "constraints": [
+          "不能直接触犯官方底线，以免引火烧身"
+        ],
+        "evidence_spans": [
+          "特工林啸潜入集装箱码头，追踪走走私商人赵乾的走私帝国。"
+        ]
+      },
+      {
+        "name": "苏晴",
+        "role": "天才女黑客",
+        "personality": [
+          "活泼",
+          "正义",
+          "技术高超"
+        ],
+        "motivation": "用黑客技术行侠仗义，帮助林啸脱离险境",
+        "relationships": {
+          "林啸": "并肩作战的技术后盾",
+          "赵乾": "敌对/抹除目标"
+        },
+        "constraints": [
+          "体能极差，无法进行近身格斗防御"
+        ],
+        "evidence_spans": []
+      }
+    ],
+    "character_relations": [
+      "林啸与赵乾为生死之仇的敌对博弈关系",
+      "苏晴是林啸强力的外部网络战友与精神支持"
+    ],
+    "core_conflict": "特工林啸在黑客苏晴的技术协助下潜入集装箱码头起获证据，对抗势力庞大、伪善奸诈的走私集团首脑赵乾。",
+    "trace": {
+      "events": [
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Title: '破晓行动', Raw Text Length: 27",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.495125",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": null,
+          "agent_name": "ParserAgent",
+          "tool_name": "memory_write_tool",
+          "status": "SUCCESS",
+          "input_summary": "{'project_id': 'trace-test-rerank-tool-id', 'memory_type': 'character', 'characters': [CharacterProfile(name='林啸', role=\"特工 (代号'风影')\", personality=['冷",
+          "output_summary": "success=True message='项目角色人设统一配置成功存档。'",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 1.0469999979250133,
+          "timestamp": "2026-06-22T03:18:50.496159",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Parsed characters: ['林啸', '赵乾', '苏晴']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 1.3069999986328185,
+          "timestamp": "2026-06-22T03:18:50.496674",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Project ID: 'trace-test-rerank-tool-id'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.496674",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": null,
+          "agent_name": "Workflow",
+          "tool_name": "memory_write_tool",
+          "status": "SUCCESS",
+          "input_summary": "{'project_id': 'trace-test-rerank-tool-id', 'memory_type': 'character', 'characters': [CharacterProfile(name='林啸', role=\"特工 (代号'风影')\", personality=['冷",
+          "output_summary": "success=True message='项目角色人设统一配置成功存档。'",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.9385000012116507,
+          "timestamp": "2026-06-22T03:18:50.497717",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Saved characters in memory for project 'trace-test-rerank-tool-id'",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 1.0793999972520396,
+          "timestamp": "2026-06-22T03:18:50.497717",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '破晓行动', evidences count: 0",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.497717",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "memory_read_tool",
+          "status": "SUCCESS",
+          "input_summary": "{'project_id': 'trace-test-rerank-tool-id', 'memory_type': 'character'}",
+          "output_summary": "project_report=None characters=[CharacterProfile(name='林啸', role=\"特工 (代号'风影')\", personality=['冷静', '机警', '背负旧创'], motivation='查明灭门真相，彻底铲除赵乾的跨国走私势力', r",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.2535999956307933,
+          "timestamp": "2026-06-22T03:18:50.498233",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=5, plot=4, decision=PASS",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.43119999463669956,
+          "timestamp": "2026-06-22T03:18:50.498233",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '破晓行动', Genre: '动作'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.498233",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": null,
+          "agent_name": "RetrievalAgent",
+          "tool_name": "similar_work_search_tool",
+          "status": "SUCCESS",
+          "input_summary": "{'query': '特工林啸潜入集装箱码头，追踪走走私商人赵乾的走私帝国。 动作 大众', 'top_k': 20}",
+          "output_summary": "evidences=[RetrievalEvidence(source_title='流浪地球', source_type='电影', content='太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。', relevance_rea",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.34149999555666,
+          "timestamp": "2026-06-22T03:18:50.498749",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": null,
+          "agent_name": "RetrievalAgent",
+          "tool_name": "rerank_tool",
+          "status": "SUCCESS",
+          "input_summary": "{'evidences': [RetrievalEvidence(source_title='流浪地球', source_type='电影', content='太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。', relevance",
+          "output_summary": "evidences=[RetrievalEvidence(source_title='隐秘的角落', source_type='电视剧', content='三个小孩在景区玩耍时无意间记录下了一场谋杀，从而展开了一场关于人性、罪恶与救赎的角力。', relevance_reason='【精排依据】与",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.11079999967478216,
+          "timestamp": "2026-06-22T03:18:50.499264",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Retrieved 2 evidences: ['隐秘的角落', '流浪地球']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.6979000027058646,
+          "timestamp": "2026-06-22T03:18:50.499264",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: PASS",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.499264",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": null,
+          "agent_name": "ReviewAgent",
+          "tool_name": "memory_read_tool",
+          "status": "SUCCESS",
+          "input_summary": "{'project_id': 'trace-test-rerank-tool-id', 'memory_type': 'character'}",
+          "output_summary": "project_report=None characters=[CharacterProfile(name='林啸', role=\"特工 (代号'风影')\", personality=['冷静', '机警', '背负旧创'], motivation='查明灭门真相，彻底铲除赵乾的跨国走私势力', r",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.20559999393299222,
+          "timestamp": "2026-06-22T03:18:50.499778",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": null,
+          "agent_name": "ReviewAgent",
+          "tool_name": "review_check_tool",
+          "status": "SUCCESS",
+          "input_summary": "{'script_title': '破晓行动', 'script_genre': '动作', 'raw_text': '特工林啸潜入集装箱码头，追踪走走私商人赵乾的走私帝国。', 'analysis': ScriptAnalysis(characters=[CharacterProfile(name",
+          "output_summary": "issues=[ReviewIssue(issue_type='weak_suggestion', severity='MEDIUM', claim=\"修改建议: '直接开拍。'\", reason='该修改建议过于空泛笼统（如仅给出‘直接开机’、‘直接放弃’或简单的口号式建议），缺乏可落地的具体集数",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.487299999804236,
+          "timestamp": "2026-06-22T03:18:50.499778",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.6129999965196475,
+          "timestamp": "2026-06-22T03:18:50.499778",
+          "review_action": "rewrite_analysis",
+          "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
+          "target_node": "AnalysisNode"
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '破晓行动', evidences count: 2",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.500291",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": null,
+          "agent_name": "AnalysisAgent",
+          "tool_name": "memory_read_tool",
+          "status": "SUCCESS",
+          "input_summary": "{'project_id': 'trace-test-rerank-tool-id', 'memory_type': 'character'}",
+          "output_summary": "project_report=None characters=[CharacterProfile(name='林啸', role=\"特工 (代号'风影')\", personality=['冷静', '机警', '背负旧创'], motivation='查明灭门真相，彻底铲除赵乾的跨国走私势力', r",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.19549998978618532,
+          "timestamp": "2026-06-22T03:18:50.500291",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=5, plot=4, decision=REVISE",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.33830000029411167,
+          "timestamp": "2026-06-22T03:18:50.500291",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.500291",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": null,
+          "agent_name": "ReviewAgent",
+          "tool_name": "memory_read_tool",
+          "status": "SUCCESS",
+          "input_summary": "{'project_id': 'trace-test-rerank-tool-id', 'memory_type': 'character'}",
+          "output_summary": "project_report=None characters=[CharacterProfile(name='林啸', role=\"特工 (代号'风影')\", personality=['冷静', '机警', '背负旧创'], motivation='查明灭门真相，彻底铲除赵乾的跨国走私势力', r",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.19969999266322702,
+          "timestamp": "2026-06-22T03:18:50.500805",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": null,
+          "agent_name": "ReviewAgent",
+          "tool_name": "review_check_tool",
+          "status": "SUCCESS",
+          "input_summary": "{'script_title': '破晓行动', 'script_genre': '动作', 'raw_text': '特工林啸潜入集装箱码头，追踪走走私商人赵乾的走私帝国。', 'analysis': ScriptAnalysis(characters=[CharacterProfile(name",
+          "output_summary": "issues=[ReviewIssue(issue_type='high_risk', severity='HIGH', claim=\"报告或修改建议中涉及了有关 '血腥暴力' 的敏感表述\", reason=\"剧本评估内容触发高危审查红线敏感词 '血腥暴力'，可能面临监管合规或禁映下架风险。\", s",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.49390000640414655,
+          "timestamp": "2026-06-22T03:18:50.501324",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.6229999999050051,
+          "timestamp": "2026-06-22T03:18:50.501324",
+          "review_action": "human_check",
+          "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
+          "target_node": "ReportNode"
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.501324",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-64cb21c3",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Locked final report with decision: HUMAN_CHECK",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0044000043999403715,
+          "timestamp": "2026-06-22T03:18:50.501324",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        }
+      ],
+      "metrics": {
+        "total_latency_ms": 5.09,
+        "total_tool_calls": 10,
+        "failed_tool_calls": 0,
+        "retry_count": 1,
+        "fallback_used": 0,
+        "workflow_success": true
+      }
+    },
+    "review_decision": null
+  },
+  "proj-unhelpful": {
+    "project_id": "proj-unhelpful",
+    "title": "测试剧本",
+    "executive_summary": "评估大纲内容",
+    "character_score": 3,
+    "plot_logic_score": 3,
+    "conflict_density_score": 3,
+    "market_fit_score": 3,
+    "evidence_list": [],
+    "review_issues": [],
+    "decision_suggestion": "PASS",
+    "improvement_suggestions": [],
+    "trace": {
+      "events": [],
+      "metrics": {}
+    }
+  },
+  "proj-replay-test": {
+    "project_id": "proj-replay-test",
+    "title": "林晚复仇记",
+    "executive_summary": "【建议人工复核】\n【执行摘要评分报告 - 契约复仇修正版】\n1. 角色人设维度: 4分。理由：林晚复仇动机强烈，沈知行作为沈氏集团总裁身份尊贵，但沈知行早期工具人色彩过重，需结合商业动机补全介入合理性。\n2. 剧情逻辑维度: 3分。理由：契约婚姻达成缺乏现实基础。对标类似博弈对决作品《狂飙》中严密的斗争逻辑，本剧需补强商战现实可信度。\n3. 冲突密度维度: 4分。理由：伪装下的双重拉扯博弈戏剧张力好。\n4. 市场适应度维度: 3分。理由：对标同题材悬疑证据《隐秘的角落》（检索库同类型代表），故事精准狙击悬疑微短剧受众，但仍需突出差异化亮点。\n建议该项目在针对修改建议进行二稿打磨后予以立项通过。",
+    "character_score": 4,
+    "plot_logic_score": 3,
+    "conflict_density_score": 4,
+    "market_fit_score": 3,
+    "evidence_list": [
+      {
+        "source_title": "狂飙",
+        "source_type": "电视剧",
+        "content": "讲述了一名一线刑警与黑恶势力代表人物长达二十年的生死较量，通过小人物的命运沉浮展现时代变迁与扫黑除恶的坚定决心。",
+        "relevance_reason": "【精排依据】与《狂飙》对标：题材匹配=1.0，标签重合度=0.25，核心冲突重合=0.00，人设重合=0.02。综合推荐分=0.38。",
+        "score": 0.377
+      },
+      {
+        "source_title": "流浪地球",
+        "source_type": "电影",
+        "content": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。面对木星引力危机，中国航天员与地面救援队展开生死救援。",
+        "relevance_reason": "【精排依据】与《流浪地球》对标：题材匹配=0.0，标签重合度=0.00，核心冲突重合=0.00，人设重合=0.00。综合推荐分=0.00。",
+        "score": 0.0
+      }
+    ],
+    "review_issues": [
+      {
+        "issue_type": "high_risk",
+        "severity": "HIGH",
+        "claim": "报告或修改建议中涉及了有关 '政策红线' 的敏感表述",
+        "reason": "剧本评估内容触发高危审查红线敏感词 '政策红线'，可能面临监管合规或禁映下架风险。",
+        "suggested_fix": "须立即中止自动立项流转，提交制片团队进行线下人工合规复核（建议人工复核）。"
+      }
+    ],
+    "decision_suggestion": "HUMAN_CHECK",
+    "improvement_suggestions": [
+      "在第 1 集结尾增加女主在沈知行书房发现父亲遗留暗号线索的钩子，以强化两人的命运绑定与戏剧悬念（原文绑定: 林晚查明父亲死亡真相）。",
+      "在第 2 集增加高层会议中沈知行面对股权对赌被迫与林晚达成假结婚的博弈细节，解决契约婚姻动机不足的硬伤。",
+      "针对政策红线，在二稿第 3 集中设计官方刑警力量的暗中协助，将女主复仇的行为转化为辅助警方的正义举措，以规避违规私刑审查风险。"
+    ],
+    "node_traces": [
+      {
+        "node_name": "ParserNode",
+        "input_summary": "Title: '林晚复仇记', Raw Text Length: 18",
+        "output_summary": "Parsed characters: ['林晚', '沈知行']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "MemoryNode",
+        "input_summary": "Project ID: 'proj-replay-test'",
+        "output_summary": "Saved characters in memory for project 'proj-replay-test'",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '林晚复仇记', evidences count: 0",
+        "output_summary": "Draft report score: char=4, plot=3, decision=PASS",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "RetrievalNode",
+        "input_summary": "Script Title: '林晚复仇记', Genre: '都市'",
+        "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: PASS",
+        "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
+        "errors": null,
+        "retry_count": 0,
+        "review_action": "rewrite_analysis",
+        "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
+        "target_node": "AnalysisNode"
+      },
+      {
+        "node_name": "AnalysisNode",
+        "input_summary": "Script Title: '林晚复仇记', evidences count: 2",
+        "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      },
+      {
+        "node_name": "ReviewNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": "human_check",
+        "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
+        "target_node": "ReportNode"
+      },
+      {
+        "node_name": "ReportNode",
+        "input_summary": "Draft report decision: REVISE",
+        "output_summary": "Locked final report with decision: HUMAN_CHECK",
+        "errors": null,
+        "retry_count": 1,
+        "review_action": null,
+        "review_reason": null,
+        "target_node": null
+      }
+    ],
+    "risk_points": [
+      "政策审查风险：林晚以‘复仇’为主线，若后期涉及过多法律红线外的私刑制裁，极易导致项目无法上线或下架。"
+    ],
+    "strengths": [
+      "人设讨喜：女主角林晚的复仇动机‘查清父亲死亡真相’（原文证据见 CharacterProfile 证据片段）逻辑清晰且具备极强的情感支点。",
+      "戏剧性好：‘契约婚姻’配合‘复仇主线’，双重身份的掩护给故事带来了极佳的秘密博弈空间。"
+    ],
+    "weaknesses": [
+      "男主角功能化：沈知行在剧情前期的介入理由略显薄弱，有过度服务剧情的‘工具人霸总’倾向。",
+      "商战细节空洞：两人签订婚姻协议并决定联手对付幕后势力的商业博弈细节空洞，缺乏现实金融常识。"
+    ],
+    "characters": [
+      {
+        "name": "林晚",
+        "role": "女主角",
+        "personality": [
+          "隐忍",
+          "坚毅"
+        ],
+        "motivation": "查清父亲死亡真相并完成复仇",
+        "relationships": {
+          "沈知行": "契约婚姻"
+        },
+        "constraints": [
+          "不能暴露真实身份与真实目的"
+        ],
+        "evidence_spans": [
+          "女主林晚，男主沈知行，契约婚姻复仇。"
+        ]
+      },
+      {
+        "name": "沈知行",
+        "role": "男主角",
+        "personality": [
+          "冷静",
+          "深沉"
+        ],
+        "motivation": "配合林晚进行契约婚姻，并在暗中配合调查",
+        "relationships": {
+          "林晚": "契约婚姻"
+        },
+        "constraints": [
+          "必须遵守商业合同条款与保密规定"
+        ],
+        "evidence_spans": [
+          "女主林晚，男主沈知行，契约婚姻复仇。"
+        ]
+      }
+    ],
+    "character_relations": [
+      "林晚与沈知行是契约婚姻关系"
+    ],
+    "core_conflict": "林晚为了查清父亲死亡真相进行复仇，与沈知行达成契约婚姻，共同应对幕后势力。",
+    "trace": {
+      "events": [
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Title: '林晚复仇记', Raw Text Length: 18",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.455759",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "ParserNode",
+          "agent_name": "ParserAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Parsed characters: ['林晚', '沈知行']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.8502999990014359,
+          "timestamp": "2026-06-22T03:18:50.456761",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Project ID: 'proj-replay-test'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.457770",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "MemoryNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Saved characters in memory for project 'proj-replay-test'",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.7614000060129911,
+          "timestamp": "2026-06-22T03:18:50.457770",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '林晚复仇记', evidences count: 0",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.457770",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=4, plot=3, decision=PASS",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.18610000552143902,
+          "timestamp": "2026-06-22T03:18:50.458883",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '林晚复仇记', Genre: '都市'",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.458883",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "RetrievalNode",
+          "agent_name": "RetrievalAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Retrieved 2 evidences: ['狂飙', '流浪地球']",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.38919999497011304,
+          "timestamp": "2026-06-22T03:18:50.458883",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: PASS",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.458883",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: rewrite_analysis, Reason: 检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。, TargetNode: AnalysisNode, RetryCount: 0",
+          "error_message": null,
+          "retry_count": 0,
+          "latency_ms": 0.22729999909643084,
+          "timestamp": "2026-06-22T03:18:50.459889",
+          "review_action": "rewrite_analysis",
+          "review_reason": "检测到报告包含明显的人设冲突、剧情幻觉或空泛修改建议，必须退回重写。",
+          "target_node": "AnalysisNode"
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Script Title: '林晚复仇记', evidences count: 2",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.459889",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "AnalysisNode",
+          "agent_name": "AnalysisAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Draft report score: char=4, plot=3, decision=REVISE",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.1660000125411898,
+          "timestamp": "2026-06-22T03:18:50.459889",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.459889",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "ReviewNode",
+          "agent_name": "ReviewAgent",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "ReviewAction: human_check, Reason: 发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。, TargetNode: ReportNode, RetryCount: 1",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.22399998852051795,
+          "timestamp": "2026-06-22T03:18:50.459889",
+          "review_action": "human_check",
+          "review_reason": "发现剧本包含高度合规或政策红线风险点，已拦截并自动流转至人工审核。",
+          "target_node": "ReportNode"
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "START",
+          "input_summary": "Draft report decision: REVISE",
+          "output_summary": "",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0,
+          "timestamp": "2026-06-22T03:18:50.459889",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        },
+        {
+          "trace_id": "tr-045f5113",
+          "node_name": "ReportNode",
+          "agent_name": "Workflow",
+          "tool_name": null,
+          "status": "SUCCESS",
+          "input_summary": "",
+          "output_summary": "Locked final report with decision: HUMAN_CHECK",
+          "error_message": null,
+          "retry_count": 1,
+          "latency_ms": 0.0037999998312443495,
+          "timestamp": "2026-06-22T03:18:50.459889",
+          "review_action": null,
+          "review_reason": null,
+          "target_node": null
+        }
+      ],
+      "metrics": {
+        "total_latency_ms": 2.81,
+        "total_tool_calls": 0,
+        "failed_tool_calls": 0,
+        "retry_count": 1,
+        "fallback_used": 0,
+        "workflow_success": true
+      }
+    },
     "review_decision": null
   }
 }
