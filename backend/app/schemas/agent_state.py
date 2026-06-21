@@ -17,3 +17,5 @@ class AgentState(BaseModel):
     node_traces: List[NodeTrace] = Field(default_factory=list, description="节点执行 Trace 记录")
     trace: Optional[Dict[str, Any]] = Field(None, description="可观测性 Trace 和 Metrics 数据")
     review_decision: Optional[ReviewDecision] = Field(None, description="Review Agent 质检决策记录")
+    use_tools_via_router: bool = Field(default=False, description="是否在代理执行中全部通过工具路由")
+    injected_errors: List[str] = Field(default_factory=list, description="需要手动注入的错误列表")

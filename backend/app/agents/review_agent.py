@@ -34,15 +34,32 @@ class ReviewAgent:
             return state
 
         # 运行详细的质检审核规则
-        issues = self.review(
-            script_title=state.script.title,
-            script_genre=state.script.genre,
-            raw_text=state.script.raw_text,
-            analysis=state.analysis,
-            project_id=state.script.project_id,
-            evidences=state.evidences,
-            draft_report=draft
-        )
+        if state.use_tools_via_router:
+            from ..tools.router import global_tool_router
+            review_res = global_tool_router.call_tool(
+                agent_name="ReviewAgent",
+                tool_name="review_check_tool",
+                arguments={
+                    "script_title": state.script.title,
+                    "script_genre": state.script.genre,
+                    "raw_text": state.script.raw_text,
+                    "analysis": state.analysis,
+                    "project_id": state.script.project_id,
+                    "evidences": state.evidences,
+                    "draft_report": draft
+                }
+            )
+            issues = review_res.issues
+        else:
+            issues = self.review(
+                script_title=state.script.title,
+                script_genre=state.script.genre,
+                raw_text=state.script.raw_text,
+                analysis=state.analysis,
+                project_id=state.script.project_id,
+                evidences=state.evidences,
+                draft_report=draft
+            )
 
         # 写入审核出的问题
         state.review_issues = issues
@@ -100,7 +117,8 @@ class ReviewAgent:
         analysis: Any,
         project_id: str,
         evidences: List[Any],
-        draft_report: FinalReport
+        draft_report: FinalReport,
+        use_tools_via_router: bool = False
     ) -> List[ReviewIssue]:
         issues = []
         
@@ -140,7 +158,16 @@ class ReviewAgent:
                     ))
 
         # 2. 角色行为违反 CharacterMemory.constraints (character_inconsistency)
-        mem_chars = global_character_memory.load_characters(project_id)
+        if use_tools_via_router:
+            from ..tools.router import global_tool_router
+            read_res = global_tool_router.call_tool(
+                agent_name="ReviewAgent",
+                tool_name="memory_read_tool",
+                arguments={"project_id": project_id, "memory_type": "character"}
+            )
+            mem_chars = [c.model_dump() for c in read_res.characters] if read_res.characters else []
+        else:
+            mem_chars = global_character_memory.load_characters(project_id)
         char_constraints = {}
         for c in (analysis.characters if analysis else []):
             char_constraints[c.name] = set(c.constraints)

@@ -16,25 +16,33 @@ class RetrievalAgent:
         
         # 1. 第一阶段：粗召回 20 条候选对标作品
         state.history_logs.append(
-            f"[{datetime.datetime.now().isoformat()}] [召回阶段] 正在调用 similar_work_search_tool 获取候选对比数据。"
+            f"[{datetime.datetime.now().isoformat()}] [召回阶段] 获取候选对比数据。"
         )
-        search_res = global_tool_router.call_tool(
-            agent_name="RetrievalAgent",
-            tool_name="similar_work_search_tool",
-            arguments={"query": query_string, "top_k": 20}
-        )
-        recalled_evidences = search_res.evidences
+        if state.use_tools_via_router:
+            search_res = global_tool_router.call_tool(
+                agent_name="RetrievalAgent",
+                tool_name="similar_work_search_tool",
+                arguments={"query": query_string, "top_k": 20}
+            )
+            recalled_evidences = search_res.evidences
+        else:
+            from ..rag.retriever import mock_retriever
+            recalled_evidences = mock_retriever.search_similar_works(query_string, top_k=20)
         
         # 2. 第二阶段：对召回结果进行多维度精细重排 (取 Top 5)
         state.history_logs.append(
-            f"[{datetime.datetime.now().isoformat()}] [重排阶段] 正在调用 rerank_tool 对候选证据进行多因子权重重排。"
+            f"[{datetime.datetime.now().isoformat()}] [重排阶段] 对候选证据进行多因子权重重排。"
         )
-        rerank_res = global_tool_router.call_tool(
-            agent_name="RetrievalAgent",
-            tool_name="rerank_tool",
-            arguments={"evidences": recalled_evidences, "query": query_string, "top_k": 5}
-        )
-        reranked_evidences = rerank_res.evidences
+        if state.use_tools_via_router:
+            rerank_res = global_tool_router.call_tool(
+                agent_name="RetrievalAgent",
+                tool_name="rerank_tool",
+                arguments={"evidences": recalled_evidences, "query": query_string, "top_k": 5}
+            )
+            reranked_evidences = rerank_res.evidences
+        else:
+            from ..rag.retriever import mock_reranker
+            reranked_evidences = mock_reranker.rerank(recalled_evidences, query_string, top_k=5)
         
         # 3. 筛选最终最精准的 Top 2 对标证据，注入状态机上下文
         state.evidences = reranked_evidences[:2]

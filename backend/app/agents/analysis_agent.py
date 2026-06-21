@@ -16,7 +16,16 @@ class AnalysisAgent:
         content = state.script.raw_text
         
         # 1. 从 Character Memory 中加载该项目的角色设定数据
-        characters_list = global_character_memory.load_characters(project_id)
+        if state.use_tools_via_router:
+            from ..tools.router import global_tool_router
+            read_res = global_tool_router.call_tool(
+                agent_name="AnalysisAgent",
+                tool_name="memory_read_tool",
+                arguments={"project_id": project_id, "memory_type": "character"}
+            )
+            characters_list = [c.model_dump() for c in read_res.characters] if read_res.characters else []
+        else:
+            characters_list = global_character_memory.load_characters(project_id)
         
         # 2. 提取 RAG 检索出来的参考依据作品名，用以进行论据绑定
         retrieved_titles = [ev.source_title for ev in state.evidences]

@@ -8,7 +8,7 @@ from ..agents.review_agent import review_agent
 from ..memory.project_memory import global_project_memory
 from ..memory.character_memory import global_character_memory
 import datetime
-from typing import Tuple
+from typing import Tuple, List, Dict
 
 class ScriptEvaluationWorkflow:
     """
@@ -16,8 +16,9 @@ class ScriptEvaluationWorkflow:
     外层使用确定性 workflow，内层在 Retrieval 和 Review 阶段进行局部自环纠错，
     并在全流程自动收集可观测性 Trace 和 Metrics。
     """
-    def __init__(self, max_iterations: int = 2):
+    def __init__(self, max_iterations: int = 2, use_tools_via_router: bool = False):
         self.max_iterations = max_iterations
+        self.use_tools_via_router = use_tools_via_router
 
     def run(self, script: ScriptInput) -> FinalReport:
         report, state = self.run_with_state(script)
@@ -46,6 +47,7 @@ class ScriptEvaluationWorkflow:
 
         # 2. 初始化状态
         state = AgentState(script=script)
+        state.use_tools_via_router = self.use_tools_via_router
         state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] 启动剧本评估工作流，标题: '{script.title}'")
 
         current_node = "ParserNode"
@@ -69,7 +71,19 @@ class ScriptEvaluationWorkflow:
         # 3. 最终归档到项目记忆中
         final_report = state.final_report or state.draft_report
         if final_report:
-            global_project_memory.save_project(script.project_id, final_report)
+            if state.use_tools_via_router:
+                from ..tools.router import global_tool_router
+                global_tool_router.call_tool(
+                    agent_name="Workflow",
+                    tool_name="memory_write_tool",
+                    arguments={
+                        "project_id": script.project_id,
+                        "memory_type": "project",
+                        "project_report": final_report
+                    }
+                )
+            else:
+                global_project_memory.save_project(script.project_id, final_report)
 
         # 4. 统计并导出可观测性指标，存入 state.trace
         exported_events = recorder.export_trace()
@@ -134,11 +148,25 @@ class ScriptEvaluationWorkflow:
                 
             elif node_name == "MemoryNode":
                 if state.analysis and state.analysis.characters:
-                    global_character_memory.save_characters(state.script.project_id, state.analysis.characters)
+                    if state.use_tools_via_router:
+                        from ..tools.router import global_tool_router
+                        global_tool_router.call_tool(
+                            agent_name="Workflow",
+                            tool_name="memory_write_tool",
+                            arguments={
+                                "project_id": state.script.project_id,
+                                "memory_type": "character",
+                                "characters": state.analysis.characters
+                            }
+                        )
+                    else:
+                        global_character_memory.save_characters(state.script.project_id, state.analysis.characters)
                 output_summary = f"Saved characters in memory for project '{state.script.project_id}'"
                 
             elif node_name == "AnalysisNode":
                 state = analysis_agent.execute(state)
+                if retry_count == 0 and getattr(state, "injected_errors", None):
+                    inject_errors_into_state(state, state.injected_errors)
                 output_summary = (
                     f"Draft report score: char={state.draft_report.character_score if state.draft_report else 'N/A'}, "
                     f"plot={state.draft_report.plot_logic_score if state.draft_report else 'N/A'}, "
@@ -271,3 +299,38 @@ class ScriptEvaluationWorkflow:
 
 # 全局工作流执行器
 evaluation_workflow = ScriptEvaluationWorkflow()
+
+def inject_errors_into_state(state: AgentState, injected_errors: List[str]):
+    if not injected_errors or not state.draft_report:
+        return
+    import re
+    from ..schemas.report import RetrievalEvidence
+    
+    draft = state.draft_report
+    for err in injected_errors:
+        if err == "weak_suggestion":
+            draft.improvement_suggestions = ["直接开拍。"]
+        elif err == "unsupported_claim":
+            state.evidences = []
+            draft.evidence_list = []
+            draft.executive_summary = re.sub(r'《[^》]+》', '', draft.executive_summary)
+            for kw in ["原文", "证据", "数据", "段落", "对标", "检索"]:
+                draft.executive_summary = draft.executive_summary.replace(kw, "")
+        elif err == "high_risk":
+            draft.executive_summary += "\n剧本涉及私刑制裁，可能触及政策红线与法律红线。"
+        elif err == "hallucinated_event":
+            draft.executive_summary += "\n在后续章节中引入了王强开着穿越车祸的剧情。"
+        elif err == "evidence_mismatch":
+            state.script.genre = "都市/爱情"
+            ev = RetrievalEvidence(
+                source_title="流浪地球",
+                source_type="电影",
+                content="科幻片对标",
+                relevance_reason="相似制作",
+                score=0.95
+            )
+            state.evidences = [ev]
+            draft.evidence_list = [ev]
+            draft.executive_summary += "\n对标引用的科幻片《流浪地球》进行市场预测。"
+        elif err == "character_inconsistency":
+            draft.executive_summary += "\n特工林啸大开杀戒，炸死无辜百姓。"

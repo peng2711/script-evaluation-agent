@@ -219,7 +219,19 @@ class ParserAgent:
         analysis = self.extract(content)
         
         # 将角色特征注册进入全局人设记忆（Character Memory）进行本地持久化写入
-        global_character_memory.save_characters(state.script.project_id, analysis.characters)
+        if state.use_tools_via_router:
+            from ..tools.router import global_tool_router
+            global_tool_router.call_tool(
+                agent_name="ParserAgent",
+                tool_name="memory_write_tool",
+                arguments={
+                    "project_id": state.script.project_id,
+                    "memory_type": "character",
+                    "characters": analysis.characters
+                }
+            )
+        else:
+            global_character_memory.save_characters(state.script.project_id, analysis.characters)
             
         state.analysis = analysis
         state.history_logs.append(f"[{datetime.datetime.now().isoformat()}] ParserAgent 抽取完成。")

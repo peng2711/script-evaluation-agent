@@ -68,11 +68,33 @@ python -m pytest
 测试会覆盖数据结构校验、Parser Agent 事实提取机制、异常请求处理、接口返回类型以及核心工作流的状态流转。
 
 ### 运行多机制对比评估脚本 (Eval)
-我们提供了一个用于比对单 Prompt 生成、固定工作流、与含有 Review 纠错机制的 Agent 工作流差异的脚本。可在 `backend/` 目录下执行：
+我们提供了一个用于系统化离线评测的基准测试模块。
+
+> [!WARNING]
+> **关于评测指标的免责声明 / Warning Disclaimer**：
+> 当前系统所有 Agent 节点和工具底层的推理均采用 Mock LLMs（启发式规则和模拟延迟）进行，因此评估报告中产出的指标（如平均延迟 `avg_latency_ms`、对标精准度 `evidence_precision` 等）**仅用于流程闭环与数据结构验证**。它们仅体现系统各模式的工程结构差异，并不代表真实生产环境下大语言模型（如 Gemini 或 GPT-4）的真实性能、准确度上限与延迟表现。
+
+#### 1. 运行单模式评估
+您可以在 `backend/` 目录下执行以下命令，使用 `--mode` 参数评估指定模式（数据结果输出至 `app/eval/eval_results.json`）：
 ```bash
-python -m app.eval.run_eval
+# 单 Prompt 直出 Baseline 模式 (single_prompt)
+D:\ANACONDA\envs\script-agent\python.exe -m app.eval.run_eval --mode single_prompt
+
+# 固定顺序流工作流模式 (fixed)
+D:\ANACONDA\envs\script-agent\python.exe -m app.eval.run_eval --mode fixed
+
+# Hybrid Agent 自环纠错工作流模式 (hybrid)
+D:\ANACONDA\envs\script-agent\python.exe -m app.eval.run_eval --mode hybrid
+
+# Hybrid Agent 工作流 + ToolRouter 校验鉴权模式 (hybrid_with_tools)
+D:\ANACONDA\envs\script-agent\python.exe -m app.eval.run_eval --mode hybrid_with_tools
 ```
-该脚本将测试典型剧本大纲，输出三种流程模式下的打分、决策结论与纠错日志对比。
+
+#### 2. 运行全模式比对
+一键运行以上所有模式，并在控制台渲染指标对比对照表，同时将报告导出至 `app/eval/eval_report.md`：
+```bash
+D:\ANACONDA\envs\script-agent\python.exe -m app.eval.compare_modes
+```
 
 ---
 
@@ -197,7 +219,7 @@ graph TD
 
 ## 9. Eval 评估指标设计与物理意义
 
-为了量化不同剧本评估方案在性能、准确度和稳定性上的优劣，系统定义并计算了 7 个核心的评估指标：
+为了量化不同剧本评估方案在性能、准确度和稳定性上的优劣，系统定义并计算了 10 个核心的评估指标：
 
 ### 1. JSON 成功率 (`json_success_rate`)
 * **定义**：计算工作流输出的报告对象转换为合法 JSON，并能成功被 Pydantic `FinalReport` 模型反序列化验证通过的概率。
@@ -228,5 +250,18 @@ graph TD
 ### 7. 工作流完成率 (`workflow_success_rate`)
 * **定义**：工作流顺利执行到底，各节点在执行中未捕获到崩溃性 Exception 异常的概率。
 * **物理意义**：评估系统整体的稳定运行效率。
+
+### 8. 平均工具调用次数 (`avg_tool_calls`)
+* **定义**：单次剧本评估流程中，系统通过 Tool Router 或直接调用的外部工具的平均次数。
+* **物理意义**：衡量各工作流模式下，工具调用体系的活跃度与开销。
+
+### 9. 平均执行延迟/毫秒 (`avg_latency_ms`)
+* **定义**：单次剧本评估流程的平均运行耗时（毫秒）。
+* **物理意义**：评估各模式在性能和时间开销上的差异。
+
+### 10. 工具降级率 (`fallback_rate`)
+* **定义**：工具调用执行失败触发降级机制（Fallback）的概率。
+* **物理意义**：评估工具调用链路在面对异常/限制时的鲁棒性与容错能力。
+
 
 

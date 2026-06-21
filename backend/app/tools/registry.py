@@ -91,7 +91,7 @@ class MemoryWriteTool(BaseTool):
             description="将最终报告或角色提取配置写入持久化记忆库。",
             input_schema=MemoryWriteInput,
             output_schema=MemoryWriteOutput,
-            allowed_agents=["Workflow"]
+            allowed_agents=["Workflow", "ParserAgent"]
         )
 
     def run(
@@ -147,7 +147,8 @@ class ReviewCheckTool(BaseTool):
             analysis=analysis,
             project_id=project_id,
             evidences=evidences,
-            draft_report=draft_report
+            draft_report=draft_report,
+            use_tools_via_router=True
         )
         return ReviewCheckOutput(issues=issues)
 

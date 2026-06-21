@@ -16,7 +16,7 @@ def test_benchmark_data_completeness():
     1. 验证评估数据集 benchmark_sample.json 的完备性：包含 10 条样本，且包含所需全部黄金标准字段
     """
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    benchmark_path = os.path.normpath(os.path.join(current_dir, "..", "app", "eval", "benchmark_sample.json"))
+    benchmark_path = os.path.normpath(os.path.join(current_dir, "..", "app", "eval", "benchmark.json"))
     
     assert os.path.exists(benchmark_path), f"Benchmark file does not exist at {benchmark_path}"
     
